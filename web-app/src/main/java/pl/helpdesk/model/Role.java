@@ -23,18 +23,18 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @Table(name = "Role")
 public class Role implements Serializable {
     
-    private int id;
+    private Integer id;
     private String name;
 
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "roleId")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int roleId) {
+    public void setId(Integer roleId) {
         this.id = roleId;
     }
     

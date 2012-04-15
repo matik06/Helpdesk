@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @Table(name="User")
 public class User {
     
-   private int id;
+   private Integer id;
    private Role role;
    
    private String firstName;
@@ -39,11 +39,11 @@ public class User {
     @Id
     @GeneratedValue
     @Column(name = "userId")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     
-    public void setId(int userId) {
+    public void setId(Integer userId) {
         this.id = userId;
     }
 
