@@ -5,6 +5,7 @@
 package pl.helpdesk.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,6 +34,8 @@ public class Upgrade  implements Serializable {
     private Integer id;
     private Contract contract;
     private User user;
+    
+    private Date date;
     
     private List<UpgradeFile> files;
     private List<UpgradeNote> notes;
@@ -69,6 +72,14 @@ public class Upgrade  implements Serializable {
         this.user = user;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
     @OneToMany(mappedBy = "upgrade", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     public List<UpgradeFile> getFiles() {

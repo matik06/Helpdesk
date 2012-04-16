@@ -6,6 +6,8 @@ package pl.helpdesk.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,10 +16,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -37,6 +42,7 @@ public class Task  implements Serializable {
     private String description;
     private Date date;
 
+    private List<TaskNote> notes;
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -89,6 +95,16 @@ public class Task  implements Serializable {
         this.upgrade = upgrade;
     }
 
+    @OneToMany(mappedBy = "task", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<TaskNote> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<TaskNote> notes) {
+        this.notes = notes;
+    }
+    
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getDate() {
         return date;
