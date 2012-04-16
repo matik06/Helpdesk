@@ -5,16 +5,11 @@
 package pl.helpdesk.model;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -24,18 +19,17 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Entity
-@Table(name="TaskNote")
-public class TaskNote  implements Serializable {
+@Table(name = "EventType")
+public class EventType  implements Serializable {
     
     private Integer id;
-    private Note note;
-    private NoteType type;
-    private Task task;
-    
+    private String name;
+    private String template;    
+
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "taskNoteId")
+    @Column(name = "eventTypeId")
     public Integer getId() {
         return id;
     }
@@ -44,40 +38,26 @@ public class TaskNote  implements Serializable {
         this.id = roleId;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "noteId")
-    public Note getNote() {
-        return note;
+    public String getName() {
+        return name;
     }
 
-    public void setNote(Note note) {
-        this.note = note;
-    }
-    
-    @ManyToOne(fetch= FetchType.EAGER, optional=false)
-    @JoinColumn(name="noteTypeId")
-    public NoteType getType() {
-        return type;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setType(NoteType type) {
-        this.type = type;
+    public String getTemplate() {
+        return template;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "taskId")
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
+    public void setTemplate(String template) {
+        this.template = template;
     }
     
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 13). // two randomly chosen prime numbers
+        return new HashCodeBuilder(17, 15). // two randomly chosen prime numbers
                 // if deriving: appendSuper(super.hashCode()).
                 append(id).
                 toHashCode();
@@ -96,7 +76,7 @@ public class TaskNote  implements Serializable {
             return false;
         }
 
-        TaskNote o = (TaskNote) obj;
+        EventType o = (EventType) obj;
         return new EqualsBuilder(). // if deriving: appendSuper(super.equals(obj)).
                 append(id, o.getId()).
                 isEquals();
@@ -104,6 +84,6 @@ public class TaskNote  implements Serializable {
 
     @Override
     public String toString() {
-        return "TaskNote{" + "id=" + id + ", note=" + note + ", type=" + type + ", task=" + task + '}';
+        return "EventType{" + "id=" + id + ", name=" + name + ", template=" + template + '}';
     }
 }

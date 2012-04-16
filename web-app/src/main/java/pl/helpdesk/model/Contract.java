@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +32,8 @@ public class Contract implements Serializable {
 
     private Integer id;
     private List<ContractFile> files;
+    private List<Task> tasks;
+    private List<ContractPriority> priorities;
     
     private String name;
     private Date start;
@@ -57,6 +60,25 @@ public class Contract implements Serializable {
         this.files = files;
     }
 
+    @OneToMany(mappedBy = "contract", fetch= FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    @OneToMany(mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<ContractPriority> getPriorities() {
+        return priorities;
+    }
+
+    public void setPriorities(List<ContractPriority> priorities) {
+        this.priorities = priorities;
+    }
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     public Date getEnd() {
         return end;

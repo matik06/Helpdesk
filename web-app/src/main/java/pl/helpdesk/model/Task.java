@@ -43,6 +43,8 @@ public class Task  implements Serializable {
     private Date date;
 
     private List<TaskNote> notes;
+    private List<TaskFile> files;
+    private List<Event> events;
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -103,6 +105,26 @@ public class Task  implements Serializable {
 
     public void setNotes(List<TaskNote> notes) {
         this.notes = notes;
+    }
+
+    @OneToMany(mappedBy = "task", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<TaskFile> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<TaskFile> files) {
+        this.files = files;
+    }
+
+    @OneToMany(mappedBy = "task", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
     
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
