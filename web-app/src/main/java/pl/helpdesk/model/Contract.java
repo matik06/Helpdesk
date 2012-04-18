@@ -34,6 +34,8 @@ public class Contract implements Serializable {
     private List<ContractFile> files;
     private List<Task> tasks;
     private List<ContractPriority> priorities;
+    private List<CustomerUser> customerUsers;
+    private List<Server> servers;
     
     private String name;
     private Date start;
@@ -78,6 +80,26 @@ public class Contract implements Serializable {
     public void setPriorities(List<ContractPriority> priorities) {
         this.priorities = priorities;
     }
+
+    @OneToMany(mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch= FetchType.LAZY)
+    public List<CustomerUser> getCustomerUsers() {
+        return customerUsers;
+    }
+
+    public void setCustomerUsers(List<CustomerUser> customerUsers) {
+        this.customerUsers = customerUsers;
+    }
+
+    @OneToMany(mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    public List<Server> getServers() {
+        return servers;
+    }
+
+    public void setServers(List<Server> servers) {
+        this.servers = servers;
+    }
+    
     
     @Temporal(javax.persistence.TemporalType.DATE)
     public Date getEnd() {

@@ -34,7 +34,8 @@ public class Task  implements Serializable {
     
     private Integer id;
     private Contract contract;
-    private User user;
+    private User author;
+    private HelpdeskUser responsible;
     private Status status;
     private Upgrade upgrade;
     
@@ -68,14 +69,27 @@ public class Task  implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "userId")
-    public User getUser() {
-        return user;
+    @JoinColumn(name = "authorId")
+    public User getAuthor() {
+        return author;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAuthor(User author) {
+        this.author = author;
     }
+
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "responsibleId")
+    public HelpdeskUser getResponsible() {
+        return responsible;
+    }
+
+    public void setResponsible(HelpdeskUser responsible) {
+        this.responsible = responsible;
+    }
+    
+    
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "statusId")
