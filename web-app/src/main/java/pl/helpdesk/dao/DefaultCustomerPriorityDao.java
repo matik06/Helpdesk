@@ -10,6 +10,6 @@ import pl.helpdesk.model.DefaultCustomerPriority;
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public interface DefaultContractPriorityDao extends GenericDao<DefaultCustomerPriority, Integer> {
+public interface DefaultCustomerPriorityDao extends GenericDao<DefaultCustomerPriority, Integer> {
     
 }
