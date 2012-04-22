@@ -28,7 +28,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 public class Server  implements Serializable {
     
     private Integer id;
-    private Contract contract;
+    private Customer customer;
     private HelpdeskPrivilage helpdeskPrivilage;
     
     private String ip;
@@ -53,13 +53,13 @@ public class Server  implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "contractId")
-    public Contract getContract() {
-        return contract;
+    @JoinColumn(name = "customerId")
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @OneToOne(mappedBy = "server", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -165,6 +165,6 @@ public class Server  implements Serializable {
 
     @Override
     public String toString() {
-        return "Server{" + "id=" + id + ", contract=" + contract + ", ip=" + ip + ", systemLogin=" + systemLogin + ", systemPassword=" + systemPassword + ", webServerLotin=" + webServerLotin + ", webServerPassword=" + webServerPassword + ", databaseLogin=" + databaseLogin + ", databasePassword=" + databasePassword + ", databaseUrl=" + databaseUrl + '}';
+        return "Server{" + "id=" + id + ", customer=" + customer + ", ip=" + ip + ", systemLogin=" + systemLogin + ", systemPassword=" + systemPassword + ", webServerLotin=" + webServerLotin + ", webServerPassword=" + webServerPassword + ", databaseLogin=" + databaseLogin + ", databasePassword=" + databasePassword + ", databaseUrl=" + databaseUrl + '}';
     }
 }

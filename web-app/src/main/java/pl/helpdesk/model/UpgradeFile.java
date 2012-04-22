@@ -5,16 +5,10 @@
 package pl.helpdesk.model;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -25,32 +19,9 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name="UpgradeFile")
-public class UpgradeFile implements Serializable {
+public class UpgradeFile extends File implements Serializable {
 
-    private Integer id;
-    private File file;
-    private Upgrade upgrade;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "upgradeFileId")
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer roleId) {
-        this.id = roleId;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "fileId")
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
+    private Upgrade upgrade; 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "upgradeId")
@@ -92,6 +63,6 @@ public class UpgradeFile implements Serializable {
 
     @Override
     public String toString() {
-        return "UpgradeFile{" + "id=" + id + ", file=" + file + ", upgrade=" + upgrade + '}';
+        return "UpgradeFile{" + "id=" + id + ", upgrade=" + upgrade + '}';
     }
 }

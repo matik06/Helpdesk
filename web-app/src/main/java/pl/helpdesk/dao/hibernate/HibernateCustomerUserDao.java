@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.dao.hibernate;
 
+import org.springframework.stereotype.Repository;
 import pl.helpdesk.dao.CustomerUserDao;
 import pl.helpdesk.model.CustomerUser;
 

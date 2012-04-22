@@ -32,7 +32,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Upgrade  implements Serializable {
     
     private Integer id;
-    private Contract contract;
+    private Customer customer;
     private User user;
     
     private Date date;
@@ -53,13 +53,13 @@ public class Upgrade  implements Serializable {
     }
 
     @ManyToOne(fetch= FetchType.LAZY, optional=false)
-    @JoinColumn(name = "contractId")
-    public Contract getContract() {
-        return contract;
+    @JoinColumn(name = "customerId")
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -140,6 +140,6 @@ public class Upgrade  implements Serializable {
 
     @Override
     public String toString() {
-        return "Upgrade{" + "id=" + id + ", contract=" + contract + ", user=" + user + ", files=" + files + ", notes=" + notes + ", tasks=" + tasks + '}';
+        return "Upgrade{" + "id=" + id + ", customer=" + customer + ", user=" + user + ", files=" + files + ", notes=" + notes + ", tasks=" + tasks + '}';
     }
 }

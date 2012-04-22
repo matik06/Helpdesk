@@ -25,34 +25,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name="TaskNote")
-public class TaskNote  implements Serializable {
+public class TaskNote extends Note implements Serializable {
     
     private Integer id;
-    private Note note;
     private NoteType type;
     private Task task;
-    
-    
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "taskNoteId")
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer roleId) {
-        this.id = roleId;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "noteId")
-    public Note getNote() {
-        return note;
-    }
-
-    public void setNote(Note note) {
-        this.note = note;
-    }
     
     @ManyToOne(fetch= FetchType.EAGER, optional=false)
     @JoinColumn(name="noteTypeId")
@@ -104,6 +82,6 @@ public class TaskNote  implements Serializable {
 
     @Override
     public String toString() {
-        return "TaskNote{" + "id=" + id + ", note=" + note + ", type=" + type + ", task=" + task + '}';
+        return "TaskNote{" + "id=" + id + ", type=" + type + ", task=" + task + '}';
     }
 }

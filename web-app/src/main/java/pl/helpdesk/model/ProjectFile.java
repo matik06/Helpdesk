@@ -23,10 +23,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @Entity
 @Table(name = "ProjectFile")
 public class ProjectFile {
+    
     private Integer id;
     private HelpdeskUser helpdeskUser;
-    private Contract contract;
-    
+    private Customer customer;
+    private String name;
+    private String path;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,15 +52,30 @@ public class ProjectFile {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "contractId")
-    public Contract getContract() {
-        return contract;
+    @JoinColumn(name = "customerId")
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
-    
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
     
     @Override
     public int hashCode() {
@@ -81,7 +98,7 @@ public class ProjectFile {
             return false;
         }
 
-        Contract o = (Contract) obj;
+        Customer o = (Customer) obj;
         return new EqualsBuilder(). // if deriving: appendSuper(super.equals(obj)).
                 append(id, o.getId()).
                 isEquals();

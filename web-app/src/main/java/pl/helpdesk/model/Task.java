@@ -33,7 +33,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Task  implements Serializable {
     
     private Integer id;
-    private Contract contract;
+    private Customer customer;
     private User author;
     private HelpdeskUser responsible;
     private Status status;
@@ -59,13 +59,13 @@ public class Task  implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "contractId")
-    public Contract getContract() {
-        return contract;
+    @JoinColumn(name = "customerId")
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)

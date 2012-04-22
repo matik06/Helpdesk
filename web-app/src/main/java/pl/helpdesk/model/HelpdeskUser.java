@@ -26,32 +26,9 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name="HelpdeskUser")
-public class HelpdeskUser  implements Serializable {
+public class HelpdeskUser extends User implements Serializable {
     
-    private Integer id;
-    private User user;
     private List<Task> tasks;    
-    
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "helpdeskUserId")
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer roleId) {
-        this.id = roleId;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional=false)
-    @JoinColumn(name = "userId")
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     @OneToMany(mappedBy = "responsible", fetch= FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
     public List<Task> getTasks() {

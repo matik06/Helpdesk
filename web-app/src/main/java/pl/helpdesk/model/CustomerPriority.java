@@ -23,12 +23,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Entity
-@Table(name="ContractPriority")
-public class ContractPriority  implements Serializable {
+@Table(name="CustomerPriority")
+public class CustomerPriority  implements Serializable {
     
     private Integer id;
     private Priority priority;
-    private Contract contract;
+    private Customer customer;
     
     private String name;
     private Integer executionDuration;
@@ -36,7 +36,7 @@ public class ContractPriority  implements Serializable {
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "contractPriorityId")
+    @Column(name = "customerPriorityId")
     public Integer getId() {
         return id;
     }
@@ -56,13 +56,13 @@ public class ContractPriority  implements Serializable {
     }
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "contractId")
-    public Contract getContract() {
-        return contract;
+    @JoinColumn(name = "customerId")
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Integer getExecutionDuration() {
@@ -103,7 +103,7 @@ public class ContractPriority  implements Serializable {
             return false;
         }
 
-        ContractPriority o = (ContractPriority) obj;
+        CustomerPriority o = (CustomerPriority) obj;
         return new EqualsBuilder(). // if deriving: appendSuper(super.equals(obj)).
                 append(id, o.getId()).
                 isEquals();
@@ -111,6 +111,6 @@ public class ContractPriority  implements Serializable {
 
     @Override
     public String toString() {
-        return "ContractPriority{" + "id=" + id + ", priority=" + priority + ", contract=" + contract + ", name=" + name + ", executionDuration=" + executionDuration + '}';
+        return "CustomerPriority{" + "id=" + id + ", priority=" + priority + ", customer=" + customer + ", name=" + name + ", executionDuration=" + executionDuration + '}';
     }
 }

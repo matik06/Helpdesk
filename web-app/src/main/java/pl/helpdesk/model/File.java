@@ -6,13 +6,14 @@ package pl.helpdesk.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -26,13 +27,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name = "File")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class File implements Serializable {
 
-    private Integer id;
-    private User user;
-    private String name;
-    private String path;
-    private Date date;
+    protected Integer id;
+    protected User user;
+    protected String name;
+    protected String path;
+    protected Date date;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,12 +4,12 @@
  */
 package pl.helpdesk.dao;
 
-import pl.helpdesk.model.ContractFile;
+import pl.helpdesk.model.Customer;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public interface ContractFileDao extends GenericDao<ContractFile, Integer> {
+public interface CustomerDao extends GenericDao<Customer, Integer> {
     
 }

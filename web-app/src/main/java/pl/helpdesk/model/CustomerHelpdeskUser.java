@@ -22,17 +22,17 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Entity
-@Table(name="ContractHelpdeskUser")
-public class ContractHelpdeskUser  implements Serializable {
+@Table(name="CustomerHelpdeskUser")
+public class CustomerHelpdeskUser  implements Serializable {
     
     private Integer id;
     private HelpdeskUser helpdeskUser;
-    private Contract contract;
+    private Customer customer;
 
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "contractHelpdeskUserId")
+    @Column(name = "customerHelpdeskUserId")
     public Integer getId() {
         return id;
     }
@@ -52,13 +52,13 @@ public class ContractHelpdeskUser  implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "contractId")
-    public Contract getContract() {
-        return contract;
+    @JoinColumn(name = "customerId")
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
     
 
@@ -83,7 +83,7 @@ public class ContractHelpdeskUser  implements Serializable {
             return false;
         }
 
-        ContractHelpdeskUser o = (ContractHelpdeskUser) obj;
+        CustomerHelpdeskUser o = (CustomerHelpdeskUser) obj;
         return new EqualsBuilder(). // if deriving: appendSuper(super.equals(obj)).
                 append(id, o.getId()).
                 isEquals();

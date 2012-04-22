@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -25,13 +27,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name = "Note")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Note  implements Serializable {
     
-    private Integer id;
-    private User user;
+    protected Integer id;
+    protected User user;
     
-    private Date date;
-    private String content;
+    protected Date date;
+    protected String content;
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

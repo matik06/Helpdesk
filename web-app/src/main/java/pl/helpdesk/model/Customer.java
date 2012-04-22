@@ -27,13 +27,13 @@ import org.hibernate.annotations.LazyCollectionOption;
  * @author Mateusz Lubański <m.lubanskii@gmail.com>
  */
 @Entity
-@Table(name = "Contract")
-public class Contract implements Serializable {
+@Table(name = "Customer")
+public class Customer implements Serializable {
 
     private Integer id;
-    private List<ContractFile> files;
+    private List<CustomerFile> files;
     private List<Task> tasks;
-    private List<ContractPriority> priorities;
+    private List<CustomerPriority> priorities;
     private List<CustomerUser> customerUsers;
     private List<Server> servers;
     
@@ -43,7 +43,7 @@ public class Contract implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "contractId")
+    @Column(name = "customerId")
     public Integer getId() {
         return id;
     }
@@ -52,17 +52,17 @@ public class Contract implements Serializable {
         this.id = roleId;
     }
 
-    @OneToMany(mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
-    public List<ContractFile> getFiles() {
+    public List<CustomerFile> getFiles() {
         return files;
     }
 
-    public void setFiles(List<ContractFile> files) {
+    public void setFiles(List<CustomerFile> files) {
         this.files = files;
     }
 
-    @OneToMany(mappedBy = "contract", fetch= FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", fetch= FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
     public List<Task> getTasks() {
         return tasks;
     }
@@ -71,17 +71,17 @@ public class Contract implements Serializable {
         this.tasks = tasks;
     }
 
-    @OneToMany(mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
-    public List<ContractPriority> getPriorities() {
+    public List<CustomerPriority> getPriorities() {
         return priorities;
     }
 
-    public void setPriorities(List<ContractPriority> priorities) {
+    public void setPriorities(List<CustomerPriority> priorities) {
         this.priorities = priorities;
     }
 
-    @OneToMany(mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch= FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch= FetchType.LAZY)
     public List<CustomerUser> getCustomerUsers() {
         return customerUsers;
     }
@@ -90,7 +90,7 @@ public class Contract implements Serializable {
         this.customerUsers = customerUsers;
     }
 
-    @OneToMany(mappedBy = "contract", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     public List<Server> getServers() {
         return servers;
@@ -149,7 +149,7 @@ public class Contract implements Serializable {
             return false;
         }
 
-        Contract o = (Contract) obj;
+        Customer o = (Customer) obj;
         return new EqualsBuilder(). // if deriving: appendSuper(super.equals(obj)).
                 append(id, o.getId()).
                 isEquals();
@@ -157,6 +157,6 @@ public class Contract implements Serializable {
 
     @Override
     public String toString() {
-        return "Contract{" + "id=" + id + ", files=" + files + ", name=" + name + ", start=" + start + ", end=" + end + '}';
+        return "Customer{" + "id=" + id + ", files=" + files + ", name=" + name + ", start=" + start + ", end=" + end + '}';
     }
 }

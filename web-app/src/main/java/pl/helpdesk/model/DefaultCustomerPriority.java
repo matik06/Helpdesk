@@ -22,8 +22,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Entity
-@Table(name="DefaultContractPriority")
-public class DefaultContractPriority  implements Serializable {
+@Table(name="DefaultCustomerPriority")
+public class DefaultCustomerPriority  implements Serializable {
     
     private Integer id;
     private Priority priority;
@@ -33,7 +33,7 @@ public class DefaultContractPriority  implements Serializable {
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "defaultContractPriorityId")
+    @Column(name = "defaultCustomerPriorityId")
     public Integer getId() {
         return id;
     }
@@ -90,7 +90,7 @@ public class DefaultContractPriority  implements Serializable {
             return false;
         }
 
-        DefaultContractPriority o = (DefaultContractPriority) obj;
+        DefaultCustomerPriority o = (DefaultCustomerPriority) obj;
         return new EqualsBuilder(). // if deriving: appendSuper(super.equals(obj)).
                 append(id, o.getId()).
                 isEquals();
@@ -98,6 +98,6 @@ public class DefaultContractPriority  implements Serializable {
 
     @Override
     public String toString() {
-        return "DefaultContractPriority{" + "id=" + id + ", priority=" + priority + ", name=" + name + ", executionDuration=" + executionDuration + '}';
+        return "DefaultCustomerPriority{" + "id=" + id + ", priority=" + priority + ", name=" + name + ", executionDuration=" + executionDuration + '}';
     }
 }

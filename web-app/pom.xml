@@ -36,6 +36,12 @@
     <dependencies>
         
         <dependency>
+            <groupId>pl.helpdesk</groupId>
+            <artifactId>ssh-util</artifactId>
+            <version>${part.web-app.version}</version>
+        </dependency>
+        
+        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>${commons-lang.version}</version>

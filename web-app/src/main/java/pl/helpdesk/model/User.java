@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,18 +24,19 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name="User")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     
-   private Integer id;
-   private Role role;
+   protected Integer id;
+   protected Role role;
    
-   private String firstName;
-   private String lastName;
-   private String email;
-   private String login;
-   private String password;
-   private String phone;
-   private String mobile;
+   protected String firstName;
+   protected String lastName;
+   protected String email;
+   protected String login;
+   protected String password;
+   protected String phone;
+   protected String mobile;
    
 
     @Id

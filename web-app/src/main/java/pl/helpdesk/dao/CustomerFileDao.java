@@ -4,12 +4,12 @@
  */
 package pl.helpdesk.dao;
 
-import pl.helpdesk.model.ContractPriority;
+import pl.helpdesk.model.CustomerFile;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public interface ContractPriorityDao extends GenericDao<ContractPriority, Integer> {
+public interface CustomerFileDao extends GenericDao<CustomerFile, Integer> {
     
 }

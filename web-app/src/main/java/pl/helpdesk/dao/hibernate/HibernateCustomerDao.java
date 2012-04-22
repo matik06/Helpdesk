@@ -5,17 +5,17 @@
 package pl.helpdesk.dao.hibernate;
 
 import org.springframework.stereotype.Repository;
-import pl.helpdesk.dao.ContractFileDao;
-import pl.helpdesk.model.ContractFile;
+import pl.helpdesk.dao.CustomerDao;
+import pl.helpdesk.model.Customer;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Repository
-public class HibernateContractFileDao extends HibernateDao<ContractFile, Integer> implements ContractFileDao {
+public class HibernateCustomerDao extends HibernateDao<Customer, Integer> implements CustomerDao {
     
-    public HibernateContractFileDao() {
-        super(ContractFile.class);
+    public HibernateCustomerDao() {
+        super(Customer.class);
     }
 }

@@ -4,12 +4,12 @@
  */
 package pl.helpdesk.dao;
 
-import pl.helpdesk.model.DefaultContractPriority;
+import pl.helpdesk.model.DefaultCustomerPriority;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public interface DefaultContractPriorityDao extends GenericDao<DefaultContractPriority, Integer> {
+public interface DefaultContractPriorityDao extends GenericDao<DefaultCustomerPriority, Integer> {
     
 }
