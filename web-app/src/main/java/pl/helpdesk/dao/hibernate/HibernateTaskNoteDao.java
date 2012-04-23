@@ -5,17 +5,17 @@
 package pl.helpdesk.dao.hibernate;
 
 import org.springframework.stereotype.Repository;
-import pl.helpdesk.dao.UpgradeFileDao;
-import pl.helpdesk.model.UpgradeFile;
+import pl.helpdesk.dao.TaskNoteDao;
+import pl.helpdesk.model.TaskNote;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Repository
-public class HibernateUpgradeFileDao extends HibernateDao<UpgradeFile, Integer> implements UpgradeFileDao {
+public class HibernateTaskNoteDao extends HibernateDao<TaskNote, Integer> implements TaskNoteDao {
     
-    public HibernateUpgradeFileDao() {
-        super(UpgradeFile.class);
+    public HibernateTaskNoteDao() {
+        super(TaskNote.class);
     }
 }

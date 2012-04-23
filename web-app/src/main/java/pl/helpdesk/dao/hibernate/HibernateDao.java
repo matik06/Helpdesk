@@ -11,12 +11,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import pl.helpdesk.dao.GenericDao;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
+@Repository
 public abstract class HibernateDao<T, ID extends Serializable> implements GenericDao<T, ID> {
     
     @Autowired

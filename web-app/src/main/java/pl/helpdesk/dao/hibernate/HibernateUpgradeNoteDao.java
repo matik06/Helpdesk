@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.dao.hibernate;
 
+import org.springframework.stereotype.Repository;
 import pl.helpdesk.dao.UpgradeNoteDao;
 import pl.helpdesk.model.UpgradeNote;
 
@@ -11,6 +12,7 @@ import pl.helpdesk.model.UpgradeNote;
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
+@Repository
 public class HibernateUpgradeNoteDao extends HibernateDao<UpgradeNote, Integer> implements UpgradeNoteDao {
     
     public HibernateUpgradeNoteDao() {
