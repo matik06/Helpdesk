@@ -4,10 +4,12 @@
  */
 package pl.helpdesk.service;
 
+import pl.helpdesk.model.Customer;
+
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public interface CustomerService {
+public interface CustomerService extends GenericService<Customer, Integer> {
     
 }

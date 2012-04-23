@@ -4,10 +4,12 @@
  */
 package pl.helpdesk.service;
 
+import pl.helpdesk.model.Upgrade;
+
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public interface UpgradeService {
+public interface UpgradeService extends GenericService<Upgrade, Integer> {
     
 }
