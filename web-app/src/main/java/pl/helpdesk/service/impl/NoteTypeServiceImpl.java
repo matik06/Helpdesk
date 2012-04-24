@@ -4,10 +4,15 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.springframework.stereotype.Service;
+import pl.helpdesk.dao.NoteTypeDao;
+import pl.helpdesk.model.NoteType;
+
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public class NoteTypeServiceImpl {
+@Service
+public class NoteTypeServiceImpl extends GenericServiceImpl<NoteType, Integer, NoteTypeDao> {
     
 }

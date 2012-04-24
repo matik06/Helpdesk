@@ -4,10 +4,15 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.springframework.stereotype.Service;
+import pl.helpdesk.dao.StatusDao;
+import pl.helpdesk.model.Status;
+
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public class StatusServiceImpl {
+@Service
+public class StatusServiceImpl extends GenericServiceImpl<Status, Integer, StatusDao> {
     
 }

@@ -4,10 +4,15 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.springframework.stereotype.Service;
+import pl.helpdesk.dao.UpgradeFileDao;
+import pl.helpdesk.model.UpgradeFile;
+
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public class UpgradeFileServiceImpl {
+@Service
+public class UpgradeFileServiceImpl extends GenericServiceImpl<UpgradeFile, Integer, UpgradeFileDao> {
     
 }
