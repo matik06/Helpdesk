@@ -1,0 +1,1 @@
+skrypty które należy wykonać na bazie danych Helpdesk po jej utworzeniu
