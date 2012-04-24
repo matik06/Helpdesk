@@ -27,7 +27,6 @@ public class DefaultCustomerPriority  implements Serializable {
     
     private Integer id;
     private Priority priority;
-    private String name;
     private Integer executionDuration;
 
     
@@ -60,15 +59,6 @@ public class DefaultCustomerPriority  implements Serializable {
         this.executionDuration = executionDuration;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 18). // two randomly chosen prime numbers
@@ -98,6 +88,6 @@ public class DefaultCustomerPriority  implements Serializable {
 
     @Override
     public String toString() {
-        return "DefaultCustomerPriority{" + "id=" + id + ", priority=" + priority + ", name=" + name + ", executionDuration=" + executionDuration + '}';
+        return "DefaultCustomerPriority{" + "id=" + id + ", priority=" + priority + ", executionDuration=" + executionDuration + '}';
     }
 }

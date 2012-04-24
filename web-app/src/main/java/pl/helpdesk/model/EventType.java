@@ -24,7 +24,7 @@ public class EventType  implements Serializable {
     
     private Integer id;
     private String name;
-    private String template;    
+    private Boolean isPublic;
 
     
     @Id
@@ -46,14 +46,13 @@ public class EventType  implements Serializable {
         this.name = name;
     }
 
-    public String getTemplate() {
-        return template;
+    public Boolean getIsPublic() {
+        return isPublic;
     }
 
-    public void setTemplate(String template) {
-        this.template = template;
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
     }
-    
 
     @Override
     public int hashCode() {
@@ -84,6 +83,6 @@ public class EventType  implements Serializable {
 
     @Override
     public String toString() {
-        return "EventType{" + "id=" + id + ", name=" + name + ", template=" + template + '}';
+        return "EventType{" + "id=" + id + ", name=" + name + ", isPublic=" + isPublic + '}';
     }
 }
