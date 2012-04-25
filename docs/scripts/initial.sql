@@ -33,7 +33,7 @@ INSERT INTO NoteType(noteTypeId, name) VALUES
 INSERT INTO EventType(eventTypeId, name, isPublic) VALUES
 (1, 'Created task', true),
 (2, 'Started working over task', true),
-(3, 'Stoped, need more information', true),
+(3, 'Stopped, need more information', true),
 (4, 'Finished, ready for upgrade', true),
 (5, 'Closed', true),
 (6, 'Reopened', true);
