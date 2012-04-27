@@ -28,7 +28,7 @@
 >
     
 <!-- ****************** TRANSACTIONS  ****************** -->
-    
+
     <tx:annotation-driven transaction-manager="transactionManager"/>
     
     <!-- zdefiniowanie hibernatowego managera transkacji -->

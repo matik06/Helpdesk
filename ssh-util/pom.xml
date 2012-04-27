@@ -18,6 +18,7 @@
     </parent>
   
   <properties>
+      <jsch.version>0.1.47</jsch.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   
@@ -48,6 +49,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>${jsch.version}</version>
+        </dependency>
+            
         
     </dependencies>
   
