@@ -16,5 +16,6 @@
 *.war
 *.ear
 
-#Pliki informacyjne
-*info
+# inne pliki tymczasowe
+web-app/src/main/resources/mapping-info
+web-app/src/main/resources/mapping-methods-info

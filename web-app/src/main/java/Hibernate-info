@@ -1,0 +1,5 @@
+List vs Set
+ - set nie może mieć duplikatów
+ - set nie zawiera sortowania
+http://stackoverflow.com/questions/4334970/hibernate-cannot-simultaneously-fetch-multiple-bags
+@LazyCollection(LazyCollectionOption.FALSE)
