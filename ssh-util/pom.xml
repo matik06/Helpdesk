@@ -17,10 +17,13 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
   
-  <properties>
-      <jsch.version>0.1.47</jsch.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <jsch.version>0.1.47</jsch.version>
+        <guava.version>11.0.2</guava.version>
+        <apache.commons-io>1.3.2</apache.commons-io>
+      
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
   
   
     <dependencies>
@@ -56,6 +59,17 @@
             <version>${jsch.version}</version>
         </dependency>
             
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+            
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${apache.commons-io}</version>
+        </dependency>
         
     </dependencies>
   
