@@ -5,13 +5,11 @@
 package pl.helpdesk.sshutil.command.complex;
 
 import com.jcraft.jsch.JSchException;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import pl.helpdesk.sshutil.command.Command;
-import pl.helpdesk.sshutil.command.CopyFileLocallyCommand;
-import pl.helpdesk.sshutil.command.CopyFileRemotlyCommand;
+import pl.helpdesk.sshutil.command.ForwardPortCommand;
 import pl.helpdesk.sshutil.common.User;
 
 /**
@@ -64,8 +62,13 @@ public class TestComplexCommand extends ComplexCommand {
 //                new ArrayList<File>(){{add(new File("/home/matik06/test.txt"));add(new File("/home/matik06/test2.txt"));}},
 //                new File("/home/matik06/tmp/3/4/2")));
         
-       commands.add(new CopyFileLocallyCommand(
-               new File("/home/matik/Helpdesk-files/"), new File("/home/matik/Helpdesk-files/upgrades/")));
+        //kopiowanie plikow lokalnie
+//       commands.add(new CopyFilesLocallyCommand(
+//               new File("/home/matik/Helpdesk-files/"), new File("/home/matik/Helpdesk-files/upgrades/")));
+        
+        //backup bazy danych..
+        
+        commands.add(new ForwardPortCommand(serverSession, "127.0.0.1", 5656, 3306));
         
         return commands;
         

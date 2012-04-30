@@ -1,15 +1,15 @@
 package pl.helpdesk.sshutil;
 
 import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import com.jcraft.jsch.UserInfo;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Vector;
+import java.util.Scanner;
 
 /**
  * http://www.time4tea.net/wiki/display/MAIN/SCP+a+file+in+Java+using+JSch
@@ -40,10 +40,21 @@ public class App
                 
         boolean isConnected = session.isConnected();
         System.out.println(isConnected);
+      
+        
+        //**********************************************************************/
+        //JSch - port forwarding
+        int lport = 5656;
+        int rport = 3306;
+
+        int assigned_port = session.setPortForwardingL(lport, "localhost", rport);
+        System.out.println("Port fowrwared "+ assigned_port);
+        
+        new Scanner(System.in).next();
         
         //**********************************************************************/
         ChannelExec exec = (ChannelExec) session.openChannel("exec");
-        exec.setCommand("touch ppp.txt");
+//        exec.setCommand("touch ppp.txt");
         exec.connect();
         
         
@@ -125,5 +136,34 @@ public class App
 //            System.out.println("Writing: ");
 //            bos.write(buffer, 0, readCount);
 //        }
+    }
+    
+    
+    class localUserInfo implements UserInfo {
+
+        String passwd;
+
+        public String getPassword() {
+            return passwd;
+        }
+
+        public boolean promptYesNo(String str) {
+            return true;
+        }
+
+        public String getPassphrase() {
+            return null;
+        }
+
+        public boolean promptPassphrase(String message) {
+            return true;
+        }
+
+        public boolean promptPassword(String message) {
+            return true;
+        }
+
+        public void showMessage(String message) {
+        }
     }
 }

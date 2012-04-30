@@ -8,10 +8,7 @@ import com.jcraft.jsch.JSchException;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFileFilter;
 import org.apache.log4j.Logger;
 
 /**
@@ -19,14 +16,14 @@ import org.apache.log4j.Logger;
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public class CopyFileLocallyCommand extends AbstractCommand {
+public class CopyFilesLocallyCommand extends AbstractCommand {
     
-    private static final Logger logger = Logger.getLogger(CopyFileLocallyCommand.class);
+    private static final Logger logger = Logger.getLogger(CopyFilesLocallyCommand.class);
     
     private File sourceDirectory;    
     private File destinationDirectory;   
     
-    public CopyFileLocallyCommand(File sourceDirectory, File destinationDirectory) {
+    public CopyFilesLocallyCommand(File sourceDirectory, File destinationDirectory) {
         super(null);
         this.sourceDirectory = sourceDirectory;
         this.destinationDirectory = destinationDirectory;
