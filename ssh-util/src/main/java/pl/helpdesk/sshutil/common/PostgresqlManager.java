@@ -10,12 +10,17 @@ package pl.helpdesk.sshutil.common;
  */
 public class PostgresqlManager extends DatabaseManager {
 
-    public PostgresqlManager(String username, String password, String database, int port) {
-        super(username, password, database, port);
+    public PostgresqlManager(DatabaseSettings dbSetting) {
+        super(dbSetting);
     }
     
     @Override
     protected String getBackupCommand() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected String getRestoreCommand() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

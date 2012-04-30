@@ -4,10 +4,7 @@
  */
 package pl.helpdesk.sshutil.command;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,15 +58,4 @@ public class CreateDirectoryLocallyCommand extends AbstractCommand {
         
         return files;
     }
-    
-    public static void main(String [] args) {
-        
-        List<File> files = getParentFolders(new File("/home/matik/1/2/3"));
-        
-        
-        
-        
-        
-    }
-    
 }

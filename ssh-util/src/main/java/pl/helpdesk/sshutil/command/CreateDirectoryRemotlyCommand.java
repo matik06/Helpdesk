@@ -66,16 +66,5 @@ public class CreateDirectoryRemotlyCommand extends AbstractCommand {
         }
         
         return files;
-    }
-    
-    public static void main(String [] args) {
-        
-        List<File> files = getParentFolders(new File("/home/matik/1/2/3"));
-        
-        
-        
-        
-        
-    }
-    
+    }          
 }

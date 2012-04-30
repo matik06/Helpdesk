@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import pl.helpdesk.sshutil.command.Command;
 import pl.helpdesk.sshutil.command.ForwardPortCommand;
+import pl.helpdesk.sshutil.common.DatabaseEnum;
+import pl.helpdesk.sshutil.common.DatabaseSettings;
 import pl.helpdesk.sshutil.common.User;
 
 /**
@@ -76,7 +78,9 @@ public class TestComplexCommand extends ComplexCommand {
     
     public static void main(String [] args) throws JSchException, IOException {
         User u = new User("matik06", "d3vil0.no-ip.org", 22);
-        TestComplexCommand tcc = new TestComplexCommand(u, null);
+//        ComplexCommand tcc = new TestComplexCommand(u, null);
+        DatabaseSettings dbSetting = new DatabaseSettings("root", "matik06", "test", 3306, DatabaseEnum.MYSQL);
+        ComplexCommand tcc = new DatabaseBackupComplexCommand(u, null, dbSetting, "???");
         tcc.execute();
     }
     

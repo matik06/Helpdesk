@@ -10,14 +10,19 @@ package pl.helpdesk.sshutil.common;
  */
 public class MysqlManager extends DatabaseManager {
 
-    public MysqlManager(String username, String password, String database, int port) {
-        super(username, password, database, port);
+    public MysqlManager(DatabaseSettings dbSetting) {
+        super(dbSetting);
     }
     
 
     @Override
     protected String getBackupCommand() {
         return "mysqldump" + " -u " + username + "-h 127.0.0.1 -p" + password + " -P " + port.toString() + " " + database + " -r " + "mysql-backup";
+    }
+
+    @Override
+    protected String getRestoreCommand() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

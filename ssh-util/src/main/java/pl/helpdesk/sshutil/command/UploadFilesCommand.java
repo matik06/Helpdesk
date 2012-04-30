@@ -17,16 +17,16 @@ import org.apache.log4j.Logger;
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public class UploadFiles extends AbstractCommand {
+public class UploadFilesCommand extends AbstractCommand {
     
-    private static final Logger logger = Logger.getLogger(UploadFiles.class);
+    private static final Logger logger = Logger.getLogger(UploadFilesCommand.class);
     
     private File remoteDirectory;
     private File temporaryDirectory;
     
-    public UploadFiles(Channel channel, File remoteFile, File tmpDirectory) {
+    public UploadFilesCommand(Channel channel, File remoteDirectory, File tmpDirectory) {
         super(channel);
-        this.remoteDirectory = remoteFile;
+        this.remoteDirectory = remoteDirectory;
         this.temporaryDirectory = tmpDirectory;
     }
     

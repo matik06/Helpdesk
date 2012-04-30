@@ -14,16 +14,21 @@ import java.net.ServerSocket;
  */
 public class AvailableProtFinder {
     
+    private static final int MAX = 65000;
+    private static final int MIN = 50001;
+    
     
     public static int getNextAvailable() {
         
-        for (int i = 50001; i < 65000; i++) {
-            if (available(i)) {
-                return i;
+        while (true) {
+            //losujemy port z danego zakresu
+            int randPort = MIN + (int)(Math.random() * ((MAX - MIN) + 1));
+            
+            //sprawdzamy czy port jest wolny
+            if (available(randPort)) {
+                return randPort;
             }
-        }
-        
-        throw new RuntimeException("No available ports..");
+        }        
     }
     
     /**

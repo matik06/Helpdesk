@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
 import pl.helpdesk.sshutil.command.Command;
-import pl.helpdesk.sshutil.common.FolderManager;
+import pl.helpdesk.sshutil.common.SshUtil;
 import pl.helpdesk.sshutil.common.User;
 
 /**
@@ -55,7 +55,7 @@ abstract class ComplexCommand {
 //        this.operatorSftpChannel = (ChannelSftp) operatorSession.openChannel("sftp");
         
         //utworzenie tymczasowego folderu
-        this.temporaryDirectory = FolderManager.INSTANCE.createTemporaryDirectory();
+        this.temporaryDirectory = SshUtil.INSTANCE.createTemporaryDirectory();
     }
     
     private Session initSession(User user, Session session) throws JSchException {
@@ -122,7 +122,7 @@ abstract class ComplexCommand {
         new Scanner(System.in).next();
         
         //usuniecie folderu tymczasowego
-        FolderManager.INSTANCE.deleteDirectory(temporaryDirectory);
+        SshUtil.INSTANCE.deleteDirectory(temporaryDirectory);
         //rozałcze
         disconnect();
     }

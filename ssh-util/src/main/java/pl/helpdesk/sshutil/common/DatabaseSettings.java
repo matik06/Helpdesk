@@ -8,7 +8,7 @@ package pl.helpdesk.sshutil.common;
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public class DatabaseProperties {
+public class DatabaseSettings {
     
     public static final DatabaseEnum MYSQL = DatabaseEnum.MYSQL;
     public static final DatabaseEnum POSTGRESQL = DatabaseEnum.POSTGRESQL;
@@ -16,14 +16,16 @@ public class DatabaseProperties {
     private String username;
     private String password;
     private String database;
+    private Integer port;
     
     private DatabaseEnum databaseType;
 
-    public DatabaseProperties(String username, String password, String database, Integer port, DatabaseEnum databaseType) {
+    public DatabaseSettings(String username, String password, String database, Integer port, DatabaseEnum databaseType) {
         this.username = username;
         this.password = password;
         this.database = database;
         this.databaseType = databaseType;
+        this.port = port;
     }
 
     public String getDatabase() {
@@ -56,5 +58,13 @@ public class DatabaseProperties {
 
     public void setUsername(String username) {
         this.username = username;
-    }   
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
+    }
 }

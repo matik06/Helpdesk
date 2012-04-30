@@ -21,12 +21,13 @@ public abstract class DatabaseManager {
     protected Integer port;
     
     protected abstract String getBackupCommand();
+    protected abstract String getRestoreCommand();
     
-    public DatabaseManager(String username, String password, String database, int port) {
-        this.username = username;
-        this.password = password;
-        this.database = database;
-        this.port = port;
+    public DatabaseManager(DatabaseSettings dbSettings) {
+        this.username = dbSettings.getUsername();
+        this.password = dbSettings.getPassword();
+        this.database = dbSettings.getDatabase();
+        this.port = dbSettings.getPort();
     }
     
     public boolean backup(String backupPath) throws IOException, InterruptedException {
