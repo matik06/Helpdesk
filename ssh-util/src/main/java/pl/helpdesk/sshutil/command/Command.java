@@ -5,11 +5,12 @@
 package pl.helpdesk.sshutil.command;
 
 import com.jcraft.jsch.JSchException;
+import java.io.IOException;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 public interface Command {
-    void execute() throws JSchException;
+    void execute() throws JSchException, IOException;
 }

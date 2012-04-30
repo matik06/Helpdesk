@@ -6,11 +6,12 @@ package pl.helpdesk.sshutil.command.complex;
 
 import com.jcraft.jsch.JSchException;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import pl.helpdesk.sshutil.command.Command;
-import pl.helpdesk.sshutil.command.DownloadFilesFromDirectoryCommand;
-import pl.helpdesk.sshutil.command.UploadFiles;
+import pl.helpdesk.sshutil.command.CopyFileLocallyCommand;
+import pl.helpdesk.sshutil.command.CopyFileRemotlyCommand;
 import pl.helpdesk.sshutil.common.User;
 
 /**
@@ -34,23 +35,43 @@ public class TestComplexCommand extends ComplexCommand {
 //                temporaryDirectory));
         
 //        pobieranie plików
-        commands.add(new DownloadFilesFromDirectoryCommand(
-                serverSftpChannel,
-                new File("/home/matik06/test/"),
-                temporaryDirectory));
+//        commands.add(new DownloadFilesFromDirectoryCommand(
+//                serverSftpChannel,
+//                new File("/home/matik06/test/"),
+//                temporaryDirectory));
         
         //wysyłanie plików
-        commands.add(new UploadFiles(
-                serverSftpChannel,
-                new File("/home/matik06/tmp/"),
-                temporaryDirectory));
+//        commands.add(new UploadFiles(
+//                serverSftpChannel,
+//                new File("/home/matik06/tmp/"),
+//                temporaryDirectory));
         
+        //tworzenie nowego folderu zdalnie
+//        commands.add(new CreateDirectoryRemotlyCommand(
+//                serverSftpChannel,
+//                new File("/home/matik06/1/2/3/4")
+//                ));                
         
+        //tworzenie nowego folderu lokalnie
+//        commands.add(new CreateDirectoryLocallyCommand(new File("/home/matik/1/2/3/4")));
+        
+        //usuwanie plikow z podanej lokalizacji
+//        commands.add(new DownloadFilesFromDirectoryCommand(serverSftpChannel, new File("/home/matik06/test/")));
+        
+//        kopiowanie plikow zdalnie
+//        commands.add(new CopyFileRemotlyCommand(
+//                serverExecChannel,
+//                new ArrayList<File>(){{add(new File("/home/matik06/test.txt"));add(new File("/home/matik06/test2.txt"));}},
+//                new File("/home/matik06/tmp/3/4/2")));
+        
+       commands.add(new CopyFileLocallyCommand(
+               new File("/home/matik/Helpdesk-files/"), new File("/home/matik/Helpdesk-files/upgrades/")));
         
         return commands;
+        
     }
     
-    public static void main(String [] args) throws JSchException {
+    public static void main(String [] args) throws JSchException, IOException {
         User u = new User("matik06", "d3vil0.no-ip.org", 22);
         TestComplexCommand tcc = new TestComplexCommand(u, null);
         tcc.execute();

@@ -43,7 +43,7 @@ public class App
         
         //**********************************************************************/
         ChannelExec exec = (ChannelExec) session.openChannel("exec");
-        exec.setCommand("cp -rf test2.txt test/test2.txt");
+        exec.setCommand("touch ppp.txt");
         exec.connect();
         
         
@@ -51,29 +51,7 @@ public class App
         
         ChannelSftp channel = (ChannelSftp) session.openChannel("sftp");
         channel.connect();
-        
-        //upload file
-//        channel.cd("./");
-//        File localFile = new File("/home/matik/test_result.txt");
-//        channel.put(new FileInputStream(localFile), "test3.txt");
-  
-        //download file
-//        File localFile = new File("/home/matik/test8.txt");
-//        FileOutputStream fos = new FileOutputStream(localFile);        
-//        channel.get("test3.txt", fos);
-//        fos.close();
-        
-        //kopiowanie wszystkich plików danego typu z danej lokalizacji?
-//        channel.ls("*.cvs"); - wyszukuje pliku danego typu
-//        channel.cd("/...");
-        Vector<ChannelSftp.LsEntry> list = channel.ls("*.txt");
-        for (ChannelSftp.LsEntry file : list) {
-            System.out.println(file.getFilename());
-//            channel.get(file.getFilename(), "/home/matik/" +file.getFilename());
-//            channelSftp.get(list.getFileName(), list.getFileName());
-        }
-        //usunięcie pliku
-//        channel.rm("paht/...");
+                                        
         
         //zmiana nazwy pliku lub zmiana jego lokalizacji
 //        channel.rename("test3.txt", "./test/text3.txt");
