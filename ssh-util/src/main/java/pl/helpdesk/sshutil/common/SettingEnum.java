@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 public enum SettingEnum {
     
     PRIVATE_KEY_PATH("privateKeyPath"),
-    TMP_TRANSFER_DIR("temporaryTransferDirectory");
+    UPGRADES_BACKUP_PATH("upgradesBackupPath");
     
     public static final Logger logger = Logger.getLogger(SettingEnum.class);
     private static final String SETTING_FILE = "setting.properties";

@@ -13,7 +13,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 /**
- * Download file from Computer A to Helpdesk Server S
+ * delete files from remote directory
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
@@ -22,12 +22,10 @@ public class DeleteFilesRemotly extends AbstractCommand {
     private static final Logger logger = Logger.getLogger(DeleteFilesRemotly.class);
     
     private File remoteDirectory;
-    private File temporaryDirectory;
     
-    public DeleteFilesRemotly(Channel channel, File remoteFile, File tmpDirectory) {
+    public DeleteFilesRemotly(Channel channel, File remoteFile) {
         super(channel);
         this.remoteDirectory = remoteFile;
-        this.temporaryDirectory = tmpDirectory;
     }
     
 
@@ -35,23 +33,21 @@ public class DeleteFilesRemotly extends AbstractCommand {
     public void execute() throws JSchException{        
         
         ChannelSftp sftpChannel = (ChannelSftp)channel;
-        String sourceDirectory = remoteDirectory.getAbsolutePath();     
-        String destination = "";
+        String remoteDirectoryPath = remoteDirectory.getAbsolutePath();     
         
         try {
-            sftpChannel.cd(sourceDirectory);            
+            sftpChannel.cd(remoteDirectoryPath);            
             Vector<ChannelSftp.LsEntry> list = sftpChannel.ls("*.*");
             
             for (ChannelSftp.LsEntry file : list) {
-                String fileName = file.getFilename();
-                logger.debug("downloading file: " + fileName);
-                String sourceFile = sourceDirectory + "/" + fileName;                
-                destination = temporaryDirectory.getAbsolutePath() + "/" + fileName;
-                sftpChannel.get(sourceFile, destination);
+                String fileName = file.getFilename();                
+                String fileToDelete = remoteDirectoryPath + "/" + fileName;                
+                logger.debug("deleting file: " + fileToDelete);
+                sftpChannel.rm(fileToDelete);
             }
             
         } catch (SftpException ex) {
-            throw new JSchException("Can't download files from: " + sourceDirectory + " to: " + destination, ex);
+            throw new JSchException("Can't delete files from: " + remoteDirectoryPath, ex);
         }
     }    
 }

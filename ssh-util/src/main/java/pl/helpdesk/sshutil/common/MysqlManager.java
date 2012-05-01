@@ -9,15 +9,15 @@ package pl.helpdesk.sshutil.common;
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 public class MysqlManager extends DatabaseManager {
-
-    public MysqlManager(DatabaseSettings dbSetting) {
-        super(dbSetting);
+    
+    public MysqlManager(DatabaseSettings dbSetting, int lport, String backupFile) {
+        super(dbSetting, lport, backupFile);
     }
     
 
     @Override
     protected String getBackupCommand() {
-        return "mysqldump" + " -u " + username + "-h 127.0.0.1 -p" + password + " -P " + port.toString() + " " + database + " -r " + "mysql-backup";
+        return "mysqldump" + " -u " + username + " -h " + host + " -p" + password + " -P " + lport + " " + database + " -r " + backupFile;
     }
 
     @Override

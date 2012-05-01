@@ -24,13 +24,13 @@ public class DatabaseBackupCommand extends AbstractCommand {
     private static final Logger logger = Logger.getLogger(DatabaseBackupCommand.class);
     
     private DatabaseSettings dbSetting; 
-    private int port;
+    private int lport;
     private String file;
     
-    public DatabaseBackupCommand(DatabaseSettings databaseProperties, int port, String file) {
+    public DatabaseBackupCommand(DatabaseSettings databaseProperties, int lport, String file) {
         super(null);
         this.dbSetting = databaseProperties;
-        this.port = port;
+        this.lport = lport;
         this.file = file;
     }
     
@@ -42,16 +42,19 @@ public class DatabaseBackupCommand extends AbstractCommand {
         
         //utworzenie odpowiedniego typu managera
         if (dbSetting.getDatabaseType() == DatabaseEnum.MYSQL) {
-            databaseManager = new MysqlManager(dbSetting);
+            databaseManager = new MysqlManager(dbSetting, lport, file);
         } else if(dbSetting.getDatabaseType() == DatabaseEnum.POSTGRESQL) {
-            databaseManager = new PostgresqlManager(dbSetting);
+            databaseManager = new PostgresqlManager(dbSetting, lport, file);
         } else {
             throw new UnsupportedDataTypeException("Unsuported database manager: " + dbSetting.getDatabaseType());
         }
         
         //backup bazy do pliku
         try {
-            databaseManager.backup(file);
+            boolean success = databaseManager.backup(file);
+            if (!success) {
+                //backup nieudany...
+            }
         } catch (InterruptedException ex) {
             throw new IOException(ex);
         }

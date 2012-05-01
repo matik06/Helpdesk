@@ -19,15 +19,21 @@ public abstract class DatabaseManager {
     protected String password;
     protected String database;
     protected Integer port;
+    protected Integer lport;
+    protected String backupFile;
+    protected String host;
     
     protected abstract String getBackupCommand();
     protected abstract String getRestoreCommand();
     
-    public DatabaseManager(DatabaseSettings dbSettings) {
+    public DatabaseManager(DatabaseSettings dbSettings, int lport, String backupFile) {
         this.username = dbSettings.getUsername();
         this.password = dbSettings.getPassword();
         this.database = dbSettings.getDatabase();
         this.port = dbSettings.getPort();
+        this.host = dbSettings.getHost();
+        this.lport = lport;
+        this.backupFile = backupFile;
     }
     
     public boolean backup(String backupPath) throws IOException, InterruptedException {
@@ -36,7 +42,8 @@ public abstract class DatabaseManager {
         String command = getBackupCommand();        
         Process runtimeProcess = Runtime.getRuntime().exec(command);        
         int processComplete = runtimeProcess.waitFor();
-        logger.debug("username: " + username + " database: " + database + " port: " + port + " backup file: " + backupPath);
+        logger.debug(command);
+        System.out.println(command);
         
         if (processComplete == 0) {
             logger.debug("DatabaseManager.backup: Backup Successfull");

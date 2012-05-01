@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.sshutil.command.complex;
 
+import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
@@ -49,10 +50,10 @@ abstract class ComplexCommand {
         this.serverExecChannel.setErrStream(System.err);                
         this.serverSftpChannel = (ChannelSftp) serverSession.openChannel("sftp");
                 
-//        this.operatorSession = initSession(operatorUser, operatorSession);
-//        this.operatorExecChannel = (ChannelExec) operatorSession.openChannel("exec");
-//        this.operatorExecChannel.setErrStream(System.err);                
-//        this.operatorSftpChannel = (ChannelSftp) operatorSession.openChannel("sftp");
+        this.operatorSession = initSession(operatorUser, operatorSession);
+        this.operatorExecChannel = (ChannelExec) operatorSession.openChannel("exec");
+        this.operatorExecChannel.setErrStream(System.err);                
+        this.operatorSftpChannel = (ChannelSftp) operatorSession.openChannel("sftp");
         
         //utworzenie tymczasowego folderu
         this.temporaryDirectory = SshUtil.INSTANCE.createTemporaryDirectory();
@@ -116,8 +117,6 @@ abstract class ComplexCommand {
             command.execute();
         }
         
-        connectExec();
-        
         //wczytanie linijki tekstu przes wykonaniem dalszej części kodu
         new Scanner(System.in).next();
         
@@ -130,22 +129,29 @@ abstract class ComplexCommand {
     private void connectSftp() throws JSchException {        
 
             this.serverSftpChannel.connect();
-//            this.operatorSftpChannel.connect();
+            this.operatorSftpChannel.connect();
     }
     
     private void connectExec() throws JSchException {
 
         this.serverExecChannel.connect();
-//            this.operatorExecChannel.connect();        
+            this.operatorExecChannel.connect();        
     }
     
     private void disconnect() {
-        this.serverExecChannel.disconnect();
-        this.serverSftpChannel.disconnect();
+        
+        disconnectChannel(this.serverExecChannel);
+        disconnectChannel(this.serverSftpChannel);
         this.serverSession.disconnect();
         
-//        this.operatorExecChannel.disconnect();
-//        this.operatorSftpChannel.disconnect();
-//        this.operatorSession.disconnect();
+        disconnectChannel(this.operatorExecChannel);
+        disconnectChannel(this.operatorSftpChannel);        
+        this.operatorSession.disconnect();
+    }
+    
+    private void disconnectChannel(Channel channel) {
+        if (channel.isConnected()) {
+            channel.disconnect();
+        }
     }
 }

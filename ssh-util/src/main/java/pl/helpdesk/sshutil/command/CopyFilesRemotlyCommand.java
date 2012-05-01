@@ -16,14 +16,14 @@ import org.apache.log4j.Logger;
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public class CopyFileRemotlyCommand extends AbstractCommand {
+public class CopyFilesRemotlyCommand extends AbstractCommand {
     
-    private static final Logger logger = Logger.getLogger(CopyFileRemotlyCommand.class);
+    private static final Logger logger = Logger.getLogger(CopyFilesRemotlyCommand.class);
     
-    private List<File> sourceFiles;    
+    private List<String> sourceFiles;    
     private File destinationDirectory;   
     
-    public CopyFileRemotlyCommand(Channel channel, List<File> sourceFiles, File destinationDirectory) {
+    public CopyFilesRemotlyCommand(Channel channel, List<String> sourceFiles, File destinationDirectory) {
         super(channel);
         this.sourceFiles = sourceFiles;
         this.destinationDirectory = destinationDirectory;
@@ -35,11 +35,14 @@ public class CopyFileRemotlyCommand extends AbstractCommand {
         ChannelExec execChannel = (ChannelExec) channel;
         String cpCommand = "";
         
-        for (File sourceFile : sourceFiles) {
-            cpCommand += "cp -rf " + sourceFile.getAbsolutePath() + " " + destinationDirectory.getAbsolutePath() + " ; ";            
+        for (String sourceFile : sourceFiles) {
+            cpCommand += "cp -rf " + sourceFile + " " + destinationDirectory.getAbsolutePath() + " ; ";            
         }                
         
         logger.debug(cpCommand);
         execChannel.setCommand(cpCommand);
+        
+        execChannel.connect();
+        execChannel.disconnect();
     }    
 }

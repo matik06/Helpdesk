@@ -25,9 +25,10 @@ public class DownloadFilesFromDirectoryCommand extends AbstractCommand {
     private File remoteDirectory;
     private File temporaryDirectory;
     
-    public DownloadFilesFromDirectoryCommand(Channel channel, File remoteFile) {
+    public DownloadFilesFromDirectoryCommand(Channel channel, File remoteFile, File temporaryDirectory) {
         super(channel);
         this.remoteDirectory = remoteFile;
+        this.temporaryDirectory = temporaryDirectory;
     }
     
 
@@ -35,21 +36,24 @@ public class DownloadFilesFromDirectoryCommand extends AbstractCommand {
     public void execute() throws JSchException{        
         
         ChannelSftp sftpChannel = (ChannelSftp)channel;
-        String sourceDirectory = remoteDirectory.getAbsolutePath();     
+        String remoteDirectoryPath = remoteDirectory.getAbsolutePath();     
+        String temporaryDirectoryPath = temporaryDirectory.getAbsolutePath();
         
         try {
-            sftpChannel.cd(sourceDirectory);            
+            sftpChannel.cd(remoteDirectoryPath);            
             Vector<ChannelSftp.LsEntry> list = sftpChannel.ls("*.*");
             
             for (ChannelSftp.LsEntry file : list) {
                 String fileName = file.getFilename();                
-                String sourceFile = sourceDirectory + "/" + fileName;                
-                logger.debug("deleting file: " + sourceFile);
-                sftpChannel.rm(sourceFile);
+                String sourceFile = remoteDirectoryPath + "/" + fileName;  
+                String destinationFile = temporaryDirectoryPath + "/" + fileName;
+                
+                logger.debug("downloading file from: " + sourceFile + " to: " + destinationFile);
+                sftpChannel.get(sourceFile, destinationFile);
             }
             
         } catch (SftpException ex) {
-            throw new JSchException("Can't delete files from: " + sourceDirectory, ex);
+            throw new JSchException("Can't delete files from: " + remoteDirectoryPath, ex);
         }
     }    
 }

@@ -50,8 +50,10 @@ public class CreateDirectoryRemotlyCommand extends AbstractCommand {
                 }                        
             
             sftpChannel.mkdir(remoteDirectory.getAbsolutePath());
+            
         } catch (SftpException ex) {
-            throw new JSchException("Can't create directory : " + source, ex);
+            logger.debug(ex.getMessage(), ex);
+            //folder prawdopodobnie juz istnieje
         }
     }    
     

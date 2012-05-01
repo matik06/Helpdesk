@@ -17,15 +17,17 @@ public class DatabaseSettings {
     private String password;
     private String database;
     private Integer port;
+    private String host;
     
     private DatabaseEnum databaseType;
 
-    public DatabaseSettings(String username, String password, String database, Integer port, DatabaseEnum databaseType) {
+    public DatabaseSettings(String username, String password, String database, String host, Integer port, DatabaseEnum databaseType) {
         this.username = username;
         this.password = password;
         this.database = database;
         this.databaseType = databaseType;
         this.port = port;
+        this.host = host;
     }
 
     public String getDatabase() {
@@ -66,5 +68,13 @@ public class DatabaseSettings {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 }

@@ -19,8 +19,8 @@ public class ForwardPortCommand extends AbstractCommand {
     private static final Logger logger = Logger.getLogger(ForwardPortCommand.class);
     
     Session session;
-    int lport = 5656;
-    int rport= 3306;
+    int lport;
+    int rport;
     String remoteHost;
     
     /**
@@ -43,7 +43,7 @@ public class ForwardPortCommand extends AbstractCommand {
     public void execute() throws JSchException, IOException{        
         
         int assinged_port = session.setPortForwardingL(lport, remoteHost , rport);
-        System.out.println(assinged_port);
+        logger.debug("forwarding port: " + assinged_port);
         
     }    
 }

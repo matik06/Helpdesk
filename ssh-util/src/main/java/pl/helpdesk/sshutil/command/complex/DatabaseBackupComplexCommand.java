@@ -5,12 +5,15 @@
 package pl.helpdesk.sshutil.command.complex;
 
 import com.jcraft.jsch.JSchException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import pl.helpdesk.sshutil.command.Command;
 import pl.helpdesk.sshutil.command.DatabaseBackupCommand;
+import pl.helpdesk.sshutil.command.DeleteFilesRemotly;
 import pl.helpdesk.sshutil.command.ForwardPortCommand;
+import pl.helpdesk.sshutil.command.UploadFilesCommand;
 import pl.helpdesk.sshutil.common.AvailableProtFinder;
 import pl.helpdesk.sshutil.common.DatabaseSettings;
 import pl.helpdesk.sshutil.common.SshUtil;
@@ -26,9 +29,8 @@ public class DatabaseBackupComplexCommand extends ComplexCommand {
     private static final Logger logger = Logger.getLogger(DatabaseBackupComplexCommand.class);
     
     //host na którym jest baza danych
-    private static final String R_HOST = "127.0.0.1";
     private DatabaseSettings databaseSettings;
-    private String remoteDirectory;
+    private String remoteDirectoryPath;
     
     /**
      * 
@@ -36,10 +38,10 @@ public class DatabaseBackupComplexCommand extends ComplexCommand {
      * @param operatorUser operator computer connection settings
      * @throws JSchException if something goes wrong
      */
-    public DatabaseBackupComplexCommand(User serverUser, User operatorUser, DatabaseSettings databaseSettings, String remoteDirectory) throws JSchException {
+    public DatabaseBackupComplexCommand(User serverUser, User operatorUser, DatabaseSettings databaseSettings, String remoteDirectoryPath) throws JSchException {
         super(serverUser, operatorUser);
         this.databaseSettings = databaseSettings;
-        this.remoteDirectory = remoteDirectory;
+        this.remoteDirectoryPath = remoteDirectoryPath;
     }
 
     @Override
@@ -51,15 +53,18 @@ public class DatabaseBackupComplexCommand extends ComplexCommand {
         
         //przekierowanie portu (tunelowanie)
         commands.add(new ForwardPortCommand(
-                serverSession, R_HOST, lport, databaseSettings.getPort()));
+                serverSession, databaseSettings.getHost(), lport, databaseSettings.getPort()));
         
         //backup bazy danych
         String currentDate = SshUtil.INSTANCE.getCurrentDateAsString();
-        String backupFile = this.temporaryDirectory.getAbsolutePath() + "/" + currentDate;
+        String backupFile = this.temporaryDirectory.getAbsolutePath() + "/" + currentDate + "-backup.sql";
         commands.add(new DatabaseBackupCommand(databaseSettings, lport, backupFile));
         
+        //delete files from remoteDirectory
+        commands.add(new DeleteFilesRemotly(operatorSftpChannel, new File(remoteDirectoryPath)));
+        
         //upload file with backup to remote computer
-//        commands.add(new UploadFiles(serverSftpChannel, new File(remoteDirectory), temporaryDirectory));
+        commands.add(new UploadFilesCommand(operatorSftpChannel, new File(remoteDirectoryPath), temporaryDirectory));
         
         return commands;
     }

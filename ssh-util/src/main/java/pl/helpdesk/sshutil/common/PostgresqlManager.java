@@ -10,8 +10,8 @@ package pl.helpdesk.sshutil.common;
  */
 public class PostgresqlManager extends DatabaseManager {
 
-    public PostgresqlManager(DatabaseSettings dbSetting) {
-        super(dbSetting);
+    public PostgresqlManager(DatabaseSettings dbSetting, int port, String backupFile) {
+        super(dbSetting, port, backupFile);
     }
     
     @Override
