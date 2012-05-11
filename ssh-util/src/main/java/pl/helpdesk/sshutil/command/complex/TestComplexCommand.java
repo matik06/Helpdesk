@@ -78,15 +78,17 @@ public class TestComplexCommand extends ComplexCommand {
     public static void main(String [] args) throws JSchException, IOException {
         User u = new User("matik06", "d3vil0.no-ip.org", 22);
         User u2 = new User("matik06", "d3vil0.no-ip.org", 2222, "matik06");
-//        ComplexCommand tcc = new TestComplexCommand(u, null);
+        ComplexCommand tcc = new TestComplexCommand(u, null);
+        
 //        DatabaseSettings dbSetting = new DatabaseSettings("root", "matik06", "test", "127.0.0.1", 3306, DatabaseEnum.MYSQL);
 //        ComplexCommand tcc = new DatabaseBackupComplexCommand(u, u2, dbSetting, "/home/matik06/main/");
-//        ComplexCommand tcc = new LogsBackupComplexCommand(u, u2, "/home/matik06/logs/", "/home/matik06/main/");
-        List<String> upgradeFiles = new ArrayList<String>();
-        upgradeFiles.add("/home/matik06/projects/B/upgrade2.txt");
-        upgradeFiles.add("/home/matik06/projects/A/upgrade-file1.txt");
         
-        ComplexCommand tcc = new UpgradeComplexCommand("/home/matik06/main/", upgradeFiles, "/home/matik06/upgrades", "B2B", u, u2);
+//        ComplexCommand tcc = new LogsBackupComplexCommand(u, u2, "/home/matik06/logs/", "/home/matik06/main/");
+        
+//        List<String> upgradeFiles = new ArrayList<String>();
+//        upgradeFiles.add("/home/matik06/projects/B/upgrade2.txt");
+//        upgradeFiles.add("/home/matik06/projects/A/upgrade-file1.txt");        
+//        ComplexCommand tcc = new UpgradeComplexCommand("/home/matik06/main/", upgradeFiles, "/home/matik06/upgrades", "B2B", u, u2);
         
         tcc.execute();
     }

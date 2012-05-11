@@ -21,6 +21,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
+        <javax.mail>1.4</javax.mail>
         <javax.version>6.0</javax.version>
         <spring.version>3.1.1.RELEASE</spring.version>
         <cglib.version>2.2.2</cglib.version>
@@ -52,6 +53,13 @@
             <artifactId>javaee-web-api</artifactId>
             <version>${javax.version}</version>
             <scope>provided</scope>
+        </dependency>
+        
+        <!-- Java mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${javax.mail}</version>
         </dependency>
 
         <!-- Log4j -->
