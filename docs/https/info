@@ -1,0 +1,51 @@
+W zasadzie wszystko jest tutaj:
+http://tomcat.apache.org/tomcat-6.0-doc/ssl-howto.html
+
+W skrócie:
+
+1. Z Javą dostarczane jest narzędzie do zarządzania kluczami, keytool
+2. Polecenie
+     keytool -genkeypair -alias <nazwa> -keyalg rsa -keysize 2048
+   spowoduje wygenerowanie pary kluczy (w ~/.keystore). Klucz publiczny będzie
+   podpisany przez swój klucz prywatny (self-signed).
+   Pierwszy parametr o który zapyta keytool (CN, What is your first and last
+   name?) powinien być nazwą hosta na którym jest Tomcat.
+   Parametr ten można też podać z lini poleceń, np:
+     keytool -genkeypair -alias upside -keyalg rsa -keysize 2048 -dname "CN=localhost"
+   Hasło do klucza należy ustawić takie samo jak dla keystore (puste, domyślnie
+   jest wtedy ustawiane na takie samo, jak dla keystore).
+3. W conf/server.xml Tomcata należy odkomentować connector SSL:
+<Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+                maxThreads="150" scheme="https" secure="true" keystorePass="password"
+                clientAuth="false" sslProtocol="TLS" />
+   Należy ustawić keystorePass na hasło podane przy tworzeniu keystore.
+4. Po restarcie Tomcata, połączenia z SSL powinny działać (domyślnie pod
+   https://host:8443).
+5. Poleceniem:
+     keytool -exportcert -rfc -file <plik.cert> -alias <nazwa>
+   można wyeksportować plik certyfikatu. Można go później zaimpoertować do bazy
+   znanych certyfikatów w przeglądarce.
+
+
+
+Przykład jak wygenerować certyfikat:
+
+keytool -genkey -keyalg RSA -alias "helpdesk-selfsigned" -keystore helpdesk-selfsigned.jks -storepass "P@ssw0rd" -validity 360
+What is your first and last name?
+  [Unknown]:  localhost
+What is the name of your organizational unit?
+  [Unknown]:  helpdesk
+What is the name of your organization?
+  [Unknown]:  helpdesk
+What is the name of your City or Locality?
+  [Unknown]:  Frydek
+What is the name of your State or Province?
+  [Unknown]:  Śląsk
+What is the two-letter country code for this unit?
+  [Unknown]:  43-227
+Is CN=localhost, OU=helpdesk, O=helpdesk, L=Frydek, ST=Śląsk, C=43-227 correct?
+  [no]:  yes
+
+Enter key password for <helpdesk-selfsigned>
+	(RETURN if same as keystore password):  
+
