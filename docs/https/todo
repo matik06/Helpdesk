@@ -1,0 +1,7 @@
+1. skopiuj wygenerowany plik jks do katalogu głównego tomcata
+2. W pliku tomcata conf/server.xml należy dodać wpis:
+<Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+               maxThreads="150" scheme="https" secure="true"
+               clientAuth="false" sslProtocol="TLS" 
+               keystoreFile="helpdesk-selfsigned.jks" keystorePass="P@ssw0rd"
+       />
