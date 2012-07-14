@@ -35,9 +35,9 @@ public enum RoleEnum {
     public void setValue(int value) {
         this.value = value;
     }
-    
-    public Role getBean(int value) {
-        return roleService.findById(value);
+        
+    public Role getBean() {
+        return roleService.findById(this.value);
     }
     
     public static RoleEnum fromInt(int value) throws UnsupportedEnumValue {

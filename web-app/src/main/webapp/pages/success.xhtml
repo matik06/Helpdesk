@@ -9,7 +9,7 @@
     <h:body>
         <h:form>
             <h:outputText value="USERs : "></h:outputText>
-            <p:dataTable id="users" var="user" value="#{userMB.userList}" style="width: 10%">
+            <p:dataTable id="users" var="user" value="#{HelpdeskUserMB.helpdeskUsers}" style="width: 10%">
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="ID" />
@@ -20,13 +20,13 @@
                     <f:facet name="header">
                         <h:outputText value="Name" />
                     </f:facet>
-                    <h:outputText value="#{user.name}" />
+                    <h:outputText value="#{user.firstName}" />
                 </p:column>
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Surname" />
                     </f:facet>
-                    <h:outputText value="#{user.surname}" />
+                    <h:outputText value="#{user.lastName}" />
                 </p:column>
             </p:dataTable>
         </h:form>

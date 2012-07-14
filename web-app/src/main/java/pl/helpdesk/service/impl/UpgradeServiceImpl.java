@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.UpgradeDao;
 import pl.helpdesk.model.Upgrade;
@@ -14,5 +15,11 @@ import pl.helpdesk.model.Upgrade;
  */
 @Service
 public class UpgradeServiceImpl extends GenericServiceImpl<Upgrade, Integer, UpgradeDao> {
-    
+    @Autowired
+    UpgradeDao upgradeDao;
+
+    @Override
+    public UpgradeDao getDao() {
+        return this.upgradeDao;
+    }
 }

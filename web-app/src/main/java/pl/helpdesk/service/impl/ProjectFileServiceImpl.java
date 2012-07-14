@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.ProjectFileDao;
 import pl.helpdesk.model.ProjectFile;
@@ -14,5 +15,11 @@ import pl.helpdesk.model.ProjectFile;
  */
 @Service
 public class ProjectFileServiceImpl extends GenericServiceImpl<ProjectFile, Integer, ProjectFileDao> {
-    
+    @Autowired 
+    ProjectFileDao projectFileDao;
+
+    @Override
+    public ProjectFileDao getDao() {
+        return this.projectFileDao;
+    }
 }

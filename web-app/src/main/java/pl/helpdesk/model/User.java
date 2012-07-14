@@ -84,6 +84,7 @@ public class User {
         this.lastName = lastName;
     }
 
+    @Column(unique=true)
     public String getLogin() {
         return login;
     }

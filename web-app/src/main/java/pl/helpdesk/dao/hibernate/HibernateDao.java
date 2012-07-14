@@ -33,33 +33,28 @@ public abstract class HibernateDao<T, ID extends Serializable> implements Generi
     }
 
     @Override
-    @Transactional(readOnly = true) 
     public T findById(ID id) {
         return (T) getSession().load(persistentClass, id);
     }
 
     @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public T save(T entity) {
         getSession().save(entity);
         return entity;
     }
     
     @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public T update(T entity) {
         getSession().update(entity);
         return entity;
     }
 
     @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public void delete(T entity) {
         getSession().delete(entity);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<T> findAll(int stardIndex, int fetchSize) {
         Criteria crit = getSession().createCriteria(persistentClass);
 
@@ -68,9 +63,14 @@ public abstract class HibernateDao<T, ID extends Serializable> implements Generi
 
         return crit.list();
     }
+    
+    @Override
+    public List<T> findAll() {
+        Criteria crit = getSession().createCriteria(persistentClass);
+        return crit.list();
+    }
 
     @Override
-    @Transactional(readOnly = true)
     public List<T> findByExample(T exampleInstance, String... excludeProperty) {
 
         Criteria crit = getSession().createCriteria(persistentClass);

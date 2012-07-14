@@ -14,5 +14,10 @@ import pl.helpdesk.model.EventType;
  */
 @Service
 public class EventTypeServiceImpl extends GenericServiceImpl<EventType, Integer, EventTypeDao> {
-    
+    EventTypeDao eventTypeDao;
+
+    @Override
+    public EventTypeDao getDao() {
+        return this.eventTypeDao;
+    }
 }

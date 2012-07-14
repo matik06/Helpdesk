@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.CustomerUserDao;
 import pl.helpdesk.model.CustomerUser;
@@ -14,5 +15,11 @@ import pl.helpdesk.model.CustomerUser;
  */
 @Service
 public class CustomerUserServiceImpl extends GenericServiceImpl<CustomerUser, Integer, CustomerUserDao> {
-    
+    @Autowired
+    CustomerUserDao customerUserDao;
+
+    @Override
+    public CustomerUserDao getDao() {
+        return this.customerUserDao;
+    }
 }

@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.UpgradeFileDao;
 import pl.helpdesk.model.UpgradeFile;
@@ -14,5 +15,11 @@ import pl.helpdesk.model.UpgradeFile;
  */
 @Service
 public class UpgradeFileServiceImpl extends GenericServiceImpl<UpgradeFile, Integer, UpgradeFileDao> {
-    
+    @Autowired
+    UpgradeFileDao upgradeFileDao;
+
+    @Override
+    public UpgradeFileDao getDao() {
+        return this.upgradeFileDao;
+    }
 }

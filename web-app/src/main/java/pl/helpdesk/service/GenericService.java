@@ -15,6 +15,7 @@ public interface GenericService <T, ID extends Serializable> {
     
     T findById(ID id);
     List<T> findAll(int stardIndex, int fetchSize);
+    List<T> findAll();
     List<T> findByExample(T exampleInstance, String[] excludeProperty);    
     T save(T entity);
     T update(T entity);

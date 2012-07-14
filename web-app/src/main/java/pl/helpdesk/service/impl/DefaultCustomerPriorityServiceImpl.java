@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.DefaultCustomerPriorityDao;
 import pl.helpdesk.model.DefaultCustomerPriority;
@@ -14,5 +15,11 @@ import pl.helpdesk.model.DefaultCustomerPriority;
  */
 @Service
 public class DefaultCustomerPriorityServiceImpl extends GenericServiceImpl<DefaultCustomerPriority, Integer, DefaultCustomerPriorityDao> {
-    
+    @Autowired
+    DefaultCustomerPriorityDao defaultCustomerPriorityDao;
+
+    @Override
+    public DefaultCustomerPriorityDao getDao() {
+        return this.defaultCustomerPriorityDao;
+    }
 }

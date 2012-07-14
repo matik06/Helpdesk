@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.RoleDao;
 import pl.helpdesk.model.Role;
@@ -14,4 +15,11 @@ import pl.helpdesk.model.Role;
  */
 @Service
 public class RoleServiceImpl extends GenericServiceImpl<Role, Integer, RoleDao> {
+    @Autowired
+    RoleDao roleDao;
+
+    @Override
+    public RoleDao getDao() {
+        return this.roleDao;
+    }
 }
