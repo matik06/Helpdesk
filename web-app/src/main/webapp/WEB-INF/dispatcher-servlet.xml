@@ -26,7 +26,30 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd"
         >
-       
+    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/database.properties</value>
+                <value>/WEB-INF/smtp.properties</value>
+            </list>
+        </property> 
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+    
+<!--    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+         email configuration 
+        <property name="locations">
+            <value>/WEB-INF/smtp.properties</value>
+        </property>
+         database configuration 
+        <property name="properties">
+            <value>/WEB-INF/database.properties</value>
+        </property>
+    </bean>-->
+
+    <!-- import ohter spring configuration files -->
+    <import resource="dao-context.xml"/>
        
         
     <!-- ******************  ****************** -->    
@@ -37,13 +60,8 @@
     
     <!-- register serveral features: JSR-303 validation support, message conversion, support for field formatting -->
     <mvc:annotation-driven/>
-    
-    <!-- email -->
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location">
-            <value>/WEB-INF/smtp.properties</value>
-        </property>
-    </bean>
+           
+
     
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${mail.smtp.host}"/>

@@ -43,13 +43,7 @@
     </bean>-->
     
             
-<!-- ****************** DATABASE CONNECTION  ****************** -->
-    
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location">
-            <value>/WEB-INF/database.properties</value>
-        </property>
-    </bean>
+<!-- ****************** DATABASE CONNECTION  ****************** -->    
     
     <bean id="dataSource" 
          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
