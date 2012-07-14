@@ -18,22 +18,35 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <repositories>
+        <repository>  
+            <id>prime-repo</id>  
+            <name>PrimeFaces Maven Repository</name>  
+            <url>http://repository.primefaces.org</url>  
+            <layout>default</layout>  
+        </repository>  
+    </repositories>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
         <javax.mail>1.4</javax.mail>
         <javax.version>6.0</javax.version>
         <spring.version>3.1.1.RELEASE</spring.version>
+        <spring-aspects.version>2.5.6</spring-aspects.version>
         <cglib.version>2.2.2</cglib.version>
         <mysql-connector.version>5.1.18</mysql-connector.version>
-        <hibernate.version>3.6.8.Final</hibernate.version>
+        <c3p0.version>0.9.1.2</c3p0.version>
+        <hibernate.version>4.1.0.Final</hibernate.version>
         <javassist.version>3.12.1.GA</javassist.version>
         <guava.version>r09</guava.version>
         <commons-lang.version>2.6</commons-lang.version>
         
+        <jsf.version>2.1.6</jsf.version>
+        <primefaces.version>3.3.1</primefaces.version>
         <jstl.version>1.2</jstl.version>
     </properties>
-
+    
     <dependencies>
         
         <dependency>
@@ -93,10 +106,28 @@
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency> 
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
         </dependency>
         
@@ -124,7 +155,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
-            <version>2.5.6</version>
+            <version>${spring-aspects.version}</version>
         </dependency>
         
         
@@ -154,6 +185,13 @@
             <version>${mysql-connector.version}</version>
             <scope>runtime</scope>
         </dependency>
+        
+        <!-- c3p0 dependency -->
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>${c3p0.version}</version>
+        </dependency>
 
         
         <!-- Dodatkowe biblioteki googla -->
@@ -161,6 +199,27 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        
+        
+        <!-- JSF dependencies -->
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>${jsf.version}</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>${jsf.version}</version>
+        </dependency>
+        
+        <!-- Primefaces dependency -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${primefaces.version}</version>
         </dependency>
         
         <!-- JSTL -->
