@@ -16,8 +16,14 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
  
 <!--     Mapping with servlet and url for the http requests. -->
+ <!-- Map these files with JSF -->
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/pages/*</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
@@ -29,8 +35,7 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
-    
+    </servlet-mapping>            
     
     
     <context-param>
@@ -65,7 +70,7 @@
  
 <!--     Welcome Page -->
     <welcome-file-list>
-        <welcome-file>/pages/index.xhtml</welcome-file>
+        <welcome-file>/userlist.xhtml</welcome-file>
     </welcome-file-list>        
     
     <session-config>

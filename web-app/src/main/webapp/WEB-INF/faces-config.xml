@@ -1,29 +1,48 @@
 <faces-config
     xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
- 
-    http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" 
     version="2.0">
  
     <!-- JSF and Spring are integrated -->
     <application>
-        <el-resolver>
-            org.springframework.web.jsf.el.SpringBeanFacesELResolver
-        </el-resolver>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
     </application>
- 
-    <!-- configuration of navigation rules -->
+    
     <navigation-rule>
+        <from-view-id>/userlist.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>page2</from-outcome>
+            <to-view-id>/pages/page2.xhtml</to-view-id>
+<!--            <redirect/>-->
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>page3</from-outcome>
+            <to-view-id>/pages/page3.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+<!--        <navigation-case>-->
+            <!-- przekierowanie po wywołaniu funkcji delete jeśli sprawdzony jest warunek not userList.register -->
+<!--            <from-action>#{userList.delete}</from-action>-->
+<!--            <if>#{not userList.register}</if>
+            <to-view-id>/pages/page3.xhtml</to-view-id>-->
+            <!-- strona pobierana z zmeinnej page -->
+            <!-- <to-view-id>#{bean.page}</to-view-id> -->
+<!--        </navigation-case>-->
+    </navigation-rule>
+    
+    
+    
+<!--    <navigation-rule>
         <from-view-id>/pages/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>success</from-outcome>
             <to-view-id>/pages/success.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <from-outcome>error</from-outcome>
             <to-view-id>/pages/error.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>
+    </navigation-rule>-->
  
 </faces-config>

@@ -9,20 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.dao.DataAccessException;
+import pl.helpdesk.constant.RoleEnum;
 
 import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.model.Role;
 import pl.helpdesk.service.HelpdeskUserService;
+import pl.helpdesk.service.impl.HelpdeskUserServiceImpl;
 
 /**
  *
  * @author matik06
  */
-@ManagedBean(name="HelpdeskUserMB")
+@ManagedBean(name="helpdeskUserMB")
 @RequestScoped
 public class HelpdeskUserManagedBean implements Serializable {    
     
@@ -30,8 +33,7 @@ public class HelpdeskUserManagedBean implements Serializable {
     private static final String SUCCESS = "success";
     private static final String ERROR = "error";
     
-    //Spring HelpdeskUser Service is injected...
-    @Autowired
+    @ManagedProperty(value="#{HelpdeskUserService}")
     HelpdeskUserService helpdeskUserService;
     
     List<HelpdeskUser> helpdeskUsers;
@@ -40,20 +42,20 @@ public class HelpdeskUserManagedBean implements Serializable {
     private String name;
     private String surname;
     private String login;
-    private static final Role role = new Role();
+//    private static final Role role = RoleEnum.CUSTOMER_MANAGER.getBean();
     
     public HelpdeskUserManagedBean() {
-        role.setId(1);
-        role.setName("Admin");
-        
-        HelpdeskUser user = new HelpdeskUser();
-        user.setEmail("matik06@gmail.com");
-        user.setFirstName("Mateusz");
-        user.setLastName("Lubański");
-        user.setLogin("matik06");
-        user.setPassword("abc");
-        
-        helpdeskUserService.save(user);
+//        role.setId(1);
+//        role.setName("Admin");
+//        
+//        HelpdeskUser user = new HelpdeskUser();
+//        user.setEmail("matik06@gmail.com");
+//        user.setFirstName("Mateusz");
+//        user.setLastName("Lubański");
+//        user.setLogin("matik06");
+//        user.setPassword("abc");
+//        
+//        helpdeskUserService.save(user);
     }
     
     /**
@@ -67,7 +69,7 @@ public class HelpdeskUserManagedBean implements Serializable {
             helpdeskUser.setId(getId());
             helpdeskUser.setFirstName(getName());
             helpdeskUser.setLastName(getSurname());
-            helpdeskUser.setRole(role);
+//            helpdeskUser.setRole(role);
 //            getHelpdeskUserService().save(helpdeskUser);
             return SUCCESS;
         } catch (DataAccessException e) {
@@ -98,17 +100,17 @@ public class HelpdeskUserManagedBean implements Serializable {
 
     public List<HelpdeskUser> getHelpdeskUsers() {
         helpdeskUsers = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            HelpdeskUser user = new HelpdeskUser();
-            user.setFirstName(new Integer(i).toString());
-            user.setLastName(new Integer(i).toString());
-            user.setLogin(new Integer(i).toString());
-            user.setId(i);
-            
-            helpdeskUsers.add(user);
-        }
+//        for (int i = 0; i < 2; i++) {
+//            HelpdeskUser user = new HelpdeskUser();
+//            user.setFirstName(new Integer(i).toString());
+//            user.setLastName(new Integer(i).toString());
+//            user.setLogin(new Integer(i).toString());
+//            user.setId(i);
+//            
+//            helpdeskUsers.add(user);
+//        }
         
-//        helpdeskUsers.addAll(helpdeskUserService.findAll());                
+        helpdeskUsers.addAll(helpdeskUserService.findAll());                
         return helpdeskUsers;
     }
 
