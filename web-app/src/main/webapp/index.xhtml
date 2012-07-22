@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <!-- h:outputScript, h:outputStyleSheet -->
+<!--        <script src="./scripts/utils.js" type="text/javascript"></script>-->
+        <script type="text/javascript">
+            function showWorkingIndicator(data) {
+                showIndicatorRegion(data, "workingIndicator");
+            }
+            function showIndicatorRegion(data, regionId) {
+                //"begin", "complete", or "success"
+                if (data.status == "begin") {
+                    showElement(regionId);
+                } else if (data.status == "success") {
+                    hideElement(regionId);
+                } 
+            }
+            function showElement(id) {
+                document.getElementById(id).style.display
+                    = "inline";
+            }
+            function hideElement(id) {
+                document.getElementById(id).style.display
+                    = "none";
+            }
+        </script>
+    </h:head>
+    <h:body>
+        
+        <h:form>
+            <fieldset>
+                <legend>Random Number: No Ajax</legend>
+                <h:commandButton value="Show Number" action="#{numberGenerator.randomize}"/>
+                <h2><h:outputText value="#{numberGenerator.number}" id="numField1"/></h2>
+            </fieldset>
+        </h:form>
+        
+        <h:form>
+            <fieldset>
+                <legend>Random Number</legend>
+                <h:commandButton value="Show Number" action="#{numberGenerator.randomize}">
+                    <f:ajax render="numField1"/>
+                </h:commandButton><br/>
+                <h2><h:outputText value="#{numberGenerator.number}" id="numField1"/></h2>
+            </fieldset>
+        </h:form>
+        
+        <h:form>
+            <fieldset>
+                <legend>Random Number (with execute="someId")</legend>
+                Range:
+                <h:inputText value="#{numberGenerator.range}" id="rangeField"/><br/>
+                <h:commandButton value="Show Number" action="#{numberGenerator.randomize}">
+                    <f:ajax execute="rangeField" render="numField3"/>
+                </h:commandButton><br/>
+                <h2><h:outputText value="#{numberGenerator.number}" id="numField3"/></h2>
+            </fieldset>
+        </h:form>
+        
+        <h:form>
+            <fieldset>
+                <legend>Bank Customer Lookup (with execute="@form")</legend>
+                Customer ID: <h:inputText value="#{bankingBeanAjax.customerId}"/><br/>
+                Password: <h:inputSecret value="#{bankingBeanAjax.password}"/><br/>
+                <h:commandButton value="Show Current Balance" action="#{bankingBeanAjax.showBalance}">
+                    <f:ajax execute="@form" render="ajaxMessage1"/>
+                </h:commandButton>
+                <br/>
+                <h2><h:outputText value="#{bankingBeanAjax.message}" id="ajaxMessage1"/></h2>
+            </fieldset>
+        </h:form>
+        
+        <h:form>
+            <fieldset>
+                <legend>Population Lookup (with chained comboboxes)</legend>
+                State: 
+                <h:selectOneMenu value="#{locationBean.state}">
+                    <f:selectItems value="#{locationBean.states}"/>
+                    <!-- value change event by default  -->
+                    <f:ajax render="cityList"/> 
+                </h:selectOneMenu>
+                <br/>City:
+                <h:selectOneMenu value="#{locationBean.city}" disabled="#{locationBean.cityListDisabled}" id="cityList">
+                    <f:selectItems value="#{locationBean.cities}"/>
+                    <!-- value change event by default  -->
+                    <f:ajax render="population"/>
+                </h:selectOneMenu>
+                <br/>Population:
+                <h:outputText value="#{locationBean.city}" id="population"/>
+            </fieldset>
+        </h:form>
+        
+        <h:form>
+            <fieldset>
+                <legend>On-the-Fly Temperature Converter …</legend>
+                Temperature in Fahrenheit:
+                <h:inputText value="#{temperatureConverter.fTemp}">
+                    <f:ajax event="keyup" render="cField kField"/>
+                </h:inputText><br/>
+                <h2>
+                    Temperature in Celsius: <h:outputText value="#{temperatureConverter.cTemp}" id="cField"/><br/>
+                    Temperature in Kelvin: <h:outputText value="#{temperatureConverter.kTemp}" id="kField"/><br/>
+                </h2>
+            </fieldset>
+        </h:form>
+        
+        <h:form>
+            <fieldset>
+                <legend>Bank Customer Lookup (with onevent)</legend>
+                Customer ID: <h:inputText value="#{bankingBeanSlow.customerId}"/><br/>
+                Password: <h:inputSecret value="#{bankingBeanSlow.password}"/><br/>
+                <h:commandButton value="Show Current Balance" action="#{bankingBeanSlow.showBalance}">
+                    <f:ajax execute="@form" render="ajaxMessage2" onevent="showWorkingIndicator"/>
+                </h:commandButton>
+                <h2>
+                    <span id="workingIndicator" style="display: none; font-size: 60%">
+                        <!-- <img src="./images/ajax-loader.gif"/>-->
+                        Loading data from server...
+                    </span>
+                    <h:outputText value="#{bankingBeanSlow.message}" id="ajaxMessage2"/>
+                </h2>
+            </fieldset>
+        </h:form>
+        
+        <!--
+            – Color generation cannot be ajaxified
+            – Text generation can easily be ajaxified
+        -->
+        <table>
+            <tr><th bgcolor="#{textGenerator.randomColor}">
+                    <h2>#{textGenerator.randomText}</h2>
+                </th></tr>
+        </table>
+        
+        <table>
+            <tr><h:outputText value="#{textGenerator.startCell}" escape="false"/>
+                <h2>
+                    <h:outputText value="#{textGenerator.randomText}"/>
+                </h2>
+                <h:outputText value="#{textGenerator.endCell}" escape="false"/>
+            </tr>
+        </table>
+        
+    </h:body>
+</html>

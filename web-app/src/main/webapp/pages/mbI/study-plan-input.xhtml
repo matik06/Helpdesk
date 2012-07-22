@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        …
+    </h:head>
+    <h:body>
+        …
+        <h:form>
+            Email address: 
+            <h:inputText value="#{trainingForm.emailAddress}"/><br/>
+            Favorite language: 
+            <h:inputText value="#{trainingForm.favoriteLanguage}"/><br/>
+            Second favorite language:
+            <h:selectOneMenu value="#{trainingForm.secondFavoriteLanguage}">
+                <f:selectItems value="#{trainingForm.availableLanguages}"/>
+            </h:selectOneMenu><br/>
+            Programmed for 5+ years? 
+            <h:selectBooleanCheckbox value="#{trainingForm.isExpert}"/><br/>
+            Personally know Larry Page, Steve Balmer, and James Gosling?
+            <h:selectBooleanCheckbox value="#{trainingForm.isLiar}"/><br/>
+            <h:commandButton value="Show Recommended Study Plan" 
+                             action="#{trainingForm.showTrainingPlan}"/>
+        </h:form>
+        …
+    </h:body>
+</html>

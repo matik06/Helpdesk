@@ -42,7 +42,7 @@
         <guava.version>r09</guava.version>
         <commons-lang.version>2.6</commons-lang.version>
         
-        <jsf.version>2.1.6</jsf.version>
+        <jsf.version>2.1.11</jsf.version>
         <primefaces.version>3.3.1</primefaces.version>
         <jstl.version>1.2</jstl.version>
     </properties>

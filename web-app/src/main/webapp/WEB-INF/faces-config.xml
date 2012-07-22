@@ -7,29 +7,34 @@
     <!-- JSF and Spring are integrated -->
     <application>
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+        
+        <resource-bundle>
+            <base-name>messages1</base-name>
+            <var>msgs1</var>
+        </resource-bundle>
     </application>
-    
+<!--    
     <navigation-rule>
         <from-view-id>/userlist.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>page2</from-outcome>
             <to-view-id>/pages/page2.xhtml</to-view-id>
-<!--            <redirect/>-->
+            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>page3</from-outcome>
             <to-view-id>/pages/page3.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-<!--        <navigation-case>-->
-            <!-- przekierowanie po wywołaniu funkcji delete jeśli sprawdzony jest warunek not userList.register -->
-<!--            <from-action>#{userList.delete}</from-action>-->
-<!--            <if>#{not userList.register}</if>
-            <to-view-id>/pages/page3.xhtml</to-view-id>-->
-            <!-- strona pobierana z zmeinnej page -->
-            <!-- <to-view-id>#{bean.page}</to-view-id> -->
-<!--        </navigation-case>-->
-    </navigation-rule>
+        <navigation-case>
+             przekierowanie po wywołaniu funkcji delete jeśli sprawdzony jest warunek not userList.register 
+            <from-action>#{userList.delete}</from-action>
+            <if>#{not userList.register}</if>
+            <to-view-id>/pages/page3.xhtml</to-view-id>
+             strona pobierana z zmeinnej page 
+             <to-view-id>#{bean.page}</to-view-id> 
+        </navigation-case>
+    </navigation-rule>-->
     
     
     

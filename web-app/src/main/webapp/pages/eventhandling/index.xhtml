@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        …
+    </h:head>
+    <h:body style="font-size:#{formSettings.bodyStyleClass}">
+        …
+        
+        <h:form>
+            Email address: 
+            <h:inputText value="#{trainingForm.emailAddress}"/><br/>
+            Favorite language: 
+            <h:inputText value="#{trainingForm.favoriteLanguage}"/><br/>
+            Some other text... Some other text... Some other text... Some other text... Some other text... 
+            Some other text... Some other text... Some other text... Some other text... Some other text...             
+            
+            <br/>
+            <h:outputFormat value="#{msgs1.registrationText}">
+                <f:param value="Literal value for 0th entry"/>
+                <f:param value="#{msgs1.lastName}"/>
+                <f:param value="#{trainingForm.emailAddress}"/>
+            </h:outputFormat>
+
+            <br/>
+            <div align="center">
+                <h:commandButton value="Text with normal font" actionListener="#{formSettings.setNormalSize}" immediate="true"/>
+                <h:commandButton value="Text with larger fong" actionListener="#{formSettings.setLargeSize}" immediate="true"/>
+            </div>
+        </h:form>
+        …
+        
+    </h:body>
+</html>
