@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    <head><title>(For validation only)</title></head>
+    <body>
+        
+        <composite:interface/>
+        <composite:implementation>
+            #{cc.parent.attrs.programmer.firstName}'s languages:
+            <ul>
+                <ui:repeat var="language" value="#{cc.parent.attrs.programmer.languages}">
+                    <li>#{language}</li>
+                </ui:repeat>
+            </ul>
+        </composite:implementation>
+        
+    </body>
+</html>

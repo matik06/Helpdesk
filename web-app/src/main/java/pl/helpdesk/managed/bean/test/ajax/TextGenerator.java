@@ -7,7 +7,6 @@ package pl.helpdesk.managed.bean.test.ajax;
 import java.util.Random;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import org.apache.commons.lang.math.RandomUtils;
 
 /**
  *

@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/eboats-template.xhtml">
+    <ui:define name="title">
+        Welcome to eboats!!!
+    </ui:define>
+    <ui:define name="header">
+        <ui:include src="/snippets/header.xhtml"/>
+    </ui:define>
+    <ui:define name="menu">
+        <ui:include src="/snippets/google-search-box.xhtml"/>        
+    </ui:define>
+    <ui:define name="body">
+        <p/>
+        <img src="./images/yacht.jpg" width="240" height="367"
+             align="right" alt="Base-model yacht"/>
+        Looking for a hole in the water into which to pour your money?
+        You've come to the right place! We offer a wide selection of
+        reasonably priced boats for everyday use.
+        <h2>Yachts</h2>
+        ... (more body content)
+    </ui:define>
+    <ui:define name="footer">
+        <ui:include src="/snippets/footer-no-home.xhtml"/>
+    </ui:define>
+</ui:composition>

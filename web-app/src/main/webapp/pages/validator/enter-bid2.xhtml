@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+       ...
+    </h:head>
+    <h:body>
+
+        <h:form>
+            <table>
+                <tr>
+                    <td>User ID: 
+                        <h:inputText value="#{bidBean2.userID}" 
+                                     required="true"
+                                     requiredMessage="You must enter a user ID"
+                                     id="userID"/></td>
+                    <td><h:message for="userID" style="font-weight: bold; color: red;"/></td></tr>
+                <tr>
+                    <td>Keyword: 
+                        <h:inputText value="#{bidBean2.keyword}"
+                                     required="true" 
+                                     requiredMessage="You must enter a keyword"
+                                     id="keyword"/></td>
+                    <td><h:message for="keyword" style="font-weight: bold; color: red;"/></td></tr>
+                <tr>
+                    <td>Bid Amount: 
+                        $<h:inputText value="#{bidBean2.bidAmount}"
+                                      required="true"
+                                      requiredMessage="You must enter an amount"
+                                      converterMessage="Amount must be a number"
+                                      id="amount"/></td>
+                    <td><h:message for="amount" style="font-weight: bold; color: red;"/></td></tr>
+                <tr>
+                    <td>Duration: 
+                        <h:inputText value="#{bidBean2.bidDuration}" 
+                                     required="true"
+                                     requiredMessage="You must enter a duration"
+                                     converterMessage="Duration must be a whole number"
+                                     id="duration"/></td>
+                    <td><h:message for="duration" style="font-weight: bold; color: red;"/></td></tr>
+                <tr><th colspan="2">
+                        <h:commandButton value="Send Bid!" 
+                                         action="#{bidBean2.doBid}"/></th></tr>
+            </table>
+        </h:form>
+
+    </h:body>
+</html>

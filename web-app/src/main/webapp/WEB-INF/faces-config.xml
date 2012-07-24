@@ -6,6 +6,9 @@
  
     <!-- JSF and Spring are integrated -->
     <application>
+        <!--
+            Now, whenever JSF sees a bean name, it uses JSF rules first, then Spring rules next.
+        -->
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
         
         <resource-bundle>

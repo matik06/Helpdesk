@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:utils="http://java.sun.com/jsf/composite/utils">
+      <!-- Matches the folder name (under “resources”) of the component. -->
+    <h:head><title>Using a Composite Component</title>
+        <link href="./css/styles.css" rel="stylesheet" type="text/css"/>
+        <style type="text/css">
+            .languages { font-style: italic; }
+            .langs1 { font-style: italic; }
+            .langs2 { font-weight: bold; color: blue; margin-top: -1em; }
+        </style>
+    </h:head>
+    <h:body>
+        
+        <h2>First coreservlets.com Developer</h2>
+        <ul>
+            <li>Level: Junior</li>
+            <li>First name: #{person1.firstName}</li>
+            <li>Last name: #{person1.lastName}</li>
+            <!-- “list” matches the base filename of the component (i.e., list.xhtml) -->
+            <li>Languages: <utils:list value="#{person1.languages}" styleClass="langs1"/></li>
+        </ul>
+        <h2>Second coreservlets.com Developer</h2>
+        <p>
+            Our second junior-level developer is #{person2.firstName} #{person2.lastName}. 
+            He is proficient in: <utils:list value="#{person2.languages}" styleClass="langs2"/>
+        </p>
+        
+    </h:body>
+</html>

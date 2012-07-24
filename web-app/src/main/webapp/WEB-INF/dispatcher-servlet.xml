@@ -73,5 +73,23 @@
             </props>
         </property>
     </bean>
+    
+    <!--
+        Przykład tworzenia beanow z zakresem session lub request:
+    
+    <bean id="colorPreferences" class="coreservlets.ColorPreferences" scope="session">
+        <property name="foreground" value="black"/>
+        <property name="background" value="#fdf5e6"/>
+    </bean>
+    -->
+    
+    <!--
+        Przykład inicjalizacji benów MB:
+    -->
+    
+    <bean id="fBean1" class="pl.helpdesk.managed.bean.test.primefaces.FahrenheitBean" scope="request">
+        <property name="f" value="36"/>
+    </bean>
+            
         
 </beans>

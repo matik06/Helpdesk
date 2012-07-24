@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"      
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite">      
+    <head><title>(For validation only)</title></head>
+    <body>
+        
+        <composite:interface>
+            <composite:attribute name="value"/>
+            <composite:attribute name="styleClass"/>
+        </composite:interface>
+        
+        <composite:implementation>
+            <!-- cc is predefined variable with predefined attrs property. So, cc.attrs.styleClass
+                 means “the value passed in by page author for the styleClass attribute”. -->
+            <ul class="#{cc.attrs.styleClass}">
+                <ui:repeat var="listItem" value="#{cc.attrs.value}">
+                    <li>#{listItem}</li>
+                </ui:repeat>
+            </ul>
+        </composite:implementation>
+        
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>
+            <ui:insert name="title">Default Title</ui:insert>
+        </title>
+        <link rel="stylesheet" type="text/css" href="./css/styles.css"/>
+    </h:head>
+    <h:body>
+        <table border="5" align="center">
+            <tr>
+                <th class="title">
+                    <ui:insert name="title">Default Title</ui:insert>
+                </th>
+            </tr>
+        </table>
+        <h2>A random number: #{numGenerator.randomNum}</h2>
+        <ui:insert name="content">Default Content</ui:insert>
+    </h:body>
+</html>

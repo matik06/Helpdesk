@@ -65,13 +65,21 @@
         </param-value>
     </context-param>
     
-<!--     wczytywanie dodatkowych plików xml z definicjami beanów do głównego contextu -->
+
+    <!-- 
+        This listener runs when the app is first started. It instantiates the ApplicationContext (from 
+        WEB-INF/applicationContext.xml) and places a and places areference to it in the ServletContext
+    -->
     <listener>
         <listener-class>
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
-<!--     wymagany przez JSF -->
+    <!-- 
+        This listener is needed if you declare any of your beans to be request-scoped or session-scoped
+        X• Web scopes instead of the usual Spring scopes of singleton or prototype
+        Lets you give request or session scopes to beans in applicationContext.xml. If you don’t use these scopes, this listener is not required
+    -->
     <listener>
         <listener-class>
             org.springframework.web.context.request.RequestContextListener
