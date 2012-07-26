@@ -10,37 +10,42 @@
     </lifecycle>
 
     <url-mapping>
-        <pattern value="/index"/>
-        <view-id value="/pages/error.xhtml"/>
+        <pattern value="/home"/>
+        <view-id value="/index.xhtml"/>
     </url-mapping>
     
-    <!--
+    <url-mapping>
+        <pattern value="/example"/>
+        <view-id value="/example.xhtml"/>
+    </url-mapping>
+    
+<!--    
         Przyklady uzycia prettyfaces
-    -->
+    
     <url-mapping id="store"> 
         <pattern value="/store" /> 
         <view-id value="/pf/store.xhtml" />
     </url-mapping>
     
     <url-mapping id="viewCategory">
-        <pattern value="/store/#{ cat }/" /> <!-- do zmiennej cat typu GET (/some/url?cat=) podstawiana jest zawartosc linka -->
+        <pattern value="/store/#{ cat }/" />  do zmiennej cat typu GET (/some/url?cat=) podstawiana jest zawartosc linka 
         <view-id value="/pf/store.xhtml" /> 
     </url-mapping>
     
     <url-mapping id="viewCategory">
-        <pattern value="/store2/#{store.category}/" /> <!-- wartosc z linka wstawiana jest bezposrednio do zmiennej store.category -->
+        <pattern value="/store2/#{store.category}/" />  wartosc z linka wstawiana jest bezposrednio do zmiennej store.category 
         <view-id value="/pf/store.xhtml" /> 
     </url-mapping>
     
     <url-mapping id="viewCategory">
-        <pattern value="/store3/#{ cat : store.category }/" /> <!-- robi oba podstawienia -->
+        <pattern value="/store3/#{ cat : store.category }/" />  robi oba podstawienia 
         <view-id value="/pf/store.xhtml" /> 
     </url-mapping>
     
     <url-mapping id="viewCategory">
-        <pattern value="/store5/#{/\\d+/ store.category }/" /> <!-- parametrem może być tylko liczba -->
+        <pattern value="/store5/#{/\\d+/ store.category }/" />  parametrem może być tylko liczba 
         <view-id value="/pf/store.xhtml" />         
-    </url-mapping>    
+    </url-mapping>    -->
     
     <!--
         inject url parameter to some bean
@@ -50,25 +55,25 @@
         <query-param name="query" onPostback="false">#{searchBean.query}</query-param>
     -->
     
-    <!-- URL inherit  -->
+<!--     URL inherit  
     <url-mapping id="store"> 
         <pattern value="/store" /> 
-        <!-- Result: /store -->
+         Result: /store 
         <view-id value="/faces/shop/store.jsf" />
     </url-mapping>
 
     <url-mapping parentId="store" id="category"> 
         <pattern value="/#{category}" /> 
-        <!-- Result: /store/#{category} -->
+         Result: /store/#{category} 
         <view-id value="/faces/shop/category.jsf" /> 
     </url-mapping>
     
-    <!-- Load data when accessing mapped URLs -->
+     Load data when accessing mapped URLs 
     <url-mapping id="viewCategory">
         <pattern value="/store6/#{/\\d+/ store.category }/" /> 
         <view-id value="/pf/store.xhtml" />
-        <action onPostback="false">#{store.process2}</action>   <!-- wywołanie metody po ustawieniu parametrów z adresu url, gdy metoda zwróci: pretty:mappingId to następuje kolejne przekierowania (np gdy user nie ma odpowiednich uprawnien do tej akcji( -->
-    </url-mapping>
+        <action onPostback="false">#{store.process2}</action>    wywołanie metody po ustawieniu parametrów z adresu url, gdy metoda zwróci: pretty:mappingId to następuje kolejne przekierowania (np gdy user nie ma odpowiednich uprawnien do tej akcji( 
+    </url-mapping>-->
     
 
     <!-- annotations

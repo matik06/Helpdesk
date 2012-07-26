@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <div id="comments">
+        <h2>Comments</h2>
+        <ul class="commentlist">
+
+            <li class="comment_odd">
+                <div class="author">
+                    <img class="avatar" src="" width="32" height="32" alt="" />
+                    <span class="name"><a href="#">A Name</a></span> <span class="wrote">wrote: <strong>some bolder text</strong> </span>
+                </div>
+                <div class="submitdate">
+                    <a href="#">August 4, 2009 at 8:35 am</a>
+                </div>
+                <p>This is an example of a comment made on a post. You can either edit the comment, delete the comment or reply to the comment. Use this as a place to respond to the post or to share what you are thinking.</p>
+                <p class="readmore"><a href="#">Continue Reading &#187;</a></p>
+            </li>
+
+            <li class="comment_even">
+                <div class="author"><img class="avatar" src="" width="32" height="32" alt="" /><span class="name"><a href="#">A Name</a></span> <span class="wrote">wrote:</span></div>
+                <div class="submitdate"><a href="#">August 4, 2009 at 8:35 am</a></div>
+                <p>This is an example of a comment made on a post. You can either edit the comment, delete the comment or reply to the comment. Use this as a place to respond to the post or to share what you are thinking.</p>
+                <p class="readmore"><a href="#">Continue Reading &#187;</a></p>
+            </li>          
+
+        </ul>
+    </div>
+
+
+    <h2 class="title">Table(s)</h2>
+    <table summary="Summary Here" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Header 1</th>
+                <th>Header 2</th>
+                <th>Header 3</th>
+                <th>Header 4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="light">
+                <td>Value 1</td>
+                <td>Value 2</td>
+                <td>Value 3</td>
+                <td>Value 4</td>
+            </tr>
+            <tr class="dark">
+                <td>Value 5</td>
+                <td>Value 6</td>
+                <td>Value 7</td>
+                <td>Value 8</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h2>Write A Comment</h2>
+    <div id="respond">
+        <form action="#" method="post">
+            <p>
+                <input type="text" name="name" id="name" value="" size="22" />
+                <label for="name"><small>Name (required)</small></label>
+            </p>
+            <p>
+                <input type="text" name="email" id="email" value="" size="22" />
+                <label for="email"><small>Mail (required)</small></label>
+            </p>
+            <p>
+                <textarea name="comment" id="comment" cols="100%" rows="10"></textarea>
+                <label for="comment" style="display:none;"><small>Comment (required)</small></label>
+            </p>
+            <p>
+                <input name="submit" type="submit" id="submit" value="Submit Form" />
+                &#160;
+                <input name="reset" type="reset" id="reset" tabindex="5" value="Reset Form" />
+            </p>
+        </form>
+    </div>
+
+
+    <div class="pagination">
+        <ul>
+            <li class="prev"><a href="#">&#171; Previous</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li class="splitter">...</li>
+            <li><a href="#">6</a></li>
+            <li class="current">7</li>
+            <li><a href="#">8</a></li>
+            <li><a href="#">9</a></li>
+            <li class="splitter">...</li>
+            <li><a href="#">14</a></li>
+            <li><a href="#">15</a></li>
+            <li class="next"><a href="#">Next &#187;</a></li>
+        </ul>
+    </div>
+    
+</ui:composition>

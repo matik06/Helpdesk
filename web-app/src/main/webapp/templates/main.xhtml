@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <h:head>
+        <title>Helpdes</title>
+        <h:outputStylesheet library="css" name="layout.css" />
+        <h:outputStylesheet library="css" name="navi.css" />
+        <h:outputStylesheet library="css" name="tables.css" />
+        <h:outputStylesheet library="css" name="forms.css" />
+        
+        <!-- OTHER RESUOURCES LIKE CSS OR SCRIPTS -->
+        <ui:insert name="resources"></ui:insert>
+    </h:head>
+    
+    <h:body id="top">
+        
+        <!-- HEADER -->
+        <ui:include src="/snippets/header.xhtml" />
+        
+        <div class="wrapper row3">
+            <div id="container" class="clear">
+                <!-- LEFT COLUMN -->
+                <ui:include src="/snippets/left-menu.xhtml" />
+                <!-- MAIN CONTENT -->
+                <div id="content">            
+                    <ui:insert name="content">
+                        <ui:include src="/snippets/content-example.xhtml" />
+                    </ui:insert>
+                </div>
+            </div>
+        </div>        
+
+        <!-- FOOTER -->
+        <ui:include src="/snippets/footer.xhtml" />                
+        
+    </h:body>
+</html>

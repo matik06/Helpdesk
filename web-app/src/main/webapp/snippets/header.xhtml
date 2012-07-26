@@ -1,22 +1,29 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
-    <table width="100%" class="dark">
-        <tr><th align="left">
-                <a href="welcome.jsf" class="white">Home</a>
-                &#160;&#160;&#160;
-                <a href="products.jsf" class="white">Products</a>
-                &#160;&#160;&#160;
-                <a href="services.jsf" class="white">Services</a>
-                &#160;&#160;&#160;
-                <a href="contact.jsf" class="white">Contact Us</a>
-            </th>
-            <th align="right">
-                <a href="cart.jsf" class="white">My Cart</a>
-                &#160;&#160;&#160;
-                <a href="logout.jsf" class="white">Logout</a>
-                &#160;&#160;&#160;
-                <a href="help.jsf" class="white">Help</a>
-            </th>
-        </tr>
-    </table>    
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html">
+    
+    <div class="wrapper row1">
+        <div id="header" class="clear">
+
+            <div class="fl_left">
+                <h1><a href="index.html">Codido</a></h1>
+            </div>
+
+            <div class="fl_right">
+                <p><a href="#">Ustawienia</a> | <a href="#">Wyloguj</a></p>
+            </div>
+
+            <div id="topnav">
+                <ul>                    
+                    <li><h:outputLink class="active" value="#{request.contextPath}/example.xhtml" >Layout example</h:outputLink></li>                    
+                    <li><h:outputLink value="#{request.contextPath}/index.xhtml" >Home</h:outputLink></li>                    
+                    <li><h:outputLink value="#{request.contextPath}/" >Zgłoszenia nieprzydzielone</h:outputLink></li>
+                    <li><h:outputLink value="#{request.contextPath}/" >Zgłoszenia mojef</h:outputLink></li>
+                    <li><h:outputLink value="#{request.contextPath}/" >Inne</h:outputLink></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    
 </ui:composition>
