@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.TaskFileDao;
 import pl.helpdesk.model.TaskFile;
+import pl.helpdesk.service.TaskFileService;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Service
-public class TaskFileServiceImpl extends GenericServiceImpl<TaskFile, Integer, TaskFileDao> {
+public class TaskFileServiceImpl extends GenericServiceImpl<TaskFile, Integer, TaskFileDao> implements TaskFileService {
     @Autowired 
     TaskFileDao taskFileDao;
 

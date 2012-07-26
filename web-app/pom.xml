@@ -45,6 +45,7 @@
         <jsf.version>2.1.11</jsf.version>
         <primefaces.version>3.3.1</primefaces.version>
         <jstl.version>1.2</jstl.version>
+        <prettyfaces.version>3.3.3</prettyfaces.version>
     </properties>
     
     <dependencies>
@@ -220,6 +221,13 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>${primefaces.version}</version>
+        </dependency>
+        
+        <!-- PrettyFaces -->
+        <dependency>
+            <groupId>com.ocpsoft</groupId>
+            <artifactId>prettyfaces-jsf2</artifactId>
+            <version>${prettyfaces.version}</version>
         </dependency>
         
         <!-- JSTL -->

@@ -34,13 +34,7 @@
     <!-- zdefiniowanie hibernatowego managera transkacji -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    
-    
-    <!-- wstrzyknięcie do ogólnego managera transakcji hibernatowego managera -->
-<!--    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
-        <property name="transactionManager" ref="transactionManager"/>
-    </bean>-->
+    </bean>       
     
             
 <!-- ****************** DATABASE CONNECTION  ****************** -->    
@@ -73,16 +67,15 @@
                 <!-- opcja do wyłączenia (http://stackoverflow.com/questions/438146/hibernate-question-hbm2ddl-auto-possible-values-and-what-they-do)-->
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 
-                <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>
-                <prop key="hibernate.current_session_context_class">thread</prop>
+                <!-- ponizsza konfiguracja wylancza springowe zarzadzanie transakcjami -->
+<!--                <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>-->
+<!--                <prop key="hibernate.current_session_context_class">thread</prop>-->
             </props>
         </property>
     </bean>
     
     
     <!-- jeśli używamy hibernate template a chcemy przekonwertować exceptiony hibernata na springowe niezależne to musimy dodać: -->
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-       
-
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>       
             
 </beans>

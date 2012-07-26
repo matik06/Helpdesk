@@ -4,22 +4,29 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
+<!--    <f:metadata>
+        <f:viewParam name="cat" value="#{store.category}"/>
+    </f:metadata>-->
     <h:head>
         <h:outputStylesheet name="css/default.css" />
     </h:head>    
     <h:body>   
-                
+        
+        <h:form>
+            Parametr url: <h:outputLabel value="#{store.category}" />        
+            <h:commandButton action="#{store.process2}" value="OK" />
+        </h:form>
         
         <h:form>
             <p:panel id="panel" header="Test...">
                 <p:messages /> 
-                    <h:panelGrid columns="3"> 
-                        <h:outputLabel for="id" value="Id: " />  
-                        <p:inputText id="id" value="#{role2.id}" required="true" label="id" >
-                            <f:validateLength minimum="2" maximum="5"/>
-                        </p:inputText>
-                        <p:message for="id" display="text"/>
-                    </h:panelGrid>
+                <h:panelGrid columns="3"> 
+                    <h:outputLabel for="id" value="Id: " />  
+                    <p:inputText id="id" value="#{role2.id}" required="true" label="id" >
+                        <f:validateLength minimum="2" maximum="5"/>
+                    </p:inputText>
+                    <p:message for="id" display="text"/>
+                </h:panelGrid>
                 <h:commandButton action="#{role2.process}" value="process"/>
             </p:panel>
         </h:form>  

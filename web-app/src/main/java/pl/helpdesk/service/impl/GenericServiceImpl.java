@@ -6,7 +6,6 @@ package pl.helpdesk.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.dao.GenericDao;

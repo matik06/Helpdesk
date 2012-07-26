@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.UpgradeNoteDao;
 import pl.helpdesk.model.UpgradeNote;
+import pl.helpdesk.service.UpgradeNoteService;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Service
-public class UpgradeNoteServiceImpl extends GenericServiceImpl<UpgradeNote, Integer, UpgradeNoteDao> {
+public class UpgradeNoteServiceImpl extends GenericServiceImpl<UpgradeNote, Integer, UpgradeNoteDao> implements UpgradeNoteService {
     @Autowired
     UpgradeNoteDao upgradeNoteDao;
 

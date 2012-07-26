@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.RoleDao;
 import pl.helpdesk.model.Role;
+import pl.helpdesk.service.RoleService;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Service
-public class RoleServiceImpl extends GenericServiceImpl<Role, Integer, RoleDao> {
+public class RoleServiceImpl extends GenericServiceImpl<Role, Integer, RoleDao> implements RoleService {
     @Autowired
     RoleDao roleDao;
 

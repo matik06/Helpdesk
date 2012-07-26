@@ -1,0 +1,12 @@
+/* 
+    Document   : default
+    Created on : 2012-07-25, 10:57:38
+    Author     : matik06
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 90%;
+}
+

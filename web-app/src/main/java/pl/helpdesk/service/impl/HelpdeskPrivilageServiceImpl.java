@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.helpdesk.dao.HelpdeskPrivilageDao;
 import pl.helpdesk.model.HelpdeskPrivilage;
+import pl.helpdesk.service.HelpdeskPrivilageService;
 
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 @Service
-public class HelpdeskPrivilageServiceImpl extends GenericServiceImpl<HelpdeskPrivilage, Integer, HelpdeskPrivilageDao> {
+public class HelpdeskPrivilageServiceImpl extends GenericServiceImpl<HelpdeskPrivilage, Integer, HelpdeskPrivilageDao> implements HelpdeskPrivilageService {
     @Autowired
     HelpdeskPrivilageDao helpdeskPrivilageDao;
 

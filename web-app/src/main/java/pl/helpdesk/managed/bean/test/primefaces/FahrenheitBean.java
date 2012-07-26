@@ -5,6 +5,7 @@
 package pl.helpdesk.managed.bean.test.primefaces;
 
 import javax.faces.bean.ManagedBean;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  *
@@ -23,7 +24,7 @@ public class FahrenheitBean {
         this.f = Math.max(f, -460); // --459 459 67 is absolute zero .67 is absolute zero
     }; 
     
-    public int getC() {        
+    public int getC() {    
         return ((int) ((f - 32) * (5.0 / 9.0)));
     }
 }
