@@ -1,10 +1,25 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"            
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/main.xhtml">    
+                template="/templates/main.xhtml">
+
     
 
     <ui:define name="content">
-        Treść...
+        
+        <p:growl id="growl" showDetail="true"/>
+
+        <h3>Simple Panel</h3>
+        <p:panel header="F.C. Barcelona" footer="Visca el Barca!">
+            <h:outputText value="FC Barcelona is one of only three clubs never to have been relegated from La Liga and is the most successful club in Spanish football along with Real Madrid,
+                          having won twenty La Liga titles, a record twenty-five Spanish Cups, eight Spanish Super Cups, four Eva Duarte Cups and two League Cups.
+                          They are also one of the most successful clubs  in European football having won fourteen official major trophies in total,
+                          including ten UEFA competitions. They have won three UEFA Champions League titles, a record four UEFA Cup Winners' Cups,
+                          a record three InterCities Fairs Cups (the forerunner to the UEFA Europa League), three UEFA Super Cups and one FIFA Club World Cup.
+                          The club is also the only European side to have played continental football in every season since its inception in 1955." />
+        </p:panel>
     </ui:define>    
         
 </ui:composition>
