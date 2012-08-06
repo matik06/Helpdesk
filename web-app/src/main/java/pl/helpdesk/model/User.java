@@ -15,6 +15,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -32,7 +33,9 @@ public class User {
    
    protected String firstName;
    protected String lastName;
+   @NotNull
    protected String email;
+   @NotNull
    protected String login;
    protected String password;
    protected String phone;
@@ -50,7 +53,7 @@ public class User {
         this.id = userId;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional=false)
+    @OneToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name = "roleId")
     public Role getRole() {
         return role;

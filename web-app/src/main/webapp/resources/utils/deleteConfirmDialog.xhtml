@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:utils="http://java.sun.com/jsf/composite/utils">     
+    <head><title>(For validation only)</title></head>
+    <body>
+        
+        <composite:interface>
+            <composite:attribute name="controller" required="true"/>            
+        </composite:interface>
+        <composite:implementation>
+            
+            <p:confirmDialog id="deleteConfirmDialog" message="Czy chcesz usunąć zaznaczony element?" header="&#160;"
+                             severity="alert" widgetVar="deleteConfirmation">                                 
+                <p:commandButton id="confirm" value="Tak"  update="@form"
+                                 oncomplete="deleteConfirmation.hide()" action="#{cc.attrs.controller.deleteEntity}" />
+                <p:commandButton id="decline" value="Nie" onclick="deleteConfirmation.hide()" type="button" />
+            </p:confirmDialog>
+                        
+        </composite:implementation>
+        
+    </body>
+</html>

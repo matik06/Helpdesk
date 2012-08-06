@@ -3,23 +3,220 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"            
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/main.xhtml">
-
+                template="/templates/main.xhtml"
+                
+                xmlns:utils="http://java.sun.com/jsf/composite/utils">
     
+    <ui:define name="resources">    
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args, form) {
 
+                if(!args.validationFailed) {          
+                    newEntity.hide();
+                } 
+            }
+            
+            function removetest() {                                
+                $('.ui-state-error').removeClass('ui-state-error');
+            }
+        </script>
+        <style>
+            .clc {
+                margin-bottom: 20px;                
+            }
+
+            
+            /* div.wrapper { text-align: left; }  */
+
+        </style>
+    </ui:define>
+
+
+<!--    <ui:define name="left-menu">
+        
+        
+        
+    </ui:define>-->
+    
     <ui:define name="content">
         
-        <p:growl id="growl" showDetail="true"/>
+        <div style="margin-bottom: 30px; padding-bottom: 30px; margin-right: 25px;">
+            <h:form style="float: right;">                        
+                <p:menuButton value="Opcje"     >
+                    <p:menuitem value="Nowy pracownik" icon="ui-icon-plusthick" onclick="dlg.show();"/>
+                    <p:separator />
+                </p:menuButton>
+            </h:form>
+            
+            <h:form style="float: right; margin-right: 25px;">   
+                <p:menuButton value="Sortowanie">
+                    <p:menuitem value="Nowy pracownik" icon="ui-icon-plusthick" actionListener="#{helpdeskUserController.process}"/>
+                    <p:separator />
+                </p:menuButton>
+            </h:form>
+        </div>
+        
+        <div class="clc"></div>
+                
+        
+        <h:form id="entity-list-form">        
 
-        <h3>Simple Panel</h3>
-        <p:panel header="F.C. Barcelona" footer="Visca el Barca!">
-            <h:outputText value="FC Barcelona is one of only three clubs never to have been relegated from La Liga and is the most successful club in Spanish football along with Real Madrid,
-                          having won twenty La Liga titles, a record twenty-five Spanish Cups, eight Spanish Super Cups, four Eva Duarte Cups and two League Cups.
-                          They are also one of the most successful clubs  in European football having won fourteen official major trophies in total,
-                          including ten UEFA competitions. They have won three UEFA Champions League titles, a record four UEFA Cup Winners' Cups,
-                          a record three InterCities Fairs Cups (the forerunner to the UEFA Europa League), three UEFA Super Cups and one FIFA Club World Cup.
-                          The club is also the only European side to have played continental football in every season since its inception in 1955." />
-        </p:panel>
+            
+            <p:dataTable id="entity-table" value="#{helpdeskUserController.entityList}" var="user"
+                        paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                        
+                        resizableColumns="true" draggableColumns="true"
+                        >                                
+
+                <f:facet name="header">
+                    Lista userów
+                </f:facet>
+
+                <p:column headerText="Login" sortBy="#{user.login}" filterBy="#{user.login}" id="loginCol">
+                    #{user.login}
+                </p:column>                            
+
+                <p:column headerText="Imie" sortBy="#{user.firstName}" filterBy="#{user.firstName}" id="firstNameCol">
+                    #{user.firstName}
+                </p:column>
+
+                <p:column headerText="Nazwisko" sortBy="#{user.lastName}" filterBy="#{user.lastName}" id="lastNameCol">
+                    #{user.lastName}
+                </p:column>
+
+                <p:column headerText="Rola" sortBy="#{user.role.name}" filterBy="#{user.role.name}" id="roleCol">
+                    #{user.role.name}
+                </p:column>
+
+                <p:column style="width:40px">
+                    <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
+
+                        <p:commandButton onclick="deleteConfirmation.show()" icon="ui-icon-closethick">
+                            <f:setPropertyActionListener value="#{user}" target="#{helpdeskUserController.selectedEntity}" />
+                        </p:commandButton>
+                        
+                        <p:commandButton update=":edit-entity-dialog" oncomplete="editEntity.show();" icon="ui-icon-pencil" title="View">  
+                            <f:setPropertyActionListener value="#{user}" target="#{helpdeskUserController.selectedEntity}" />
+                        </p:commandButton>
+                        
+                    </h:panelGrid>
+                    <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
+                        
+                    </h:panelGrid>
+                </p:column>
+                
+                <f:facet name="footer">  
+                    <p:commandButton value="Nowy pracownik" update=":new-entity-form" onclick="newEntity.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                    
+                </f:facet>
+                
+            </p:dataTable>
+
+            
+            <utils:deleteConfirmDialog controller="#{helpdeskUserController}" />                        
+            
+            
+        </h:form>
+        
+       
+        
+        
+        <!--   FORMULARZ DODAWANIA USERA  -->
+        <p:dialog header="Formularz" widgetVar="newEntity" resizable="false" modal="true" id="new-entity-dialog" >                                                         
+            
+            <h:form id="new-entity-form" style="width: 400px;" prependId="false">                                
+                
+                <p:messages id="msgs1"/>                
+                
+                <h:panelGrid columns="3" style="margin-bottom:10px">                    
+                    <h:outputLabel for="login" value="Login" />
+                    <p:inputText id="login" value="#{helpdeskUserController.newEntity.login}" label="Login">                        
+                    </p:inputText>
+                    <p:message for="login" display="icon"/>
+                    
+                    <h:outputLabel for="password" value="Hasło" />
+                    <p:password id="password" value="#{helpdeskUserController.newEntity.password}" label="Hasło"/>
+                    <p:message for="password" display="icon"/>
+                        
+                    <h:outputLabel for="email" value="Email" />
+                    <p:inputText id="email" value="#{helpdeskUserController.newEntity.email}" label="Email"/>
+                    <p:message for="email" display="icon"/>
+                    
+                    <h:outputLabel for="firstname" value="Imie" />
+                    <p:inputText id="firstname" value="#{helpdeskUserController.newEntity.firstName}" label="Imie"/>
+                    <p:message for="firstname" display="icon"/>
+                    
+                    <h:outputLabel for="lastname" value="Nazwisko" />
+                    <p:inputText id="lastname" value="#{helpdeskUserController.newEntity.lastName}" label="Nazwisko"/>
+                    <p:message for="lastname" display="icon"/>
+                    
+                    <h:outputLabel for="mobile" value="Telefon kom." />
+                    <p:inputText id="mobile" value="#{helpdeskUserController.newEntity.mobile}" label="Telefon kom."/>
+                    <p:message for="mobile" display="icon"/>
+                    
+                    <h:outputLabel for="phone" value="Telefon" />
+                    <p:inputText id="phone" value="#{helpdeskUserController.newEntity.phone}" label="Telefon"/>
+                    <p:message for="mobile" display="icon"/>
+                    
+                    <h:outputLabel for="role" value="Rola" />                    
+                    <p:selectOneMenu id="role" style="width: 180px;" value="#{helpdeskUserController.newEntity.role}" converter="#{roleConverter}" label="Rola">
+                        <f:selectItems value="#{constantController.allRoles}"/>
+                    </p:selectOneMenu>
+                    <p:message for="role" display="icon"/>
+                </h:panelGrid>
+                    
+                <p:commandButton value="Zapisz" update=":entity-list-form:entity-table @form" actionListener="#{helpdeskUserController.addEntity}" oncomplete="handleLoginRequest(xhr, status, args, newEntity)"/>
+                    
+            </h:form>
+        </p:dialog>                            
+        
+        
+        <!--   FORMULARZ Edycji USERA  -->
+        <p:dialog header="Formularz" widgetVar="editEntity" resizable="false" modal="true" id="edit-entity-dialog" >                                                         
+            
+            <h:form id="edit-entity-form" style="width: 400px;" prependId="false">                                
+                
+                <p:messages id="msgs2"/>                
+                    
+                <h:panelGrid columns="3" style="margin-bottom:10px">                    
+                    <h:outputLabel for="login1" value="Login" />
+                    <p:inputText id="login1" value="#{helpdeskUserController.selectedEntity.login}" label="Login">                        
+                    </p:inputText>
+                    <p:message for="login1" display="icon"/>
+                        
+                    <h:outputLabel for="password1" value="Hasło" />
+                    <p:password id="password1" value="#{helpdeskUserController.selectedEntity.password}" label="Hasło"/>
+                    <p:message for="password1" display="icon"/>
+                        
+                    <h:outputLabel for="email1" value="Email" />
+                    <p:inputText id="email1" value="#{helpdeskUserController.selectedEntity.email}" label="Email"/>
+                    <p:message for="email1" display="icon"/>
+                        
+                    <h:outputLabel for="firstname1" value="Imie" />
+                    <p:inputText id="firstname1" value="#{helpdeskUserController.selectedEntity.firstName}" label="Imie"/>
+                    <p:message for="firstname1" display="icon"/>
+                        
+                    <h:outputLabel for="lastname1" value="Nazwisko" />
+                    <p:inputText id="lastname1" value="#{helpdeskUserController.selectedEntity.lastName}" label="Nazwisko"/>
+                    <p:message for="lastname1" display="icon"/>
+                        
+                    <h:outputLabel for="mobile1" value="Telefon kom." />
+                    <p:inputText id="mobile1" value="#{helpdeskUserController.selectedEntity.mobile}" label="Telefon kom."/>
+                    <p:message for="mobile1" display="icon"/>
+                        
+                    <h:outputLabel for="phone1" value="Telefon" />
+                    <p:inputText id="phone1" value="#{helpdeskUserController.selectedEntity.phone}" label="Telefon"/>
+                    <p:message for="mobile1" display="icon"/>
+                        
+                    <h:outputLabel for="role1" value="Rola" />                    
+                    <p:selectOneMenu id="role1" style="width: 180px;" value="#{helpdeskUserController.selectedEntity.role}" converter="#{roleConverter}" label="Rola">
+                        <f:selectItems value="#{constantController.allRoles}"/>
+                    </p:selectOneMenu>
+                    <p:message for="role1" display="icon"/>
+                </h:panelGrid>
+                    
+                <p:commandButton value="Zapisz" update=":entity-list-form:entity-table @form" actionListener="#{helpdeskUserController.updateEntity}" oncomplete="handleLoginRequest(xhr, status, args); editEntity."/>
+                    
+            </h:form>
+        </p:dialog>                            
     </ui:define>    
         
 </ui:composition>

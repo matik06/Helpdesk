@@ -4,10 +4,6 @@
  */
 package pl.helpdesk.constant;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import pl.helpdesk.model.Role;
-import pl.helpdesk.service.RoleService;
-
 /**
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
@@ -21,8 +17,6 @@ public enum RoleEnum {
     CUSTOMER_USER(5);
 
     private int value;
-    @Autowired
-    private RoleService roleService;
 
     RoleEnum(int value) {
         this.value = value;
@@ -34,11 +28,7 @@ public enum RoleEnum {
 
     public void setValue(int value) {
         this.value = value;
-    }
-        
-    public Role getBean() {
-        return roleService.findById(this.value);
-    }
+    }        
     
     public static RoleEnum fromInt(int value) throws UnsupportedEnumValue {
         

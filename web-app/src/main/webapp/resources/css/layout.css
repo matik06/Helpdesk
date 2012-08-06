@@ -6,10 +6,6 @@ Author URI: http://www.os-templates.com/
 Licence: <a href="http://www.os-templates.com/template-terms">Website Template Licence</a>
 */
 
-@import url(navi.css);
-@import url(forms.css);
-@import url(tables.css);
-
 body{
 	margin:0;
 	padding:0;
@@ -93,7 +89,7 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 #header .fl_left, #header .fl_right{margin-bottom:15px;}
 #header .fl_right{margin-top:13px;}
 
-#header .fl_right p{float:left; margin:5px 50px 0 0;}
+#header .fl_right p{float:left; margin:5px 50px 0 0; font-weight: bolder;}
 
 /* ----------------------------------------------Content-------------------------------------*/
 
@@ -345,9 +341,13 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 #container #content{
 	display:block;
 	float:left;
-	width:730px;
-	margin-left:30px;
-	}
+        
+/*	width:730px;
+	margin-left:30px;*/
+        width: 960px;
+        margin-left: 0px;
+        min-height: 600px;
+    }
 
 /* ----------------------------------------------Generalise-------------------------------------*/
 
@@ -376,6 +376,7 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 	display:block;
 	float:left;
 	width:200px;
+        min-height: 700px;
 	}
 
 #container #left_column .imgholder{
@@ -384,3 +385,4 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 
         
         
+.setting-icon{background:url("../icons/1343683349_preferences.png")}        

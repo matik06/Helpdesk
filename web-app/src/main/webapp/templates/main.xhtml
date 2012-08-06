@@ -9,11 +9,52 @@
         <h:outputStylesheet library="css" name="layout.css" />
         <h:outputStylesheet library="css" name="navi.css" />
         <h:outputStylesheet library="css" name="tables.css" />
-        <h:outputStylesheet library="css" name="forms.css" />
-        <h:outputStylesheet library="css" name="theme.css" />
+        <h:outputStylesheet library="css" name="forms.css" />                
         
         <!-- OTHER RESUOURCES LIKE CSS OR SCRIPTS -->
         <ui:insert name="resources"></ui:insert>
+        
+        <style> 
+            table {border:0}
+            table table td { border: 0; }
+            table tbody td { border: 0; width: 300px;}
+            
+            /* datatable kolor parzystych wierszy*/
+            .ui-datatable-odd {
+                background: none repeat scroll 0 0 #ffffff;
+            }
+            
+            .ui-paginator .ui-paginator-jtp-select option, .ui-paginator .ui-paginator-rpp-options option {
+                color: black;
+                background: #e1d6cb;
+            }
+            
+            /* datatable->action column: sprawia, że ikonka jest o wiele mniejsza  */
+            .ui-datatable .ui-datatable-data td, .ui-datatable .ui-datatable-data-empty td {
+                border-style: none;
+            }            
+            .ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text {
+                padding: 0;
+            }
+            /* Usuniecie przerwy pomiedzy kolejnymi wierszami */
+            .ui-datatable table {
+                margin-bottom: 0px;
+            }
+            
+            .ui-datatable table tbody td {
+                vertical-align: middle;
+            }
+            
+            /* dialog: ikonka zamkniecia */
+            .ui-widget-header .ui-icon {
+                background-image:url("http://localhost:8080/helpdesk/javax.faces.resource/images/ui-icons_222222_256x240.png.xhtml?ln=primefaces-custom");                
+            }            
+            .ui-dialog .ui-dialog-titlebar-close {
+                margin-top: 4px;
+                background-image:url("http://localhost:8080/helpdesk/javax.faces.resource/images/ui-bg_inset-hard_50_797979_1x100.png.xhtml?ln=primefaces-custom");
+            }
+
+        </style>
     </h:head>
     
     <h:body id="top">
@@ -23,8 +64,15 @@
         
         <div class="wrapper row3">
             <div id="container" class="clear">
+                
                 <!-- LEFT COLUMN -->
-                <ui:include src="/snippets/left-menu.xhtml" />
+                
+<!--                <div id="left_column">
+                    <ui:insert name="left-menu">
+                            <ui:include src="/snippets/left-menu.xhtml" />
+                    </ui:insert>
+                </div>-->
+                
                 <!-- MAIN CONTENT -->
                 <div id="content">            
                     <ui:insert name="content">

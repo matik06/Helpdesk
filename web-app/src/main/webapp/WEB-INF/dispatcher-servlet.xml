@@ -73,6 +73,8 @@
         </property>
     </bean>
     
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+    
     <!--
         Przykład tworzenia beanow z zakresem session lub request:
     
@@ -85,10 +87,18 @@
     <!--
         Przykład inicjalizacji benów MB:
     -->
-    
-    <bean id="fBean1" class="pl.helpdesk.managed.bean.test.primefaces.FahrenheitBean" scope="request">
-        <property name="f" value="36"/>
-    </bean>
             
+    <!--
+        Add View scope
+    -->
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+        <property name="scopes">
+            <map>
+                <entry key="view">
+                    <bean class="pl.helpdesk.jsf.ViewScope" />
+                </entry>
+            </map>
+        </property>
+    </bean>
         
 </beans>

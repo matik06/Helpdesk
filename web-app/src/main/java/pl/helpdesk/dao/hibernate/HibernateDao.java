@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.dao.GenericDao;
 
 /**
@@ -32,7 +33,7 @@ public abstract class HibernateDao<T, ID extends Serializable> implements Generi
 
     @Override
     public T findById(ID id) {
-        return (T) getSession().load(persistentClass, id);
+        return (T) getSession().get(persistentClass, id);
     }
 
     @Override

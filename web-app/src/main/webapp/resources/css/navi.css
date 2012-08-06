@@ -20,6 +20,7 @@ Licence: <a href="http://www.os-templates.com/template-terms">Website Template L
 	text-transform:uppercase;
 	color:#FFFFFF;
 	background-color:#510000;
+        font-weight: bolder;
 	}
 
 #topnav a:hover, #topnav li.active a{
