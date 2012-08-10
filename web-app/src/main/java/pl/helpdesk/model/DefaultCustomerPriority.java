@@ -23,7 +23,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name="DefaultCustomerPriority")
-public class DefaultCustomerPriority  implements Serializable {
+public class DefaultCustomerPriority extends BaseEntity<Integer> implements Serializable {
     
     private Integer id;
     private Priority priority;

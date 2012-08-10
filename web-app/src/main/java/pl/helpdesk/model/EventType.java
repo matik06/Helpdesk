@@ -20,7 +20,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name = "EventType")
-public class EventType  implements Serializable {
+public class EventType extends BaseEntity<Integer> implements Serializable {
     
     private Integer id;
     private String name;

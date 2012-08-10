@@ -28,7 +28,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @Entity
 @Table(name = "File")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class File implements Serializable {
+public class File extends BaseEntity<Integer> implements Serializable {
 
     protected Integer id;
     protected User user;

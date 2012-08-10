@@ -54,7 +54,23 @@
                 background-image:url("http://localhost:8080/helpdesk/javax.faces.resource/images/ui-bg_inset-hard_50_797979_1x100.png.xhtml?ln=primefaces-custom");
             }
 
+            
+            /* marginesy dla dodatkowego menu nad gridem */
+            .additional-menu {
+                margin-bottom: 30px;
+                padding-bottom: 30px;
+                margin-right: 25px;            
+            }
         </style>
+        
+        <script>
+            function handleCloseEntityDialog(xhr, status, args, form) {
+                
+                if(!args.validationFailed) {         
+                    entityDetail.hide();
+                }
+            }            
+        </script>
     </h:head>
     
     <h:body id="top">

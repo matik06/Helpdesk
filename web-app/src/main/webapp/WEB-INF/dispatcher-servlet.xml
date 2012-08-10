@@ -48,7 +48,7 @@
 <!--    <mvc:resources mapping="/resources/**" location="/resources/" />-->
     
     <!-- register serveral features: JSR-303 validation support, message conversion, support for field formatting -->
-    <mvc:annotation-driven/>    
+    <mvc:annotation-driven />    
     <context:component-scan base-package="pl.helpdesk" >
 <!--        <context:exclude-filter type="annotation" expression="javax.faces.bean.ManagedBean"/>
         <context:exclude-filter type="annotation" expression="javax.faces.bean.RequestScoped"/>-->
@@ -71,22 +71,7 @@
                 <prop key="mail.smtp.socketFactory.fallback">${mail.smtp.socketFactory.fallback}</prop>
             </props>
         </property>
-    </bean>
-    
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-    
-    <!--
-        Przykład tworzenia beanow z zakresem session lub request:
-    
-    <bean id="colorPreferences" class="coreservlets.ColorPreferences" scope="session">
-        <property name="foreground" value="black"/>
-        <property name="background" value="#fdf5e6"/>
-    </bean>
-    -->
-    
-    <!--
-        Przykład inicjalizacji benów MB:
-    -->
+    </bean>        
             
     <!--
         Add View scope

@@ -20,7 +20,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name = "Status")
-public class Status  implements Serializable {
+public class Status extends BaseEntity<Integer> implements Serializable {
     
     private Integer id;
     private String name;

@@ -18,7 +18,7 @@ import pl.helpdesk.service.GenericService;
  * @param <ID> id
  * @param <DAO> Dao
  */
-public abstract class GenericServiceImpl<T, ID extends Serializable, DAO extends GenericDao> implements GenericService<T, ID>, Serializable {
+public abstract class GenericServiceImpl<T, ID extends Serializable, DAO extends GenericDao> implements GenericService<T, ID> {
             
     @Override
     @Transactional(readOnly=true)

@@ -19,6 +19,18 @@
         <view-id value="/example.xhtml"/>
     </url-mapping>
     
+    <!-- 
+        Konfiguracja widoków wraz z ich przekierowaniami
+    -->
+    
+    <url-mapping>
+        <pattern value="/helpdesk-users"/>
+        <view-id value="/views/helpdesk-users.xhtml"/>
+    </url-mapping>
+    
+    
+    
+    
 <!--    
         Przyklady uzycia prettyfaces
     

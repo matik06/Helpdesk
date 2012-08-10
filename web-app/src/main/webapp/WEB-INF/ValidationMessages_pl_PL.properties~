@@ -1,0 +1,2 @@
+javax.validation.constraints.NotNull.message=src/main/resources/webapp notnullmessagecustom!!! pl_PL3
+javax.validation.constraints.Size.message = src/main/resources/webapp Pole mo\u017ce mie\u0107 od {min} do {max} znak\u00f3w pl_PL3

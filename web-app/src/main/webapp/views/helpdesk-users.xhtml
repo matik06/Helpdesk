@@ -4,8 +4,6 @@
                 xmlns:p="http://primefaces.org/ui"           
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/templates/main.xhtml"
-
-                xmlns:utils="http://java.sun.com/jsf/composite/utils"
                 xmlns:component="http://java.sun.com/jsf/composite/component">
 
     <ui:define name="resources">   
@@ -17,32 +15,7 @@
         </style>
     </ui:define>
 
-
-    <!--    <ui:define name="left-menu">
-           
-           
-           
-        </ui:define>-->
-
     <ui:define name="content">                
-        
-
-        <div class="additional-menu">
-            <h:form style="float: right;">                       
-                <p:menuButton value="Opcje"     >
-                    <p:menuitem value="Nowy pracownik" icon="ui-icon-plusthick" onclick="dlg.show();"/>
-                    <p:separator />
-                </p:menuButton>
-            </h:form>
-
-            <h:form style="float: right; margin-right: 25px;">  
-                <p:menuButton value="Sortowanie">
-                    <p:menuitem value="Nowy pracownik" icon="ui-icon-plusthick" actionListener="#{helpdeskUserController.process}"/>
-                    <p:separator />
-                </p:menuButton>
-            </h:form>
-        </div>
-
         
         <h:form id="entity-grid-form">       
             <p:dataTable id="entity-grid-table" value="#{helpdeskUserController.entityList}" var="entity"
@@ -100,7 +73,7 @@
             <p:ajax event="close" listener="#{helpdeskUserController.enablePermissionToWrite}" />
             <h:form id="entity-form" style="width: 400px;" prependId="false">                               
                 
-                <p:messages id="msgs1"/>               
+                <p:messages id="msgs1" globalOnly="false"/>               
                     
                 <h:panelGrid columns="3" style="margin-bottom:10px" id="display">                   
                     <h:outputLabel for="login" value="Login" />

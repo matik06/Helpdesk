@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name = "HelpdeskPrivilage")
-public class HelpdeskPrivilage  implements Serializable {
+public class HelpdeskPrivilage extends BaseEntity<Integer> implements Serializable {
     
     private Integer id;
     private Server server;

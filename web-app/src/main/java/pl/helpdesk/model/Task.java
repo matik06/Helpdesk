@@ -30,7 +30,7 @@ import org.hibernate.annotations.LazyCollectionOption;
  */
 @Entity
 @Table(name="Task")
-public class Task  implements Serializable {
+public class Task extends BaseEntity<Integer> implements Serializable {
     
     private Integer id;
     private Customer customer;

@@ -28,7 +28,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @Entity
 @Table(name = "Note")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Note  implements Serializable {
+public class Note extends BaseEntity<Integer> implements Serializable {
     
     protected Integer id;
     protected User user;

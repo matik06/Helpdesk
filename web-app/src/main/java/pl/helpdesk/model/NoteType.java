@@ -20,7 +20,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name="NoteType")
-public class NoteType implements Serializable {
+public class NoteType extends BaseEntity<Integer> implements Serializable {
 
     private Integer id;
     private String name;

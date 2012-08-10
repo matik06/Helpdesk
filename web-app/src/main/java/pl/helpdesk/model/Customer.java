@@ -28,7 +28,7 @@ import org.hibernate.annotations.LazyCollectionOption;
  */
 @Entity
 @Table(name = "Customer")
-public class Customer implements Serializable {
+public class Customer extends BaseEntity<Integer> implements Serializable {
 
     private Integer id;
     private List<CustomerFile> files;

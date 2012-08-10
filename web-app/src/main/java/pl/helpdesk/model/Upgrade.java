@@ -29,7 +29,7 @@ import org.hibernate.annotations.LazyCollectionOption;
  */
 @Entity
 @Table(name="Upgrade")
-public class Upgrade  implements Serializable {
+public class Upgrade extends BaseEntity<Integer> implements Serializable {
     
     private Integer id;
     private Customer customer;

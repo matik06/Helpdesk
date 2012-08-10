@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +23,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @Entity
 @Table(name = "ProjectFile")
-public class ProjectFile {
+public class ProjectFile extends BaseEntity<Integer> implements Serializable {
     
     private Integer id;
     private HelpdeskUser helpdeskUser;
