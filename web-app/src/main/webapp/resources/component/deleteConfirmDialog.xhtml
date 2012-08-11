@@ -8,15 +8,16 @@
     >
     
     <composite:interface>
-        <composite:attribute name="controller" required="true"/>            
+        <composite:attribute name="controller" required="true"/>
+        <composite:attribute name="widgetVar" default="deleteConfirmation" />
     </composite:interface>
     <composite:implementation>
 
-        <p:confirmDialog id="deleteConfirmDialog" message="Czy chcesz usunąć zaznaczony element?" header="&#160;"
-                         severity="alert" widgetVar="deleteConfirmation">                                 
-            <p:commandButton id="confirm" value="Tak"  update="@form"
+        <p:confirmDialog message="Czy chcesz usunąć zaznaczony element?" header="&#160;"
+                         severity="alert" widgetVar="#{cc.attrs.widgetVar}">                                 
+            <p:commandButton value="Tak"  update="@form"
                              oncomplete="deleteConfirmation.hide()" action="#{cc.attrs.controller.deleteEntity}" />
-            <p:commandButton id="decline" value="Nie" onclick="deleteConfirmation.hide()" type="button" />
+            <p:commandButton value="Nie" onclick="#{cc.attrs.widgetVar}.hide()" type="button" />
         </p:confirmDialog>
                 
     </composite:implementation>

@@ -18,7 +18,7 @@
         </style>
     </ui:define>
 
-    <ui:define name="content">                        
+    <ui:define name="content">                                        
         
         <h:form id="entity-grid-form">       
             <p:dataTable id="entity-grid-table" value="#{customerController.entityList}" var="entity"
@@ -30,16 +30,9 @@
                 </f:facet>
                     
                 <p:column headerText="Nazwa" sortBy="#{entity.name}" filterBy="#{entity.name}" id="nameCol">
-                    <h:outputLink value="#{request.contextPath}/views/customer-users.xhtml">#{entity.name}
+                    <h:outputLink value="#{request.contextPath}/views/customer-detail.xhtml">#{entity.name}
                         <f:param name="customer" value="#{entity.id}"/>
-                    </h:outputLink>
-                    
-<!--                    <pretty:link mappingId="customers-users">
-                        <f:param name="customer" value="#{entity.id}"/>
-                        #{entity.name}
-                    </pretty:link>                                        -->
-                    
-                    
+                    </h:outputLink>                                                            
                 </p:column>                           
                     
                 <p:column headerText="Email" sortBy="#{entity.email}" filterBy="#{entity.email}" id="emailCol">

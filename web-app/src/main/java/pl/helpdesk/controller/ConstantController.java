@@ -15,7 +15,10 @@ import org.springframework.stereotype.Controller;
 import pl.helpdesk.constant.RoleEnum;
 import pl.helpdesk.converter.ConverterUtil;
 import pl.helpdesk.model.BaseEntity;
+import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.model.Role;
+import pl.helpdesk.service.GenericService;
+import pl.helpdesk.service.HelpdeskUserService;
 import pl.helpdesk.service.RoleService;
 
 /**
@@ -28,6 +31,8 @@ public class ConstantController implements Serializable {
     
     @Autowired
     RoleService roleService;
+    @Autowired
+    HelpdeskUserService helpdeskUserService;
     
     private List<SelectItem> helpdeskRoles;
     private List<SelectItem> customerRoles;
@@ -36,15 +41,26 @@ public class ConstantController implements Serializable {
     @PostConstruct
     public void init() {
         
-        List<Role> roles = roleService.findAll();
-        allRoles = prepareList(roles);                
-                
+        allRoles = perpereList(roleService);
+        
+        List<Role> roles;
         roles = roleService.findAllByIds(RoleEnum.CUSTOMER_MANAGER.getValue(), RoleEnum.CUSTOMER_USER.getValue());
         customerRoles = prepareList(roles);
         
         roles = roleService.findAllByIds(RoleEnum.HELPDESK_MANAGER.getValue(), RoleEnum.HELPDESK_USER.getValue());
         helpdeskRoles = prepareList(roles);
     }        
+    
+    public List<SelectItem> getHelpdeskUsers() {
+        List<HelpdeskUser> users = helpdeskUserService.findAll();
+        return prepareList(users, "login");
+    }
+    
+    private <T extends BaseEntity> List<SelectItem> perpereList(GenericService<T, Integer> service) {
+        List<T> list = service.findAll();
+        System.out.println(list);
+        return prepareList(list);
+    }
     
     private <T extends BaseEntity> List<SelectItem> prepareList(List<T> entities) {
         List<SelectItem> result = new ArrayList<>();
@@ -54,6 +70,17 @@ public class ConstantController implements Serializable {
         List<SelectItem> subList = ConverterUtil.convertList(entities);        
         result.addAll(subList);
         
+        return result;
+    }
+    
+    private <T extends BaseEntity> List<SelectItem> prepareList(List<T> entities, String label) {
+        List<SelectItem> result = new ArrayList<>();
+
+        //dodanie pustego elementu
+        result.add(getEmpty());
+        List<SelectItem> subList = ConverterUtil.convertList(entities, label);
+        result.addAll(subList);
+
         return result;
     }
     

@@ -35,7 +35,7 @@
     
     <url-mapping id="customers-users">
         <pattern value="/customer/#{/\\d+/ customer}/users" />
-        <view-id value="/views/customer-users.xhtml"/>
+        <view-id value="/views/customer-detail.xhtml"/>
     </url-mapping>
     
     

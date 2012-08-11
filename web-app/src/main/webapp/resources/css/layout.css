@@ -57,7 +57,7 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 
 .row1, .row2{color:#979797; background-color:#E1D6CB;}
 .row3{color:#979797; background-color:#FFFFFF; border-top:1px solid #510000; border-bottom:5px solid #E1D6CB;}
-.row3 a{color:#896C50; background-color:#FFFFFF;}
+.row3 a{color:#896C50;}
 .row4{padding:30px 0;}
 
 /* ----------------------------------------------Generalise-------------------------------------*/

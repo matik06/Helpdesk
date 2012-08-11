@@ -1,0 +1,207 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"           
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/main.xhtml"
+
+                xmlns:utils="http://java.sun.com/jsf/composite/utils"
+                xmlns:component="http://java.sun.com/jsf/composite/component">
+
+    <ui:define name="resources">   
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('div[aria-hidden="true"]').hide()
+            });
+        </script>
+        <style>
+            .ui-tabs .ui-tabs-panel {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .ui-helper-hidden {
+                display: none;
+            }
+        </style>
+    </ui:define>   
+    
+
+    <!--    <ui:define name="left-menu">
+           
+           
+           
+        </ui:define>-->
+
+    <ui:define name="content">  
+        
+        <!-- dynamic="true" cache="true" -->
+        <p:tabView  id="tabView" activeIndex="0" >       
+            
+            <p:tab title="Powiązani pracownicy helpdesk" id="sss">
+                
+                <h:form id="entity-grid-form-helpdesk-users">       
+                    <p:dataTable id="entity-grid-table-helpdesk-users" value="#{customerHelpdeskUserController.entityList}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                                 draggableColumns="true" >                                         
+                                     
+                        <p:column headerText="Login" sortBy="#{entity.helpdeskUser.login}" filterBy="#{entity.helpdeskUser.login}">
+                            #{entity.helpdeskUser.login}
+                        </p:column>                           
+                            
+                        <p:column headerText="Imie" sortBy="#{entity.helpdeskUser.firstName}" filterBy="#{entity.helpdeskUser.firstName}">
+                            #{entity.helpdeskUser.firstName}
+                        </p:column>
+                            
+                        <p:column headerText="Nazwisko" sortBy="#{entity.helpdeskUser.lastName}" filterBy="#{entity.helpdeskUser.lastName}">
+                            #{entity.helpdeskUser.lastName}
+                        </p:column>
+                            
+                        <p:column headerText="Rola" sortBy="#{entity.helpdeskUser.role.name}" filterBy="#{entity.helpdeskUser.role}" filterMatchMode="exact" filterOptions="#{constantController.customerRoles}">
+                            #{entity.helpdeskUser.role.name}
+                        </p:column>
+                            
+                        <p:column style="width:40px">
+                            <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
+                                    
+                                <p:commandButton onclick="deleteConfirmationHelpdeskUser.show()" icon="#{msg['grid.delete.icon']}" title="#{msg['grid.delete.title']}">
+                                    <f:setPropertyActionListener value="#{entity}" target="#{customerHelpdeskUserController.entity}" />
+                                </p:commandButton>                        
+                                    
+                            </h:panelGrid>
+                        </p:column>
+                            
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{customerHelpdeskUserController.clear}" update=":tabView:entity-form-helpdesk-users" oncomplete="entityDetailHelpdeskUser.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+                            
+                    </p:dataTable>
+                        
+                    <component:deleteConfirmDialog controller="#{customerHelpdeskUserController}" widgetVar="deleteConfirmationHelpdeskUser"/>                
+                </h:form>                
+                    
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailHelpdeskUser" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                    <p:ajax event="close" listener="#{customerHelpdeskUserController.enablePermissionToWrite}" />
+                    <h:form id="entity-form-helpdesk-users" style="width: 400px;" prependId="false">                               
+                        
+                        <p:messages id="msgs2" globalOnly="false"/>                                       
+                        
+                        <h:panelGrid columns="3" style="margin-bottom:10px">                                                                               
+                            <h:outputLabel for="helpdeskUser" value="Pracownik Helpdeks" />                   
+                            <p:selectOneMenu id="helpdeskUser" style="width: 180px;" value="#{customerHelpdeskUserController.helpdeskUser}" converter="#{helpdeskUserConverter}" label="Pracownik Helpdesk">
+                                <f:selectItems value="#{constantController.helpdeskUsers}"/>
+                            </p:selectOneMenu>
+                            <p:message for="helpdeskUser" display="icon"/>
+                        </h:panelGrid>
+                            
+                        <p:commandButton rendered="#{customerHelpdeskUserController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-helpdesk-users:entity-grid-table-helpdesk-users @form" actionListener="#{customerHelpdeskUserController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetailHelpdeskUser)"/>
+                        <p:commandButton rendered="#{!customerHelpdeskUserController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":tabView:entity-grid-form-helpdesk-users:entity-grid-table-helpdesk-users" oncomplete="entityDetailHelpdeskUser.hide()"/>
+                    </h:form>
+                </p:dialog>  
+            </p:tab>
+            
+            <p:tab title="Pracownicy klienta">
+                
+                <h:form id="entity-grid-form-client-users">       
+                    <p:dataTable id="entity-grid-table" value="#{customerUsersController.entityList}" var="entity"
+                                paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                                draggableColumns="true" >                                         
+
+                        <p:column headerText="Login" sortBy="#{entity.login}" filterBy="#{entity.login}" >
+                            #{entity.login}
+                        </p:column>                           
+
+                        <p:column headerText="Imie" sortBy="#{entity.firstName}" filterBy="#{entity.firstName}" >
+                            #{entity.firstName}
+                        </p:column>
+
+                        <p:column headerText="Nazwisko" sortBy="#{entity.lastName}" filterBy="#{entity.lastName}" >
+                            #{entity.lastName}
+                        </p:column>
+
+                        <p:column headerText="Rola" sortBy="#{entity.role.name}" filterBy="#{entity.role}" filterMatchMode="exact" filterOptions="#{constantController.customerRoles}">
+                            #{entity.role.name}
+                        </p:column>
+
+                        <p:column style="width:40px">
+                            <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
+
+                                <p:commandButton actionListener="#{customerUsersController.disablePermissionToWrite}" update=":tabView:entity-form-client-users" oncomplete="entityDetail.show();" icon="#{msg['grid.show.icon']}" title="#{msg['grid.show.title']}"> 
+                                    <f:setPropertyActionListener value="#{entity}" target="#{customerUsersController.entity}" />
+                                </p:commandButton>
+
+                                <p:commandButton update=":tabView:entity-form-client-users" oncomplete="entityDetail.show();" icon="#{msg['grid.edit.icon']}" title="#{msg['grid.edit.title']}"> 
+                                    <f:setPropertyActionListener value="#{entity}" target="#{customerUsersController.entity}" />
+                                </p:commandButton>
+
+                                <p:commandButton onclick="deleteConfirmation.show()" icon="#{msg['grid.delete.icon']}" title="#{msg['grid.delete.title']}">
+                                    <f:setPropertyActionListener value="#{entity}" target="#{customerUsersController.entity}" />
+                                </p:commandButton>                        
+
+                            </h:panelGrid>
+                        </p:column>
+
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{customerUsersController.clear}" update=":tabView:entity-form-client-users" oncomplete="entityDetail.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+
+                    </p:dataTable>
+
+                    <component:deleteConfirmDialog controller="#{customerUsersController}" />                
+                </h:form>
+
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetail" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                    <p:ajax event="close" listener="#{customerUsersController.enablePermissionToWrite}" />
+                    <h:form id="entity-form-client-users" style="width: 400px;" prependId="false">                               
+
+                        <p:messages id="msgs1" globalOnly="false"/>               
+
+                        <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                            <h:outputLabel for="login" value="Login" />
+                            <p:inputText id="login" disabled="#{!customerUsersController.permissionToWrite}" value="#{customerUsersController.entity.login}" label="Login">                       
+                            </p:inputText>
+                            <p:message for="login" display="icon"/>
+
+                            <h:outputLabel for="password" value="Hasło" />
+                            <p:password id="password" disabled="#{!customerUsersController.permissionToWrite}" value="#{customerUsersController.entity.password}" label="Hasło"/>
+                            <p:message for="password" display="icon"/>
+
+                            <h:outputLabel for="email" value="Email" />
+                            <p:inputText id="email" disabled="#{!customerUsersController.permissionToWrite}" value="#{customerUsersController.entity.email}" label="Email"/>
+                            <p:message for="email" display="icon"/>
+
+                            <h:outputLabel for="firstname" value="Imie" />
+                            <p:inputText id="firstname" disabled="#{!customerUsersController.permissionToWrite}" value="#{customerUsersController.entity.firstName}" label="Imie"/>
+                            <p:message for="firstname" display="icon"/>
+
+                            <h:outputLabel for="lastname" value="Nazwisko" />
+                            <p:inputText id="lastname" disabled="#{!customerUsersController.permissionToWrite}" value="#{customerUsersController.entity.lastName}" label="Nazwisko"/>
+                            <p:message for="lastname" display="icon"/>
+
+                            <h:outputLabel for="mobile" value="Telefon kom." />
+                            <p:inputText id="mobile" disabled="#{!customerUsersController.permissionToWrite}" value="#{customerUsersController.entity.mobile}" label="Telefon kom."/>
+                            <p:message for="mobile" display="icon"/>
+
+                            <h:outputLabel for="phone" value="Telefon" />
+                            <p:inputText id="phone" disabled="#{!customerUsersController.permissionToWrite}" value="#{customerUsersController.entity.phone}" label="Telefon"/>
+                            <p:message for="mobile" display="icon"/>
+
+                            <h:outputLabel for="role" value="Rola" />                   
+                            <p:selectOneMenu id="role" disabled="#{!customerUsersController.permissionToWrite}" style="width: 180px;" value="#{customerUsersController.entity.role}" converter="#{roleConverter}" label="Rola">
+                                <f:selectItems value="#{constantController.customerRoles}"/>
+                            </p:selectOneMenu>
+                            <p:message for="role" display="icon"/>
+                        </h:panelGrid>
+
+                        <p:commandButton rendered="#{customerUsersController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-client-users:entity-grid-table @form" actionListener="#{customerUsersController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetail)"/>
+                        <p:commandButton rendered="#{!customerUsersController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":tabView:entity-grid-form-client-users:entity-grid-table" oncomplete="entityDetail.hide()"/>
+                    </h:form>
+                </p:dialog>    
+                
+            </p:tab>                         
+            
+        </p:tabView>
+        
+    </ui:define>   
+
+</ui:composition>

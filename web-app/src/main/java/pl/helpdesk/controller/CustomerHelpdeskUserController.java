@@ -6,15 +6,17 @@ package pl.helpdesk.controller;
 
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
+import javax.validation.constraints.NotNull;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import pl.helpdesk.model.Customer;
-import pl.helpdesk.model.CustomerUser;
+import pl.helpdesk.model.CustomerHelpdeskUser;
+import pl.helpdesk.model.HelpdeskUser;
+import pl.helpdesk.service.CustomerHelpdeskUserService;
 import pl.helpdesk.service.CustomerService;
-import pl.helpdesk.service.CustomerUserService;
 import pl.helpdesk.service.GenericService;
 
 /**
@@ -23,57 +25,57 @@ import pl.helpdesk.service.GenericService;
  */
 @Controller
 @Scope(value = "view")
-public class CustomerUsersController extends GridController<CustomerUser> implements Serializable {
-    
+public class CustomerHelpdeskUserController extends GridController<CustomerHelpdeskUser> implements Serializable{
+
     @Autowired
-    CustomerUserService customerUserService;
+    CustomerHelpdeskUserService customerHelpdeskUserService;
     @Autowired
     CustomerService customerService;
     
     Customer customer;
+    @NotNull
+    HelpdeskUser helpdeskUser;
     
-    public CustomerUsersController() {
-        super(CustomerUser.class);
+    public CustomerHelpdeskUserController() {
+        super(CustomerHelpdeskUser.class);
     }
-
+    
     @Override
-    public GenericService<CustomerUser, Integer> getService() {
-        return customerUserService;
+    public GenericService<CustomerHelpdeskUser, Integer> getService() {
+        return customerHelpdeskUserService;
     }
     
     @Override
     public void saveOrUpdateEntity() {
 
-        System.out.println("save or update");
         entity.setCustomer(customer);
 
         if (entity.getId() == null) {
-            getService().save(entity);
+            entity.setHelpdeskUser(helpdeskUser);
+            getService().save(entity);            
         } else {
             getService().update(entity);
         }
 
         reloadList();
     }
-
+    
     @Override
     @PostConstruct
     public void init() {
-        
-        Integer customerId = getRequestParameterAsInt("customer");        
+
+        Integer customerId = getRequestParameterAsInt("customer");
         customer = customerService.findById(customerId);
         reloadList();
     }
-    
+
     @Override
-    protected void reloadList() {        
+    protected void reloadList() {
         Criterion c = Restrictions.eq("customer", customer);
-        entityList = customerUserService.findAllByRestriction(c);
+        entityList = customerHelpdeskUserService.findAllByRestriction(c);
     }
     
-    
     //getttery i settery
-    
     public Customer getCustomer() {
         return customer;
     }
@@ -81,4 +83,12 @@ public class CustomerUsersController extends GridController<CustomerUser> implem
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+    public HelpdeskUser getHelpdeskUser() {
+        return helpdeskUser;
+    }
+
+    public void setHelpdeskUser(HelpdeskUser helpdeskUser) {
+        this.helpdeskUser = helpdeskUser;
+    }        
 }

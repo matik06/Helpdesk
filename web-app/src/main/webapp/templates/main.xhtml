@@ -67,10 +67,10 @@
         </style>
         
         <script>
-            function handleCloseEntityDialog(xhr, status, args, form) {
+            function handleCloseEntityDialog(xhr, status, args, dialog) {
                 
                 if(!args.validationFailed) {         
-                    entityDetail.hide();
+                    dialog.hide();
                 }
             }            
         </script>

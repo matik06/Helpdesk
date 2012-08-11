@@ -64,7 +64,7 @@ public class CustomerHelpdeskUser extends BaseEntity<Integer> implements Seriali
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 22). // two randomly chosen prime numbers
+        return new HashCodeBuilder(17, 1021). // two randomly chosen prime numbers
                 // if deriving: appendSuper(super.hashCode()).
                 append(id).
                 toHashCode();
