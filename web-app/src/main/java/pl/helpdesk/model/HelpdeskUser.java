@@ -38,6 +38,7 @@ public class HelpdeskUser extends User implements Serializable {
     public int hashCode() {
         return new HashCodeBuilder(17, 21). // two randomly chosen prime numbers
                 // if deriving: appendSuper(super.hashCode()).
+                append(super.hashCode()).
                 append(id).
                 toHashCode();
     }

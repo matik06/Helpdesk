@@ -6,9 +6,11 @@ package pl.helpdesk.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.dao.GenericDao;
+import pl.helpdesk.model.BaseEntity;
 import pl.helpdesk.service.GenericService;
 
 /**
@@ -37,6 +39,12 @@ public abstract class GenericServiceImpl<T, ID extends Serializable, DAO extends
     public List<T> findAll() {
         return getDao().findAll();
     }
+    
+    @Override
+    @Transactional(readOnly=true)
+    public List<T> findAllByRestriction(Criterion... criterions) {
+        return getDao().findAllByRestriction(criterions);
+    }
 
     @Override
     @Transactional(readOnly=true)
@@ -61,7 +69,12 @@ public abstract class GenericServiceImpl<T, ID extends Serializable, DAO extends
     public void delete(T entity) {
         getDao().delete(entity);
     }
-    
+
+    @Override
+    @Transactional(readOnly=true)
+    public List<T> findAllByIds(Integer... ids) {
+        return getDao().findAllByIds(ids);
+    }        
     
     public abstract DAO getDao();
 }

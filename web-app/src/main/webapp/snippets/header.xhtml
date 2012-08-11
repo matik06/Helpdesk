@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
     
     <div class="wrapper row1">
         <div id="header" class="clear">
@@ -14,13 +15,18 @@
             </div>
 
             <div id="topnav">
+                <h:form>
                 <ul>                    
                     <li><h:outputLink class="active" value="#{request.contextPath}/example.xhtml" >Layout example</h:outputLink></li>                    
                     <li><h:outputLink value="#{request.contextPath}/index.xhtml" >Home</h:outputLink></li>                    
                     <li><h:outputLink value="#{request.contextPath}/" >Zgłoszenia nieprzydzielone</h:outputLink></li>
                     <li><h:outputLink value="#{request.contextPath}/" >Zgłoszenia mojef</h:outputLink></li>
-                    <li><h:outputLink value="#{request.contextPath}/views/helpdesk-users.xhtml" >Użytkownicy</h:outputLink></li>
+                    
+                    <li><h:commandLink action="pretty:customers">Klienci</h:commandLink></li>
+                    <li><h:commandLink action="pretty:helpdesk-users">Użytkownicy</h:commandLink></li>                    
+<!--                    <li><h:outputLink value="#{request.contextPath}/views/helpdesk-users.xhtml" >Użytkownicy</h:outputLink></li>-->
                 </ul>
+                </h:form>
             </div>
 
         </div>

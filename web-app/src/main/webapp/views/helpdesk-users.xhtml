@@ -38,7 +38,7 @@
                     #{entity.lastName}
                 </p:column>
                     
-                <p:column headerText="Rola" sortBy="#{entity.role.name}" filterBy="#{entity.role}" id="roleCol" filterMatchMode="exact" filterOptions="#{constantController.allRoles}">
+                <p:column headerText="Rola" sortBy="#{entity.role.name}" filterBy="#{entity.role}" id="roleCol" filterMatchMode="exact" filterOptions="#{constantController.helpdeskRoles}">
                     #{entity.role.name}
                 </p:column>
                     
@@ -69,7 +69,7 @@
             <component:deleteConfirmDialog controller="#{helpdeskUserController}" />                
         </h:form>
                                 
-        <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetail" resizable="false" modal="true">                                                        
+        <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetail" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
             <p:ajax event="close" listener="#{helpdeskUserController.enablePermissionToWrite}" />
             <h:form id="entity-form" style="width: 400px;" prependId="false">                               
                 
@@ -107,7 +107,7 @@
                         
                     <h:outputLabel for="role" value="Rola" />                   
                     <p:selectOneMenu id="role" disabled="#{!helpdeskUserController.permissionToWrite}" style="width: 180px;" value="#{helpdeskUserController.entity.role}" converter="#{roleConverter}" label="Rola">
-                        <f:selectItems value="#{constantController.allRoles}"/>
+                        <f:selectItems value="#{constantController.helpdeskRoles}"/>
                     </p:selectOneMenu>
                     <p:message for="role" display="icon"/>
                 </h:panelGrid>

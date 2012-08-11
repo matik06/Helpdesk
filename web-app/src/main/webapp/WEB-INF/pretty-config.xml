@@ -23,12 +23,20 @@
         Konfiguracja widoków wraz z ich przekierowaniami
     -->
     
-    <url-mapping>
+    <url-mapping id="helpdesk-users">
         <pattern value="/helpdesk-users"/>
         <view-id value="/views/helpdesk-users.xhtml"/>
     </url-mapping>
     
+    <url-mapping id="customers">
+        <pattern value="/customers"/>
+        <view-id value="/views/customers.xhtml"/>
+    </url-mapping>
     
+    <url-mapping id="customers-users">
+        <pattern value="/customer/#{/\\d+/ customer}/users" />
+        <view-id value="/views/customer-users.xhtml"/>
+    </url-mapping>
     
     
 <!--    

@@ -5,15 +5,18 @@
 package pl.helpdesk.dao.hibernate;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.dao.GenericDao;
+import pl.helpdesk.model.BaseEntity;
 
 /**
  *
@@ -84,6 +87,30 @@ public abstract class HibernateDao<T, ID extends Serializable> implements Generi
         crit.add(example);
         return crit.list();
     }
+    
+    @Override
+    public List<T> findAllByRestriction(Criterion... criterions) {        
+        Criteria criteria = getSession().createCriteria(persistentClass);
+        
+        for (Criterion criterion : criterions) {
+            criteria.add(criterion);
+        }
+        
+        return criteria.list();
+    }
+
+    @Override
+    public List<T> findAllByIds(Integer... ids) {
+        
+        List<Integer> idList = Arrays.asList(ids);                
+        
+        Query query = getSession().createQuery("FROM " + persistentClass.getName() + " item WHERE item.id IN :ids");
+        query.setParameterList("ids", idList);
+        
+        return query.list();
+    }
+    
+    
     
     protected Session getSession() {
         return sessionFactory.getCurrentSession();

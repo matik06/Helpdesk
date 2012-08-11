@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.helpdesk.controller.session;
+package pl.helpdesk.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,6 +12,9 @@ import javax.faces.model.SelectItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import pl.helpdesk.constant.RoleEnum;
+import pl.helpdesk.converter.ConverterUtil;
+import pl.helpdesk.model.BaseEntity;
 import pl.helpdesk.model.Role;
 import pl.helpdesk.service.RoleService;
 
@@ -26,18 +29,32 @@ public class ConstantController implements Serializable {
     @Autowired
     RoleService roleService;
     
-    private List<SelectItem> helpdeskRoles = new ArrayList<>();
-    private List<SelectItem> customerRoles = new ArrayList<>();
-    private List<SelectItem> allRoles = new ArrayList<>();
+    private List<SelectItem> helpdeskRoles;
+    private List<SelectItem> customerRoles;
+    private List<SelectItem> allRoles;
     
     @PostConstruct
     public void init() {
-        allRoles.add(getEmpty());
+        
         List<Role> roles = roleService.findAll();
-        for (Role role : roles) {
-            SelectItem item = new SelectItem(role, role.getName());
-            allRoles.add(item);
-        }        
+        allRoles = prepareList(roles);                
+                
+        roles = roleService.findAllByIds(RoleEnum.CUSTOMER_MANAGER.getValue(), RoleEnum.CUSTOMER_USER.getValue());
+        customerRoles = prepareList(roles);
+        
+        roles = roleService.findAllByIds(RoleEnum.HELPDESK_MANAGER.getValue(), RoleEnum.HELPDESK_USER.getValue());
+        helpdeskRoles = prepareList(roles);
+    }        
+    
+    private <T extends BaseEntity> List<SelectItem> prepareList(List<T> entities) {
+        List<SelectItem> result = new ArrayList<>();
+        
+        //dodanie pustego elementu
+        result.add(getEmpty());
+        List<SelectItem> subList = ConverterUtil.convertList(entities);        
+        result.addAll(subList);
+        
+        return result;
     }
     
     private SelectItem getEmpty() {

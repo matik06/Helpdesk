@@ -17,7 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Email;
@@ -42,9 +41,8 @@ public class User extends BaseEntity<Integer> implements Serializable {
    @Email
    protected String email;
    @NotNull
-   @Length(min=4, max=10)   
+   @Length(min=3)   
    protected String login;
-   @Min(3)
    protected String password;
    protected String phone;
    protected String mobile;
@@ -131,7 +129,7 @@ public class User extends BaseEntity<Integer> implements Serializable {
     
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 2). // two randomly chosen prime numbers
+        return new HashCodeBuilder(17, 1003). // two randomly chosen prime numbers
                 // if deriving: appendSuper(super.hashCode()).
                 append(id).
                 toHashCode();

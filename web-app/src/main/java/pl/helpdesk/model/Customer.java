@@ -17,10 +17,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -37,8 +41,16 @@ public class Customer extends BaseEntity<Integer> implements Serializable {
     private List<CustomerUser> customerUsers;
     private List<Server> servers;
     
+    @NotNull
+    @Length(min=3)
     private String name;
+    @Email    
+    private String email;
+    private String mobile;
+    @NotNull
     private Date start;
+    @NotNull
+    @Future
     private Date end;
 
     @Id
@@ -126,11 +138,27 @@ public class Customer extends BaseEntity<Integer> implements Serializable {
     public void setStart(Date start) {
         this.start = start;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
     
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 4). // two randomly chosen prime numbers
+        return new HashCodeBuilder(17, 10005). // two randomly chosen prime numbers
                 // if deriving: appendSuper(super.hashCode()).
                 append(id).
                 toHashCode();

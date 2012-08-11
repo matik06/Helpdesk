@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"           
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/main.xhtml"
+                xmlns:pretty="http://ocpsoft.com/prettyfaces"
+
+                xmlns:utils="http://java.sun.com/jsf/composite/utils"
+                xmlns:component="http://java.sun.com/jsf/composite/component">
+
+    <ui:define name="resources">   
+        <script type="text/javascript">
+            
+        </script>
+        <style>
+
+        </style>
+    </ui:define>
+
+    <ui:define name="content">                        
+        
+        <h:form id="entity-grid-form">       
+            <p:dataTable id="entity-grid-table" value="#{customerController.entityList}" var="entity"
+                         paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                         draggableColumns="true" >                               
+                             
+                <f:facet name="header">
+                    Lista klientów
+                </f:facet>
+                    
+                <p:column headerText="Nazwa" sortBy="#{entity.name}" filterBy="#{entity.name}" id="nameCol">
+                    <h:outputLink value="#{request.contextPath}/views/customer-users.xhtml">#{entity.name}
+                        <f:param name="customer" value="#{entity.id}"/>
+                    </h:outputLink>
+                    
+<!--                    <pretty:link mappingId="customers-users">
+                        <f:param name="customer" value="#{entity.id}"/>
+                        #{entity.name}
+                    </pretty:link>                                        -->
+                    
+                    
+                </p:column>                           
+                    
+                <p:column headerText="Email" sortBy="#{entity.email}" filterBy="#{entity.email}" id="emailCol">
+                    #{entity.email}
+                </p:column>
+                    
+                <p:column headerText="Telefon" sortBy="#{entity.mobile}" filterBy="#{entity.mobile}" id="mobileCol">
+                    #{entity.mobile}
+                </p:column>                                                    
+                
+                <p:column headerText="Koniec umowy" sortBy="#{entity.end}" filterBy="#{entity.end}" id="endCol">
+                    #{entity.end}
+                </p:column>
+                    
+                <p:column style="width:40px">
+                    <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
+                        
+                        <p:commandButton actionListener="#{customerController.disablePermissionToWrite}" update=":entity-form" oncomplete="entityDetail.show();" icon="#{msg['grid.show.icon']}" title="#{msg['grid.show.title']}"> 
+                            <f:setPropertyActionListener value="#{entity}" target="#{customerController.entity}" />
+                        </p:commandButton>
+                            
+                        <p:commandButton update=":entity-form" oncomplete="entityDetail.show();" icon="#{msg['grid.edit.icon']}" title="#{msg['grid.edit.title']}"> 
+                            <f:setPropertyActionListener value="#{entity}" target="#{customerController.entity}" />
+                        </p:commandButton>
+                            
+                        <p:commandButton onclick="deleteConfirmation.show()" icon="#{msg['grid.delete.icon']}" title="#{msg['grid.delete.title']}">
+                            <f:setPropertyActionListener value="#{entity}" target="#{customerController.entity}" />
+                        </p:commandButton>                        
+                            
+                    </h:panelGrid>
+                </p:column>
+                    
+                <f:facet name="footer"> 
+                    <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{customerController.clear}" update=":entity-form" oncomplete="entityDetail.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                </f:facet>
+                    
+            </p:dataTable>
+                
+            <component:deleteConfirmDialog controller="#{customerController}" />                
+        </h:form>
+                                
+        <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetail" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+            <p:ajax event="close" listener="#{customerController.enablePermissionToWrite}" />
+            <h:form id="entity-form" style="width: 400px;" prependId="false">                               
+                
+                <p:messages id="msgs1"/>               
+                    
+                <h:panelGrid columns="3" style="margin-bottom:10px" id="display">                   
+                    <h:outputLabel for="name" value="name" />
+                    <p:inputText id="name" disabled="#{!customerController.permissionToWrite}" value="#{customerController.entity.name}" label="Nazwa">                       
+                    </p:inputText>
+                    <p:message for="name" display="icon"/>                                            
+                        
+                    <h:outputLabel for="email" value="Email" />
+                    <p:inputText id="email" disabled="#{!customerController.permissionToWrite}" value="#{customerController.entity.email}" label="Email"/>
+                    <p:message for="email" display="icon"/>
+                        
+                    <h:outputLabel for="mobile" value="Telefon" />
+                    <p:inputText id="mobile" disabled="#{!customerController.permissionToWrite}" value="#{customerController.entity.mobile}" label="Telefon kom."/>
+                    <p:message for="mobile" display="icon"/>
+                    
+                    <h:outputLabel for="start" value="Umowa od" />
+                    <p:calendar id="start" disabled="#{!customerController.permissionToWrite}" value="#{customerController.entity.start}" navigator="true" label="Umowa od" mindate="#{customerController.currentDate}"/>                    
+                    <p:message for="start" display="icon"/>
+                    
+                    <h:outputLabel for="end" value="Koniec umowy" />
+                    <p:calendar id="end" disabled="#{!customerController.permissionToWrite}" value="#{customerController.entity.end}" navigator="true" label="Umowa od" mindate="#{customerController.currentDate}"/>                    
+                    <p:message for="end" display="icon"/>
+                                            
+                </h:panelGrid>
+                    
+                <p:commandButton rendered="#{customerController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":entity-grid-form:entity-grid-table @form" actionListener="#{customerController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetail)"/>
+                <p:commandButton rendered="#{!customerController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":entity-grid-form:entity-grid-table" oncomplete="entityDetail.hide()"/>
+            </h:form>
+        </p:dialog>   
+        
+    </ui:define>   
+
+</ui:composition>

@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -21,6 +22,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @Table(name="CustomerUser")
 public class CustomerUser extends User implements Serializable {
     
+    @NotNull
     private Customer customer;    
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -36,8 +38,9 @@ public class CustomerUser extends User implements Serializable {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 20). // two randomly chosen prime numbers
+        return new HashCodeBuilder(17, 1021). // two randomly chosen prime numbers
                 // if deriving: appendSuper(super.hashCode()).
+                append(super.hashCode()).
                 append(id).
                 toHashCode();
     }

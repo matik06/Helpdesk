@@ -29,7 +29,7 @@
 
         <div class="additional-menu">
             <h:form style="float: right;">                       
-                <p:menuButton value="Opcje"     >
+                <p:menuButton value="Opcje">
                     <p:menuitem value="Nowy pracownik" icon="ui-icon-plusthick" onclick="dlg.show();"/>
                     <p:separator />
                 </p:menuButton>
@@ -37,112 +37,14 @@
 
             <h:form style="float: right; margin-right: 25px;">  
                 <p:menuButton value="Sortowanie">
-                    <p:menuitem value="Nowy pracownik" icon="ui-icon-plusthick" actionListener="#{helpdeskUserController.process}"/>
+                    <p:menuitem value="Nowy pracownik" icon="ui-icon-plusthick" actionListener="#{customerController.process}"/>
                     <p:separator />
                 </p:menuButton>
             </h:form>
         </div>
 
         
-        <h:form id="entity-grid-form">       
-            <p:dataTable id="entity-grid-table" value="#{helpdeskUserController.entityList}" var="entity"
-                         paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
-                         draggableColumns="true" >                               
-                             
-                <f:facet name="header">
-                    Lista userów
-                </f:facet>
-                    
-                <p:column headerText="Login" sortBy="#{entity.login}" filterBy="#{entity.login}" id="loginCol">
-                    #{entity.login}
-                </p:column>                           
-                    
-                <p:column headerText="Imie" sortBy="#{entity.firstName}" filterBy="#{entity.firstName}" id="firstNameCol">
-                    #{entity.firstName}
-                </p:column>
-                    
-                <p:column headerText="Nazwisko" sortBy="#{entity.lastName}" filterBy="#{entity.lastName}" id="lastNameCol">
-                    #{entity.lastName}
-                </p:column>
-                    
-                <p:column headerText="Rola" sortBy="#{entity.role.name}" filterBy="#{entity.role}" id="roleCol" filterMatchMode="exact" filterOptions="#{constantController.allRoles}">
-                    #{entity.role.name}
-                </p:column>
-                    
-                <p:column style="width:40px">
-                    <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
-                        
-                        <p:commandButton actionListener="#{helpdeskUserController.disablePermissionToWrite}" update=":entity-form" oncomplete="entityDetail.show();" icon="#{msg['grid.show.icon']}" title="#{msg['grid.show.title']}"> 
-                            <f:setPropertyActionListener value="#{entity}" target="#{helpdeskUserController.entity}" />
-                        </p:commandButton>
-                            
-                        <p:commandButton update=":entity-form" oncomplete="entityDetail.show();" icon="#{msg['grid.edit.icon']}" title="#{msg['grid.edit.title']}"> 
-                            <f:setPropertyActionListener value="#{entity}" target="#{helpdeskUserController.entity}" />
-                        </p:commandButton>
-                            
-                        <p:commandButton onclick="deleteConfirmation.show()" icon="#{msg['grid.delete.icon']}" title="#{msg['grid.delete.title']}">
-                            <f:setPropertyActionListener value="#{entity}" target="#{helpdeskUserController.entity}" />
-                        </p:commandButton>                        
-                            
-                    </h:panelGrid>
-                </p:column>
-                    
-                <f:facet name="footer"> 
-                    <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{helpdeskUserController.clear}" update=":entity-form" oncomplete="entityDetail.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
-                </f:facet>
-                    
-            </p:dataTable>
-                
-            <component:deleteConfirmDialog controller="#{helpdeskUserController}" />                
-        </h:form>
-                                
-        <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetail" resizable="false" modal="true">                                                        
-            <p:ajax event="close" listener="#{helpdeskUserController.enablePermissionToWrite}" />
-            <h:form id="entity-form" style="width: 400px;" prependId="false">                               
-                
-                <p:messages id="msgs1"/>               
-                    
-                <h:panelGrid columns="3" style="margin-bottom:10px" id="display">                   
-                    <h:outputLabel for="login" value="Login" />
-                    <p:inputText id="login" disabled="#{!helpdeskUserController.permissionToWrite}" value="#{helpdeskUserController.entity.login}" label="Login">                       
-                    </p:inputText>
-                    <p:message for="login" display="icon"/>
-                        
-                    <h:outputLabel for="password" value="Hasło" />
-                    <p:password id="password" disabled="#{!helpdeskUserController.permissionToWrite}" value="#{helpdeskUserController.entity.password}" label="Hasło"/>
-                    <p:message for="password" display="icon"/>
-                        
-                    <h:outputLabel for="email" value="Email" />
-                    <p:inputText id="email" disabled="#{!helpdeskUserController.permissionToWrite}" value="#{helpdeskUserController.entity.email}" label="Email"/>
-                    <p:message for="email" display="icon"/>
-                        
-                    <h:outputLabel for="firstname" value="Imie" />
-                    <p:inputText id="firstname" disabled="#{!helpdeskUserController.permissionToWrite}" value="#{helpdeskUserController.entity.firstName}" label="Imie"/>
-                    <p:message for="firstname" display="icon"/>
-                        
-                    <h:outputLabel for="lastname" value="Nazwisko" />
-                    <p:inputText id="lastname" disabled="#{!helpdeskUserController.permissionToWrite}" value="#{helpdeskUserController.entity.lastName}" label="Nazwisko"/>
-                    <p:message for="lastname" display="icon"/>
-                        
-                    <h:outputLabel for="mobile" value="Telefon kom." />
-                    <p:inputText id="mobile" disabled="#{!helpdeskUserController.permissionToWrite}" value="#{helpdeskUserController.entity.mobile}" label="Telefon kom."/>
-                    <p:message for="mobile" display="icon"/>
-                        
-                    <h:outputLabel for="phone" value="Telefon" />
-                    <p:inputText id="phone" disabled="#{!helpdeskUserController.permissionToWrite}" value="#{helpdeskUserController.entity.phone}" label="Telefon"/>
-                    <p:message for="mobile" display="icon"/>
-                        
-                    <h:outputLabel for="role" value="Rola" />                   
-                    <p:selectOneMenu id="role" disabled="#{!helpdeskUserController.permissionToWrite}" style="width: 180px;" value="#{helpdeskUserController.entity.role}" converter="#{roleConverter}" label="Rola">
-                        <f:selectItems value="#{constantController.allRoles}"/>
-                    </p:selectOneMenu>
-                    <p:message for="role" display="icon"/>
-                </h:panelGrid>
-                    
-                <p:commandButton rendered="#{helpdeskUserController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":entity-grid-form:entity-grid-table @form" actionListener="#{helpdeskUserController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetail)"/>
-                <p:commandButton rendered="#{!helpdeskUserController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":entity-grid-form:entity-grid-table" oncomplete="entityDetail.hide()"/>
-            </h:form>
-        </p:dialog>   
+         
         
     </ui:define>   
 
