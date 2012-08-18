@@ -1,7 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:sec="http://www.springframework.org/security/tags">
     
     <div class="wrapper row1">
         <div id="header" class="clear">
@@ -10,8 +11,15 @@
                 <h1><a href="index.html">Codido</a></h1>
             </div>
 
-            <div class="fl_right">
-                <p><a href="#">Ustawienia</a> | <a href="#">Wyloguj</a></p>
+            <div class="fl_right">                
+                <!-- access="isAnonymous()" -->
+                <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
+                    <p><h:outputLink value="#{request.contextPath}/login.xhtml">Zaloguj</h:outputLink></p>
+                </sec:authorize>
+                <!-- access="isAuthenticated()" -->
+                <sec:authorize ifNotGranted="ROLE_ANONYMOUS">
+                    <p><a href="#">Ustawienia</a> | <h:outputLink value="#{request.contextPath}/logout">Wyloguj</h:outputLink></p>
+                </sec:authorize>                                                                
             </div>
 
             <div id="topnav">

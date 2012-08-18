@@ -6,6 +6,7 @@ package pl.helpdesk.controller;
 
 import java.io.Serializable;
 import javax.faces.context.FacesContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -22,5 +23,9 @@ public abstract class BaseController implements Serializable {
     protected Integer getRequestParameterAsInt(String key) {
         String stringValue = getRequestParameterAsString(key);
         return Integer.valueOf(stringValue);
+    }
+    
+    protected void getLoggedUser() {
+        SecurityContextHolder.getContext().getAuthentication();
     }
 }

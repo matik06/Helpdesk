@@ -39,6 +39,7 @@
 
     <!-- import ohter spring configuration files -->
     <import resource="dao-context.xml"/>
+    <import resource="security.xml"/>
        
         
     <!-- ******************  ****************** -->    

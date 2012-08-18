@@ -5,7 +5,7 @@
     version="2.0">
  
     <!-- JSF and Spring are integrated -->
-    <application>
+    <application>        
         <!--
             Now, whenever JSF sees a bean name, it uses JSF rules first, then Spring rules next.
         -->
@@ -32,6 +32,7 @@
     
     <lifecycle>
         <phase-listener>org.omnifaces.eventlistener.ResetInputAjaxActionListener</phase-listener>
+        <phase-listener>pl.helpdesk.security.LoginErrorPhaseListener</phase-listener>
     </lifecycle>
  
 </faces-config>

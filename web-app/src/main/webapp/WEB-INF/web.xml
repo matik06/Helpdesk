@@ -7,10 +7,22 @@
     xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+        
+    <!-- spring security integration -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
     
     <display-name>Helpdesk</display-name>
     
-<!--     JSF Servlet is defined to container -->
+    <!-- JSF Servlet is defined to container -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -111,5 +123,18 @@
     <context-param>
         <param-name>com.ocpsoft.pretty.DEVELOPMENT</param-name>
         <param-value>true</param-value>
+    </context-param>
+    
+    
+<!--    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/generic-error.xhtml</location>
+    </error-page>-->
+    
+    
+    <!-- Udostępnienie tagu sec:authorize dla JSF2 -->
+    <context-param>
+        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-value>/WEB-INF/springsecurity.taglib.xml</param-value>
     </context-param>
 </web-app>

@@ -33,6 +33,7 @@
         <javax.mail>1.4</javax.mail>
         <javax.version>6.0</javax.version>
         <spring.version>3.1.1.RELEASE</spring.version>
+        <spring-security-version>3.1.1.RELEASE</spring-security-version>
         <spring-aspects.version>2.5.6</spring-aspects.version>
         <cglib.version>2.2.2</cglib.version>
         <mysql-connector.version>5.1.18</mysql-connector.version>
@@ -131,6 +132,39 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>        
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>     
+        
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-webflow</artifactId>
+            <version>2.3.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-faces</artifactId>
+            <version>2.3.1.RELEASE</version>
+        </dependency>
+            
         
         <!-- Do usunięcia !!!!!!!!  -->
         <dependency>
