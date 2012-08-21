@@ -4,10 +4,13 @@
  */
 package pl.helpdesk.service.impl;
 
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.dao.HelpdeskUserDao;
 import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.service.HelpdeskUserService;
@@ -25,5 +28,12 @@ public class HelpdeskUserServiceImpl extends GenericServiceImpl<HelpdeskUser, In
     @Override
     public HelpdeskUserDao getDao() {
         return this.helpdeskUserDao;
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public HelpdeskUser getByLogin(String login) {
+        Criterion c = Restrictions.eq("login", login);
+        return super.findByRestrictions(c);
     }
 }

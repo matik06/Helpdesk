@@ -4,17 +4,14 @@
  */
 package pl.helpdesk.security;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import javax.annotation.PostConstruct;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import pl.helpdesk.service.CustomerUserService;
+import pl.helpdesk.service.HelpdeskUserService;
 
 /**
  *
@@ -23,33 +20,33 @@ import org.springframework.stereotype.Service;
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private HashMap<String, User> users = new HashMap<>();
+//    private HashMap<String, User> users = new HashMap<>();
+    
+    private static final Logger logger = Logger.getLogger(UserDetailsServiceImpl.class);
+    
+    @Autowired
+    HelpdeskUserService helpdeskUserService;
+    CustomerUserService customerUserService;
     
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = users.get(username);
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         
-        if (user == null) {
-            throw new UsernameNotFoundException("UserAccount for name \""+ username + "\" not found.");
-        }
-        
-        return user;
-    }
-    
-    @PostConstruct
-    public void init() {
-        Collection<GrantedAuthority> adminAuthorities = new ArrayList<>();
-        adminAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        
-        Collection<GrantedAuthority> userAuthorities = new ArrayList<>();
-        userAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        
-        boolean enabled = true;
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
-        
-        users.put("admin", new User("admin", "admin", enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, adminAuthorities));
-        users.put("user", new User("user", "user", enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, userAuthorities));
+        try {
+            pl.helpdesk.model.User user;
+
+            user = helpdeskUserService.getByLogin(login);
+            if (user == null) {
+                user = customerUserService.getByLogin(login);
+            }
+
+            if (user == null) {
+                throw new UsernameNotFoundException("UserAccount for name \"" + login + "\" not found.");
+            }
+
+            return new CustomUser(user);
+        } catch (Exception e) {
+            logger.error(e);
+            throw new UsernameNotFoundException("Some problem with database connection.");
+        }        
     }
 }

@@ -98,6 +98,17 @@ public abstract class HibernateDao<T, ID extends Serializable> implements Generi
         
         return criteria.list();
     }
+    
+    @Override
+    public T findByRestrictions(Criterion... criterions) {
+        Criteria criteria = getSession().createCriteria(persistentClass);
+        
+        for (Criterion criterion : criterions) {
+            criteria.add(criterion);
+        }
+        
+        return (T)criteria.uniqueResult();
+    }
 
     @Override
     public List<T> findAllByIds(Integer... ids) {

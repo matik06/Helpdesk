@@ -5,14 +5,11 @@
 package pl.helpdesk.security;
 
 import java.io.IOException;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import pl.helpdesk.util.FacesUtils;
 
 /**
  *
@@ -37,23 +34,41 @@ public class LoginBean {
         return password;
     }
 
+    @Autowired
+    private AuthenticationServiceImpl authenticationService; // injected Spring defined service for bikes
+    
     public void setPassword(String password) {
         this.password = password;
     }        
 
     // This is the action method called when the user clicks the "login" button
     public String doLogin() throws IOException, ServletException {
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-
-        RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
-                .getRequestDispatcher("/j_spring_security_check?j_username=" + login
-                                + "&j_password=" + password);
-        //RequestDispatcher dispatcher = ((ServletRequest) context.getRequest()).getRequestDispatcher("/j_spring_security_check");
-
-        dispatcher.forward((ServletRequest) context.getRequest(), (ServletResponse) context.getResponse());
-
-        FacesContext.getCurrentInstance().responseComplete();
-        // It's OK to return null here because Faces is just going to exit.
-        return null;
+        
+        boolean success = authenticationService.login(login, password);
+        if (success) {
+            System.out.println("zalogowano poprawnie");
+            return "/index.xhtml?faces-redirect=true";
+//            return "bikesShop.xhtml"; // return to application but being logged now
+        } else {
+            FacesUtils.addErrorMessage("Hasło lub login niepoprawne");
+            return "/login.xhtml";
+        }
+        
+//        FacesContext.getCurrentInstance().responseComplete();
+//        // It's OK to return null here because Faces is just going to exit.
+//        return null;
+        
+//        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+//
+//        RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
+//                .getRequestDispatcher("/j_spring_security_check?j_username=" + login
+//                                + "&j_password=" + password);
+//        //RequestDispatcher dispatcher = ((ServletRequest) context.getRequest()).getRequestDispatcher("/j_spring_security_check");
+//
+//        dispatcher.forward((ServletRequest) context.getRequest(), (ServletResponse) context.getResponse());
+//
+//        FacesContext.getCurrentInstance().responseComplete();
+//        // It's OK to return null here because Faces is just going to exit.
+//        return null;
     }
 }

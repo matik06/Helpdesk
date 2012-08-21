@@ -16,8 +16,8 @@
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>REQUEST</dispatcher>
+<!--        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>-->
     </filter-mapping>
     
     <display-name>Helpdesk</display-name>
@@ -87,7 +87,7 @@
  
 <!--     Welcome Page -->
     <welcome-file-list>
-        <welcome-file>/index.xhtml</welcome-file>
+        <welcome-file>/home</welcome-file>
     </welcome-file-list>        
     
     <!-- PrettyFaces configuration -->
@@ -107,7 +107,7 @@
     
     <session-config>
         <session-timeout>
-            30
+            60
         </session-timeout>
     </session-config>
     

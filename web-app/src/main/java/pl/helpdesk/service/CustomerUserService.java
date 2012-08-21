@@ -11,5 +11,5 @@ import pl.helpdesk.model.CustomerUser;
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
 public interface CustomerUserService extends GenericService<CustomerUser, Integer> {
-    
+    CustomerUser getByLogin(String login);
 }

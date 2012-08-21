@@ -10,11 +10,6 @@
     </lifecycle>
 
     <url-mapping>
-        <pattern value="/home"/>
-        <view-id value="/index.xhtml"/>
-    </url-mapping>
-    
-    <url-mapping>
         <pattern value="/example"/>
         <view-id value="/example.xhtml"/>
     </url-mapping>
@@ -22,6 +17,26 @@
     <!-- 
         Konfiguracja widoków wraz z ich przekierowaniami
     -->
+    
+    <url-mapping>
+        <pattern value="/home"/>
+        <view-id value="/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="login">
+        <pattern value="/login"/>
+        <view-id value="/login.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="invalid-session">
+        <pattern value="/invalid-session"/>
+        <view-id value="/invalidSession.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="access-deny">
+        <pattern value="/access-deny"/>
+        <view-id value="/accessDenied.xhtml"/>
+    </url-mapping>
     
     <url-mapping id="helpdesk-users">
         <pattern value="/helpdesk-users"/>

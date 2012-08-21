@@ -6,7 +6,8 @@
                 template="/templates/main.xhtml"
 
                 xmlns:utils="http://java.sun.com/jsf/composite/utils"
-                xmlns:component="http://java.sun.com/jsf/composite/component">
+                xmlns:component="http://java.sun.com/jsf/composite/component"
+                xmlns:sec="http://www.springframework.org/security/tags">
 
     <ui:define name="resources">   
         <script type="text/javascript">
@@ -26,40 +27,16 @@
 
     <ui:define name="content">                
         
+        Widoczne dla niezalogowanego usera <br/><br/>
+        <sec:authorize access="hasRole('Helpdesk_User')">
+            Widoczne tylko dla usera z rolą: Helpdesk_User<br/><br/>
+        </sec:authorize>
+        <sec:authorize access="hasRole('Helpdesk_Manager')">
+            <b>Widoczne tylko dla usera z rolą: Helpdesk_User</b><br/><br/>
+        </sec:authorize>    
 
-        <p:growl id="growl" showDetail="false" life="5000" />
-        
-        <p:dialog id="dialog" header="Login" widgetVar="dlg" visible="true" resizable="false" draggable="false" position="center,center">
-            <h:messages id="msg"/>
-            <h:form prependId="false">
-            
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="j_username" value="Login" />
-                    <p:inputText value="#{loginBean.login}" id="j_username" required="true" label="username" />
-                                            
-                    <h:outputLabel for="j_password" value="Hasło" />
-                    <p:password value="#{loginBean.password}" id="j_password" required="true" label="password" />
-                                            
-                    <f:facet name="footer">
-                        <p:commandButton id="loginButton" value="Login" update=":growl :msg" 
-                                         action="#{loginBean.doLogin}"/>
-                    </f:facet>
-                </h:panelGrid>
-                    
-            </h:form>
-        </p:dialog>
-        
-
-        <script type="text/javascript">
-            function handleLoginRequest(xhr, status, args) {
-                if(args.validationFailed || !args.loggedIn) {
-                    jQuery('#dialog').effect("shake", { times:3 }, 100);
-                } else {
-                    dlg.hide();
-                    jQuery('#loginLink').fadeOut();
-                }
-            }
-        </script>
+        content...
+    <br/>
          
         
     </ui:define>   

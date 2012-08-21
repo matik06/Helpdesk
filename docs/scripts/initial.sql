@@ -1,10 +1,10 @@
 /* Role użytkowników */
 INSERT INTO Role(roleId, name) VALUES
 (1, 'Admin'),
-(2, 'Helpdesk Manager'),
-(3, 'Helpdesk User'),
-(4, 'Customer Manager'),
-(5, 'Customer User');
+(2, 'Helpdesk_Manager'),
+(3, 'Helpdesk_User'),
+(4, 'Customer_Manager'),
+(5, 'Customer_User');
 
 /* Priorytety zgłoszeń */
 INSERT INTO Priority(priorityId, name) VALUES

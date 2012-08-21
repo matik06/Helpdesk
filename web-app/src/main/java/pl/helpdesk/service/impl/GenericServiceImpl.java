@@ -10,7 +10,6 @@ import org.hibernate.criterion.Criterion;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.dao.GenericDao;
-import pl.helpdesk.model.BaseEntity;
 import pl.helpdesk.service.GenericService;
 
 /**
@@ -44,6 +43,12 @@ public abstract class GenericServiceImpl<T, ID extends Serializable, DAO extends
     @Transactional(readOnly=true)
     public List<T> findAllByRestriction(Criterion... criterions) {
         return getDao().findAllByRestriction(criterions);
+    }
+    
+    @Override
+    @Transactional(readOnly=true)
+    public T findByRestrictions(Criterion... criterions) {
+        return (T)getDao().findByRestrictions(criterions);
     }
 
     @Override

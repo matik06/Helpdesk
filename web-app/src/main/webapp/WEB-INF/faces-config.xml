@@ -32,7 +32,7 @@
     
     <lifecycle>
         <phase-listener>org.omnifaces.eventlistener.ResetInputAjaxActionListener</phase-listener>
-        <phase-listener>pl.helpdesk.security.LoginErrorPhaseListener</phase-listener>
+<!--        <phase-listener>pl.helpdesk.security.LoginErrorPhaseListener</phase-listener>-->
     </lifecycle>
  
 </faces-config>

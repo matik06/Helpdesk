@@ -5,12 +5,9 @@
 package pl.helpdesk.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.validator.ValidatorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.service.GenericService;
@@ -28,8 +25,11 @@ public class HelpdeskUserController extends GridController<HelpdeskUser> impleme
     @Autowired    
     HelpdeskUserService helpdeskUserService;   
     
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    
     public HelpdeskUserController() {
-        super(HelpdeskUser.class);
+        super(HelpdeskUser.class);        
     }
     
     @Override

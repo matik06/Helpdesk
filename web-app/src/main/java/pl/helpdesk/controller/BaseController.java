@@ -7,6 +7,10 @@ package pl.helpdesk.controller;
 import java.io.Serializable;
 import javax.faces.context.FacesContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import pl.helpdesk.model.CustomerUser;
+import pl.helpdesk.model.HelpdeskUser;
+import pl.helpdesk.model.User;
+import pl.helpdesk.security.CustomUser;
 
 /**
  *
@@ -25,7 +29,20 @@ public abstract class BaseController implements Serializable {
         return Integer.valueOf(stringValue);
     }
     
-    protected void getLoggedUser() {
-        SecurityContextHolder.getContext().getAuthentication();
+    public User getLoggedUser() {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();        
+        
+        return customUser.getUser();
+    }
+    
+    protected HelpdeskUser getLoggedHelpdeskUser() {
+        User user = getLoggedUser();
+        return (HelpdeskUser)user;
+    }
+    
+    protected CustomerUser getLoggedCustomerUser() {
+        User user = getLoggedUser();
+        return (CustomerUser)user;
     }
 }
