@@ -29,14 +29,14 @@
     </http>
     
     
-    <beans:bean id="passwordEncoder" class="pl.helpdesk.security.CustomPasswordEncoder" />
+    <!--<beans:bean id="passwordEncoder" class="pl.helpdesk.security.CustomPasswordEncoder" />-->
+    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+<!--     <beans:bean id="encoder" class="pl.helpdesk.security.CustomPasswordEncoder" />-->
     
     <!-- Ustawienie informacji skad spring ma pobierac uzytkownikow oraz o szyfrowaniu ich haseł  -->
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="userDetailsService">        
-            <password-encoder ref="passwordEncoder">
-                <salt-source user-property="login"/>
-            </password-encoder>
+            <password-encoder ref="encoder"/>
         </authentication-provider>
     </authentication-manager>
     

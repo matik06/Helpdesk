@@ -5,22 +5,15 @@
 package pl.helpdesk.model;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  *
@@ -47,6 +40,8 @@ public class User extends BaseEntity<Integer> implements Serializable {
    protected String phone;
    protected String mobile;
    
+   @Transient
+   protected String newPassword;
 
     @Id
     @GeneratedValue
@@ -115,9 +110,22 @@ public class User extends BaseEntity<Integer> implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        
+       this.password = password;        
     }
 
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        if (newPassword != null && !newPassword.isEmpty()) {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(newPassword);
+            setPassword(hashedPassword);
+        }
+    }
+    
     public String getPhone() {
         return phone;
     }

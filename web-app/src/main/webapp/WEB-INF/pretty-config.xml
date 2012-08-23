@@ -19,6 +19,11 @@
     -->
     
     <url-mapping>
+        <pattern value="/"/>
+        <view-id value="/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping>
         <pattern value="/home"/>
         <view-id value="/index.xhtml"/>
     </url-mapping>

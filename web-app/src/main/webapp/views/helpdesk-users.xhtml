@@ -82,7 +82,7 @@
                     <p:message for="login" display="icon"/>
                         
                     <h:outputLabel for="password" value="Hasło" />
-                    <p:password id="password" disabled="#{!helpdeskUserController.permissionToWrite}" value="#{helpdeskUserController.entity.password}" label="Hasło"/>
+                    <p:password id="password" disabled="#{!helpdeskUserController.permissionToWrite}" value="#{helpdeskUserController.entity.newPassword}" label="Hasło"/>
                     <p:message for="password" display="icon"/>
                         
                     <h:outputLabel for="email" value="Email" />
