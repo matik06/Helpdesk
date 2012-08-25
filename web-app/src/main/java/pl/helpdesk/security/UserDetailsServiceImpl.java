@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 import pl.helpdesk.service.CustomerUserService;
 import pl.helpdesk.service.HelpdeskUserService;
 
@@ -17,16 +16,14 @@ import pl.helpdesk.service.HelpdeskUserService;
  *
  * @author matik06
  */
-@Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 //    private HashMap<String, User> users = new HashMap<>();
     
     private static final Logger logger = Logger.getLogger(UserDetailsServiceImpl.class);
     
-    @Autowired
-    HelpdeskUserService helpdeskUserService;
-    CustomerUserService customerUserService;
+    @Autowired HelpdeskUserService helpdeskUserService;
+    @Autowired CustomerUserService customerUserService;
     
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -45,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
             return new CustomUser(user);
         } catch (Exception e) {
-            logger.error(e);
+            logger.error("problem with loading user", e);
             throw new UsernameNotFoundException("Some problem with database connection.");
         }        
     }

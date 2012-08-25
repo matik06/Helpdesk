@@ -10,35 +10,19 @@
 
     <ui:define name="resources">   
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('div[aria-hidden="true"]').hide()
-            });
+
         </script>
         <style>
-            .ui-tabs .ui-tabs-panel {
-                margin: 0;
-                padding: 0;
-            }
             
-            .ui-helper-hidden {
-                display: none;
-            }
         </style>
-    </ui:define>   
-    
-
-    <!--    <ui:define name="left-menu">
-           
-           
-           
-        </ui:define>-->
+    </ui:define>       
 
     <ui:define name="content">  
         
         <!-- dynamic="true" cache="true" -->
         <p:tabView  id="tabView" activeIndex="0" >       
             
-            <p:tab title="Powiązani pracownicy helpdesk" id="sss">
+            <p:tab title="Powiązani pracownicy helpdesk">
                 
                 <h:form id="entity-grid-form-helpdesk-users">       
                     <p:dataTable id="entity-grid-table-helpdesk-users" value="#{customerHelpdeskUserController.entityList}" var="entity"
@@ -163,7 +147,7 @@
                             <p:message for="login" display="icon"/>
 
                             <h:outputLabel for="password" value="Hasło" />
-                            <p:password id="password" disabled="#{!customerUsersController.permissionToWrite}" value="#{customerUsersController.entity.password}" label="Hasło"/>
+                            <p:password id="password" disabled="#{!customerUsersController.permissionToWrite}" value="#{customerUsersController.entity.newPassword}" label="Hasło"/>
                             <p:message for="password" display="icon"/>
 
                             <h:outputLabel for="email" value="Email" />

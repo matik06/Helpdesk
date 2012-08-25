@@ -13,7 +13,10 @@ body{
 	font-family:Georgia, "Times New Roman", Times, serif;
 	color:#979797;
 	background-color:#333333;
+        height: 100%; min-height: 100%;
 	}
+        
+#wrap {min-height: 100%; margin-bottom: -80px;}
 
 img{margin:0; padding:0; border:none;}
 .justify{text-align:justify;}
@@ -57,7 +60,7 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 
 .row1, .row2{color:#979797; background-color:#E1D6CB;}
 .row3{color:#979797; background-color:#FFFFFF; border-top:1px solid #510000; border-bottom:5px solid #E1D6CB;}
-.row3 a{color:#896C50;}
+.row3 a{color:#896C50; font-weight: bolder;}
 .row4{padding:30px 0;}
 
 /* ----------------------------------------------Generalise-------------------------------------*/
@@ -117,9 +120,19 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 
 /* ------Comments-----*/
 
+
+
+.post {
+    background: #E1D6CB;
+    padding-right: 25px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+
 #comments{margin-bottom:40px;}
 
-#comments .commentlist{margin:0; padding:0;}
+#comments .commentlist{margin:0; padding:0; color:red;}
 
 #comments .commentlist ul{margin:0; padding:0; list-style:none;}
 
@@ -346,7 +359,6 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 	margin-left:30px;*/
         width: 100%;
         margin-left: 0px;
-        min-height: 600px;
     }
 
 /* ----------------------------------------------Generalise-------------------------------------*/

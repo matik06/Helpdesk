@@ -1,0 +1,356 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"           
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/main.xhtml"
+
+                xmlns:utils="http://java.sun.com/jsf/composite/utils"
+                xmlns:component="http://java.sun.com/jsf/composite/component"
+                xmlns:sec="http://www.springframework.org/security/tags">
+
+    <ui:define name="resources">   
+        <script type="text/javascript">
+
+        </script>
+        <style>
+            
+        </style>
+    </ui:define>   
+    
+
+    <ui:define name="content">  
+        
+        <!-- dynamic="true" cache="true" -->
+        <p:tabView  id="tabView" activeIndex="0" >       
+            
+            <sec:authorize access="hasRole('Customer_Manager')">
+            <p:tab title="W realizacji" >
+                
+                <h:form id="entity-grid-form-CTIP">       
+                    <p:dataTable id="entity-grid-table-CTIP" value="#{taskCustomerOpenController.entityList}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                                 draggableColumns="true"  >   
+                        
+                        <p:column style="width:16px">
+                            <p:rowToggler />
+                        </p:column>
+                        
+                        <p:rowExpansion>                            
+                            <component:post title="#{entity.title}" date="#{entity.date}" content="#{entity.description}" author="#{entity.author}"/>                                                        
+                        </p:rowExpansion>
+                        
+                        <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
+                            <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
+                                <f:param name="customer" value="#{entity.id}"/>
+                            </h:outputLink>
+                            
+                        </p:column>
+                        
+                        <p:column headerText="Autor" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.author.fullName}
+                        </p:column>
+                                                
+                        <p:column headerText="Serwisant" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.responsible.fullName}
+                        </p:column>
+                        
+                        <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                        </p:column>
+                            
+                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                            #{entity.status.name}
+                        </p:column>
+                            
+                        <p:column style="width:40px">
+                            <h:panelGrid columns="1" styleClass="actions" cellpadding="1">
+                                
+                                
+                                    <p:commandButton update=":tabView:entity-form-CTIP" oncomplete="entityDetailCTIP.show();" icon="#{msg['grid.edit.icon']}" title="#{msg['grid.edit.title']}"> 
+                                        <f:setPropertyActionListener value="#{entity}" target="#{taskCustomerOpenController.entity}" />
+                                    </p:commandButton>                                                                    
+                                
+                                
+                                    
+                            </h:panelGrid>
+                        </p:column>
+                            
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{taskCustomerOpenController.clear}" update=":tabView:entity-form-CTIP" oncomplete="entityDetailCTIP.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+                            
+                    </p:dataTable>
+                        
+                    <component:deleteConfirmDialog controller="#{taskCustomerOpenController}" />                
+                </h:form>
+                    
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailTIP" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                    <p:ajax event="close" listener="#{taskCustomerOpenController.enablePermissionToWrite}" />
+                    <h:form id="entity-form-CTIP" style="width: 800px;" prependId="false">                               
+                        
+                        <p:messages id="msgsCTIP" globalOnly="false"/>               
+                            
+                        <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                            <h:outputLabel for="titleCTIP" value="Tytuł" />
+                            <p:inputText style="width: 700px;"  id="titleCTIP" disabled="#{!taskCustomerOpenController.permissionToWrite}" value="#{taskCustomerOpenController.entity.title}" label="titleCTIP">                       
+                            </p:inputText>
+                            <p:message for="titleCTIP" display="icon"/>                                
+                                
+                            <h:outputLabel for="descriptionCTIP" value="Treść" />
+                            <p:editor width="700" height="400" id="descriptionCTIP" disabled="#{!taskCustomerOpenController.permissionToWrite}" value="#{taskCustomerOpenController.entity.description}" label="descriptionCTIP"/>
+                            <p:message for="descriptionCTIP" display="icon"/>                                
+                                                            
+                        </h:panelGrid>
+                            
+                        <p:commandButton rendered="#{taskCustomerOpenController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-CTIP:entity-grid-table-CTIP @form" actionListener="#{taskCustomerOpenController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetailCTIP)"/>
+                        <p:commandButton rendered="#{!taskCustomerOpenController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":tabView:entity-grid-form-CTIP:entity-grid-table-CTIP" oncomplete="entityDetailCTIP.hide()"/>
+                    </h:form>
+                </p:dialog>    
+                
+            </p:tab>
+            </sec:authorize>
+            
+            <sec:authorize access="hasRole('Customer_Manager')">
+            <p:tab title="Zamknięte">
+                
+                <h:form id="entity-grid-form-CTC">       
+                    <p:dataTable id="entity-grid-table-CTC" value="#{taskCustomerClosedController.entityList}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                                 draggableColumns="true"  >   
+                                     
+                            
+                        <p:column style="width:16px">
+                            <p:rowToggler />
+                        </p:column>
+                            
+                        <p:rowExpansion>                            
+                            <component:post title="#{entity.title}" date="#{entity.date}" content="#{entity.description}" author="#{entity.author}"/>                                                        
+                        </p:rowExpansion>
+                            
+                        <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
+                            <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
+                                <f:param name="customer" value="#{entity.id}"/>
+                            </h:outputLink>
+                                
+                        </p:column>
+                            
+                        <p:column headerText="Autor" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.author.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Serwisant" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.responsible.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                        </p:column>
+                            
+                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                            #{entity.status.name}
+                        </p:column>                                                    
+                            
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{taskCustomerClosedController.clear}" update=":tabView:entity-form-CTC" oncomplete="entityDetailCTC.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+                            
+                    </p:dataTable>
+                        
+                    <component:deleteConfirmDialog controller="#{taskCustomerClosedController}" />                
+                </h:form>
+                    
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailCTC" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                    <p:ajax event="close" listener="#{taskCustomerClosedController.enablePermissionToWrite}" />
+                    <h:form id="entity-form-CTC" style="width: 800px;" prependId="false">                               
+                        
+                        <p:messages id="msgsCTC" globalOnly="false"/>               
+                            
+                        <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                            <h:outputLabel for="titleCTC" value="Tytuł" />
+                            <p:inputText style="width: 700px;"  id="titleCTC" disabled="#{!taskCustomerClosedController.permissionToWrite}" value="#{taskCustomerClosedController.entity.title}" label="titleCTC">                       
+                            </p:inputText>
+                            <p:message for="titleCTC" display="icon"/>                                
+                                
+                            <h:outputLabel for="descriptionCTC" value="Treść" />
+                            <p:editor width="700" height="400" id="descriptionCTC" disabled="#{!taskCustomerClosedController.permissionToWrite}" value="#{taskCustomerClosedController.entity.description}" label="descriptionCTC"/>
+                            <p:message for="descriptionCTC" display="icon"/>                                
+                                
+                        </h:panelGrid>
+                            
+                        <p:commandButton rendered="#{taskCustomerClosedController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-CTC:entity-grid-table-CTC @form" actionListener="#{taskCustomerClosedController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetailCTC)"/>
+                        <p:commandButton rendered="#{!taskCustomerClosedController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":tabView:entity-grid-form-CTC:entity-grid-table-CTC" oncomplete="entityDetailCTC.hide()"/>
+                    </h:form>
+                </p:dialog>
+                
+            </p:tab>  
+            </sec:authorize>
+            
+            <sec:authorize access="hasRole('Customer_User')">
+            <p:tab title="Moje w realizacji" >
+                
+                <h:form id="entity-grid-form-CMTIP">       
+                    <p:dataTable id="entity-grid-table-CMTIP" value="#{taskCustomerMyOpenController.entityList}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                                 draggableColumns="true"  >   
+                                     
+                        <p:column style="width:16px">
+                            <p:rowToggler />
+                        </p:column>
+                            
+                        <p:rowExpansion>                            
+                            <component:post title="#{entity.title}" date="#{entity.date}" content="#{entity.description}" author="#{entity.author}"/>                                                        
+                        </p:rowExpansion>
+                            
+                        <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
+                            <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
+                                <f:param name="customer" value="#{entity.id}"/>
+                            </h:outputLink>
+                                
+                        </p:column>
+                            
+                        <p:column headerText="Autor" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.author.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Serwisant" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.responsible.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                        </p:column>
+                            
+                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                            #{entity.status.name}
+                        </p:column>
+                            
+                        <p:column style="width:40px">
+                            <h:panelGrid columns="1" styleClass="actions" cellpadding="1">
+                                
+                                
+                                <p:commandButton update=":tabView:entity-form-CMTIP" oncomplete="entityDetailCMTIP.show();" icon="#{msg['grid.edit.icon']}" title="#{msg['grid.edit.title']}"> 
+                                    <f:setPropertyActionListener value="#{entity}" target="#{taskCustomerMyOpenController.entity}" />
+                                </p:commandButton>                                                                    
+                                    
+                                    
+                                    
+                            </h:panelGrid>
+                        </p:column>
+                            
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{taskCustomerMyOpenController.clear}" update=":tabView:entity-form-CMTIP" oncomplete="entityDetailCMTIP.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+                            
+                    </p:dataTable>
+                        
+                    <component:deleteConfirmDialog controller="#{taskCustomerMyOpenController}" />                
+                </h:form>
+                    
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailTIP" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                    <p:ajax event="close" listener="#{taskCustomerMyOpenController.enablePermissionToWrite}" />
+                    <h:form id="entity-form-CMTIP" style="width: 800px;" prependId="false">                               
+                        
+                        <p:messages id="msgsCMTIP" globalOnly="false"/>               
+                            
+                        <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                            <h:outputLabel for="titleCMTIP" value="Tytuł" />
+                            <p:inputText style="width: 700px;"  id="titleCMTIP" disabled="#{!taskCustomerMyOpenController.permissionToWrite}" value="#{taskCustomerMyOpenController.entity.title}" label="titleCMTIP">                       
+                            </p:inputText>
+                            <p:message for="titleCMTIP" display="icon"/>                                
+                                
+                            <h:outputLabel for="descriptionCMTIP" value="Treść" />
+                            <p:editor width="700" height="400" id="descriptionCMTIP" disabled="#{!taskCustomerMyOpenController.permissionToWrite}" value="#{taskCustomerMyOpenController.entity.description}" label="descriptionCMTIP"/>
+                            <p:message for="descriptionCMTIP" display="icon"/>                                
+                                
+                        </h:panelGrid>
+                            
+                        <p:commandButton rendered="#{taskCustomerMyOpenController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-CMTIP:entity-grid-table-CMTIP @form" actionListener="#{taskCustomerMyOpenController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetailCMTIP)"/>
+                        <p:commandButton rendered="#{!taskCustomerMyOpenController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":tabView:entity-grid-form-CMTIP:entity-grid-table-CMTIP" oncomplete="entityDetailCMTIP.hide()"/>
+                    </h:form>
+                </p:dialog>    
+                    
+            </p:tab>
+            </sec:authorize>
+            
+            <sec:authorize access="hasRole('Customer_User')">
+            <p:tab title="Moje zamknięte">
+                
+                <h:form id="entity-grid-form-CTMC">       
+                    <p:dataTable id="entity-grid-table-CTMC" value="#{taskCustomerMyClosedController.entityList}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                                 draggableColumns="true"  >   
+                                     
+                                     
+                        <p:column style="width:16px">
+                            <p:rowToggler />
+                        </p:column>
+                            
+                        <p:rowExpansion>                            
+                            <component:post title="#{entity.title}" date="#{entity.date}" content="#{entity.description}" author="#{entity.author}"/>                                                        
+                        </p:rowExpansion>
+                            
+                        <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
+                            <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
+                                <f:param name="customer" value="#{entity.id}"/>
+                            </h:outputLink>
+                                
+                        </p:column>
+                            
+                        <p:column headerText="Autor" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.author.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Serwisant" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.responsible.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                        </p:column>
+                            
+                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                            #{entity.status.name}
+                        </p:column>                                                    
+                            
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{taskCustomerMyClosedController.clear}" update=":tabView:entity-form-CTMC" oncomplete="entityDetailCTMC.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+                            
+                    </p:dataTable>
+                        
+                    <component:deleteConfirmDialog controller="#{taskCustomerMyClosedController}" />                
+                </h:form>
+                    
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailCTMC" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                    <p:ajax event="close" listener="#{taskCustomerMyClosedController.enablePermissionToWrite}" />
+                    <h:form id="entity-form-CTMC" style="width: 800px;" prependId="false">                               
+                        
+                        <p:messages id="msgsCTMC" globalOnly="false"/>               
+                            
+                        <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                            <h:outputLabel for="titleCTMC" value="Tytuł" />
+                            <p:inputText style="width: 700px;"  id="titleCTMC" disabled="#{!taskCustomerMyClosedController.permissionToWrite}" value="#{taskCustomerMyClosedController.entity.title}" label="titleCTMC">                       
+                            </p:inputText>
+                            <p:message for="titleCTMC" display="icon"/>                                
+                                
+                            <h:outputLabel for="descriptionCTMC" value="Treść" />
+                            <p:editor width="700" height="400" id="descriptionCTMC" disabled="#{!taskCustomerMyClosedController.permissionToWrite}" value="#{taskCustomerMyClosedController.entity.description}" label="descriptionCTMC"/>
+                            <p:message for="descriptionCTMC" display="icon"/>                                
+                                
+                        </h:panelGrid>
+                            
+                        <p:commandButton rendered="#{taskCustomerMyClosedController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-CTMC:entity-grid-table-CTMC @form" actionListener="#{taskCustomerMyClosedController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetailCTMC)"/>
+                        <p:commandButton rendered="#{!taskCustomerMyClosedController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":tabView:entity-grid-form-CTMC:entity-grid-table-CTMC" oncomplete="entityDetailCTMC.hide()"/>
+                    </h:form>
+                </p:dialog>
+                    
+            </p:tab>
+            </sec:authorize>
+            
+            
+        </p:tabView>
+        
+    </ui:define>   
+
+</ui:composition>

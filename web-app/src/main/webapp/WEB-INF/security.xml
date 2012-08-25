@@ -29,9 +29,9 @@
     </http>
     
     
-    <!--<beans:bean id="passwordEncoder" class="pl.helpdesk.security.CustomPasswordEncoder" />-->
+    <!--<beans:bean id="encoder" class="pl.helpdesk.security.CustomPasswordEncoder" />-->
     <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-<!--     <beans:bean id="encoder" class="pl.helpdesk.security.CustomPasswordEncoder" />-->
+    <beans:bean id="userDetailsService" class="pl.helpdesk.security.UserDetailsServiceImpl"/>    
     
     <!-- Ustawienie informacji skad spring ma pobierac uzytkownikow oraz o szyfrowaniu ich haseł  -->
     <authentication-manager alias="authenticationManager">

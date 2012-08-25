@@ -58,6 +58,15 @@
         <view-id value="/views/customer-detail.xhtml"/>
     </url-mapping>
     
+    <url-mapping id="tasks">
+        <pattern value="/tasks"/>
+        <view-id value="/views/tasks.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="task-detail">
+        <pattern value="/task/#{/\\d+/ taskId}/detail" />
+        <view-id value="/views/task-detail.xhtml"/>
+    </url-mapping>
     
 <!--    
         Przyklady uzycia prettyfaces

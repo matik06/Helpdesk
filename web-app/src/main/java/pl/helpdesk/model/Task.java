@@ -19,10 +19,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
+import pl.helpdesk.constant.DisplayConfig;
 
 /**
  *
@@ -39,6 +43,7 @@ public class Task extends BaseEntity<Integer> implements Serializable {
     private Status status;
     private Upgrade upgrade;
     
+    @NotNull
     private String title;
     private String description;
     private Date date;
@@ -150,8 +155,20 @@ public class Task extends BaseEntity<Integer> implements Serializable {
         this.date = date;
     }
 
+    @Type(type="text")
     public String getDescription() {
         return description;
+    }
+    
+    @Transient
+    public String getShortDescription() {
+        
+        if (description == null || description.length() < DisplayConfig.longDataShortLength) {
+            return description;
+        } else {
+            return description.substring(0, DisplayConfig.longDataShortLength);
+        }            
+        
     }
 
     public void setDescription(String description) {
@@ -192,4 +209,11 @@ public class Task extends BaseEntity<Integer> implements Serializable {
                 append(id, o.getId()).
                 isEquals();
     }
+
+    @Override
+    public String toString() {
+        return "Task{" + "id=" + id + ", status=" + status + ", title=" + title + ", description=" + description + ", date=" + date + '}';
+    }
+    
+    
 }

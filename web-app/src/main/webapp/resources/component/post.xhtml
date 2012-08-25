@@ -1,0 +1,37 @@
+<ui:component
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:composite="http://java.sun.com/jsf/composite"
+    >
+    
+    <composite:interface>
+        <composite:attribute name="title" required="true"/>
+        <composite:attribute name="date" required="true" />
+        <composite:attribute name="content" required="true" />
+        <composite:attribute name="author" required="true" />
+    </composite:interface>
+    <composite:implementation>
+
+        
+        
+        <div class="post">
+            <ul class="commentlist">                                
+                <div style="font-size: 120%;">
+                    <span class="name"><strong>#{cc.attrs.title}</strong> </span>
+                </div>
+                <div class="submitdate">
+                    <strong>#{cc.attrs.date}</strong>
+                </div>
+                <p>
+                    <h:outputText escape="false" value="#{cc.attrs.content}"/> 
+                </p>                                        
+                <p style="font-size: 120%;"><strong>autor: #{cc.attrs.author.firstName} #{cc.attrs.author.lastName}</strong></p>                                
+            </ul>
+        </div>
+                
+    </composite:implementation>
+    
+</ui:component>

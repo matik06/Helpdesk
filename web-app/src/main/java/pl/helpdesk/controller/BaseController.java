@@ -5,6 +5,7 @@
 package pl.helpdesk.controller;
 
 import java.io.Serializable;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.FacesContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.helpdesk.model.CustomerUser;
@@ -27,6 +28,14 @@ public abstract class BaseController implements Serializable {
     protected Integer getRequestParameterAsInt(String key) {
         String stringValue = getRequestParameterAsString(key);
         return Integer.valueOf(stringValue);
+    }
+    
+    protected void redirect(String url) {
+        
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
+
+        nav.performNavigation(url);
     }
     
     public User getLoggedUser() {

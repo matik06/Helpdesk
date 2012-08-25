@@ -11,33 +11,32 @@
 
     <ui:define name="resources">   
         <script type="text/javascript">
-            
+
         </script>
         <style>
-
+            
         </style>
-    </ui:define>
+    </ui:define>   
+    
 
-
-    <!--    <ui:define name="left-menu">
-           
-           
-           
-        </ui:define>-->
-
-    <ui:define name="content">                                
+    <ui:define name="content">  
         
-        Widoczne dla niezalogowanego usera <br/><br/>
-        <sec:authorize access="hasRole('Helpdesk_User')">
-            Widoczne tylko dla usera z rolą: Helpdesk_User<br/><br/>
-        </sec:authorize>
-        <sec:authorize access="hasRole('Helpdesk_Manager')">
-            <b>Widoczne tylko dla usera z rolą: Helpdesk_User</b><br/><br/>
-        </sec:authorize>    
-
-        content...
-    <br/>
-         
+        <!-- dynamic="true" cache="true" -->
+        <p:tabView  id="tabView" activeIndex="0" >       
+            
+            <p:tab title="Komentarze" >
+                 
+            </p:tab>
+            
+            <p:tab title="Pliki">                
+                
+            </p:tab>                         
+            
+            <p:tab title="Logi">                
+                
+            </p:tab>                         
+            
+        </p:tabView>
         
     </ui:define>   
 

@@ -20,6 +20,7 @@ import pl.helpdesk.model.Role;
 import pl.helpdesk.service.GenericService;
 import pl.helpdesk.service.HelpdeskUserService;
 import pl.helpdesk.service.RoleService;
+import pl.helpdesk.service.StatusService;
 
 /**
  *
@@ -33,15 +34,19 @@ public class ConstantController implements Serializable {
     RoleService roleService;
     @Autowired
     HelpdeskUserService helpdeskUserService;
+    @Autowired
+    StatusService statusService;
     
     private List<SelectItem> helpdeskRoles;
     private List<SelectItem> customerRoles;
     private List<SelectItem> allRoles;
+    private List<SelectItem> allTaskStatuses;
     
     @PostConstruct
     public void init() {
         
-        allRoles = perpereList(roleService);
+        allRoles = prepereList(roleService);
+        allTaskStatuses = prepereList(statusService);        
         
         List<Role> roles;
         roles = roleService.findAllByIds(RoleEnum.CUSTOMER_MANAGER.getValue(), RoleEnum.CUSTOMER_USER.getValue());
@@ -56,7 +61,7 @@ public class ConstantController implements Serializable {
         return prepareList(users, "login");
     }
     
-    private <T extends BaseEntity> List<SelectItem> perpereList(GenericService<T, Integer> service) {
+    private <T extends BaseEntity> List<SelectItem> prepereList(GenericService<T, Integer> service) {
         List<T> list = service.findAll();
         System.out.println(list);
         return prepareList(list);
@@ -112,5 +117,13 @@ public class ConstantController implements Serializable {
 
     public void setHelpdeskRoles(List<SelectItem> helpdeskRoles) {
         this.helpdeskRoles = helpdeskRoles;
+    }
+
+    public List<SelectItem> getAllTaskStatuses() {
+        return allTaskStatuses;
+    }
+
+    public void setAllTaskStatuses(List<SelectItem> allTaskStatuses) {
+        this.allTaskStatuses = allTaskStatuses;
     }        
 }

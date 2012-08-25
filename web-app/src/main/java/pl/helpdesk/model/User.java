@@ -6,7 +6,6 @@ package pl.helpdesk.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -86,6 +85,11 @@ public class User extends BaseEntity<Integer> implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    
+    @Transient
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     @Column(unique=true)

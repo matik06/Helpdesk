@@ -60,6 +60,10 @@
         
         <property name="hibernateProperties">
             <props>
+                
+                <prop key="hibernate.connection.useUnicode">true</prop>
+                <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+                
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <!-- ładnie sformatowane wyświetlanie zapytań -->

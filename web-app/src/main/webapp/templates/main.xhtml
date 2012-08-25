@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:sec="http://www.springframework.org/schema/security">    
+      xmlns:ui="http://java.sun.com/jsf/facelets" >    
     
     <ui:insert name="get-param" ></ui:insert>
     
@@ -65,9 +64,27 @@
                 padding-bottom: 30px;
                 margin-right: 25px;            
             }
+            
+            /* marginesy wewnątrz zakładek */
+            .ui-tabs .ui-tabs-panel {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* ukrywanie niewidocznych zakładek */
+            .ui-helper-hidden {
+                display: none;
+            }
         </style>
         
         <script>
+            
+            /* ukrywanie niewidocznych zakładek */
+            $(document).ready(function () {
+                $('div[aria-hidden="true"]').hide()
+                $("div#container").css("min-height", function(){ return screen.height - 100 });
+            });
+            
             function handleCloseEntityDialog(xhr, status, args, dialog) {
                 
                 if(!args.validationFailed) {         
