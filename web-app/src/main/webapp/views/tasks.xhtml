@@ -42,7 +42,7 @@
                         
                         <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
                             <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
-                                <f:param name="customer" value="#{entity.id}"/>
+                                <f:param name="taskId" value="#{entity.id}"/>
                             </h:outputLink>
                             
                         </p:column>
@@ -59,7 +59,7 @@
                             #{entity.date}
                         </p:column>
                             
-                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
                         </p:column>
                             
@@ -85,7 +85,7 @@
                     <component:deleteConfirmDialog controller="#{taskCustomerOpenController}" />                
                 </h:form>
                     
-                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailTIP" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailCTIP" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
                     <p:ajax event="close" listener="#{taskCustomerOpenController.enablePermissionToWrite}" />
                     <h:form id="entity-form-CTIP" style="width: 800px;" prependId="false">                               
                         
@@ -130,7 +130,7 @@
                             
                         <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
                             <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
-                                <f:param name="customer" value="#{entity.id}"/>
+                                <f:param name="taskId" value="#{entity.id}"/>
                             </h:outputLink>
                                 
                         </p:column>
@@ -204,7 +204,7 @@
                             
                         <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
                             <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
-                                <f:param name="customer" value="#{entity.id}"/>
+                                <f:param name="taskId" value="#{entity.id}"/>
                             </h:outputLink>
                                 
                         </p:column>
@@ -221,7 +221,7 @@
                             #{entity.date}
                         </p:column>
                             
-                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
                         </p:column>
                             
@@ -247,7 +247,7 @@
                     <component:deleteConfirmDialog controller="#{taskCustomerMyOpenController}" />                
                 </h:form>
                     
-                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailTIP" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailCMTIP" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
                     <p:ajax event="close" listener="#{taskCustomerMyOpenController.enablePermissionToWrite}" />
                     <h:form id="entity-form-CMTIP" style="width: 800px;" prependId="false">                               
                         
@@ -292,7 +292,7 @@
                             
                         <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
                             <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
-                                <f:param name="customer" value="#{entity.id}"/>
+                                <f:param name="taskId" value="#{entity.id}"/>
                             </h:outputLink>
                                 
                         </p:column>
@@ -348,6 +348,275 @@
             </p:tab>
             </sec:authorize>
             
+            <p:tab title="Nieprzydzielone" >
+
+                <h:form id="entity-grid-form-HNA">       
+                    <p:dataTable id="entity-grid-table-HNA" value="#{taskHelpdeskNotAssignedAllController.entityList}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                        draggableColumns="true"  >   
+                                     
+                        <p:column style="width:16px">
+                            <p:rowToggler />
+                        </p:column>
+                        
+                        <p:column headerText="Klient" sortBy="#{entity.customer.name}" filterBy="#{entity.customer}" filterMatchMode="exact" filterOptions="#{constantController.allCustomers}">
+                            #{entity.customer.name}
+                        </p:column>
+                        
+                        <p:rowExpansion>                            
+                            <component:post title="#{entity.title}" date="#{entity.date}" content="#{entity.description}" author="#{entity.author}"/>                                                        
+                        </p:rowExpansion>                                                
+                            
+                        <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
+                            <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
+                                <f:param name="taskId" value="#{entity.id}"/>
+                            </h:outputLink>
+                                
+                        </p:column>
+                            
+                        <p:column headerText="Autor" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.author.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Serwisant" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.responsible.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                        </p:column>
+
+                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                            #{entity.status.name}
+                        </p:column>                                                
+
+                        <p:column style="width:40px">
+                            <h:panelGrid columns="1" styleClass="actions" cellpadding="1">
+
+                                <p:commandButton update=":tabView:entity-form-HNA" oncomplete="entityDetailHNA.show();" icon="#{msg['grid.edit.icon']}" title="#{msg['grid.edit.title']}"> 
+                                    <f:setPropertyActionListener value="#{entity}" target="#{taskHelpdeskNotAssignedAllController.entity}" />
+                                </p:commandButton>                                
+                                        
+                                <p:commandButton oncomplete="AssignMyselfHNA.show();" icon="ui-icon-check" title="Przypisz sobie" > 
+                                    <f:setPropertyActionListener value="#{entity}" target="#{taskHelpdeskNotAssignedAllController.entity}" />
+                                </p:commandButton>
+                                        
+                            </h:panelGrid>
+                        </p:column>
+
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{taskHelpdeskNotAssignedAllController.clear}" update=":tabView:entity-form-HNA" oncomplete="entityDetailHNA.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+
+                    </p:dataTable>
+
+                    <component:actionWithConfirmation action="#{taskHelpdeskNotAssignedAllController.assignMyself}" message="Czy chcesz przypisać sobie zlecenie?" widgetVar="AssignMyselfHNA" bean="#{taskHelpdeskNotAssignedAllController}"/>
+                                    
+                </h:form>
+
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailHNA" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                    <p:ajax event="close" listener="#{taskHelpdeskNotAssignedAllController.enablePermissionToWrite}" />
+                    <h:form id="entity-form-HNA" style="width: 830px;" prependId="false">                               
+
+                        <p:messages id="msgsHNA" globalOnly="false"/>               
+
+                        <h:panelGrid columns="3" style="margin-bottom:10px">                   
+
+                            <h:outputLabel for="titleHNA" value="Tytuł" />
+                            <p:inputText style="width: 700px;"  id="titleHNA" disabled="#{!taskHelpdeskNotAssignedAllController.canEdit}" value="#{taskHelpdeskNotAssignedAllController.entity.title}" label="titleHNA">                       
+                            </p:inputText>
+                            <p:message for="titleHNA" display="icon"/>                                
+                                
+                            <h:outputLabel for="descriptionHNA" value="Treść" />
+                            <p:editor width="700" height="400" id="descriptionHNA" disabled="#{!taskHelpdeskNotAssignedAllController.canEdit}" value="#{taskHelpdeskNotAssignedAllController.entity.description}" label="descriptionHNA"/>
+                            <p:message for="descriptionHNA" display="icon"/>                                
+                            
+                            
+                            <h:outputLabel for="servisantHNA" value="Serwisant"/>                   
+                            <p:selectOneMenu id="servisantHNA" style="width: 180px;" value="#{taskHelpdeskNotAssignedAllController.entity.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant" required="#{taskHelpdeskNotAssignedAllController.entity != null and taskHelpdeskNotAssignedAllController.entity.id != null}">
+                                <f:selectItems value="#{constantController.helpdeskUsers}"/>
+                            </p:selectOneMenu>
+                            <p:message for="servisantHNA" display="icon"/>
+                            
+                            <h:outputLabel for="customerHNA" value="Klient" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}"/>                   
+                            <p:selectOneMenu id="customerHNA" style="width: 180px;" value="#{taskHelpdeskNotAssignedAllController.entity.customer}" converter="#{customerConverter}" label="Klient" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}">
+                                <f:selectItems value="#{constantController.allCustomers}"/>
+                            </p:selectOneMenu>
+                            <p:message for="customerHNA" display="icon" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}"/>
+                            
+                        </h:panelGrid>
+
+                        <p:commandButton rendered="#{taskHelpdeskNotAssignedAllController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-HNA:entity-grid-table-HNA @form" actionListener="#{taskHelpdeskNotAssignedAllController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetailHNA)"/>
+                        <p:commandButton rendered="#{!taskHelpdeskNotAssignedAllController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":tabView:entity-grid-form-HNA:entity-grid-table-HNA" oncomplete="entityDetailHNA.hide()"/>
+                    </h:form>
+                </p:dialog>    
+                    
+            </p:tab>
+            
+            <p:tab title="Wszystkie w realizacji" >
+                
+                <h:form id="entity-grid-form-HIP">       
+                    <p:dataTable id="entity-grid-table-HIP" value="#{taskHelpdeskInRealisationController.entityList}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                                 draggableColumns="true"  >   
+                                     
+                        <p:column style="width:16px">
+                            <p:rowToggler />
+                        </p:column>
+                        
+                        <p:column headerText="Klient" sortBy="#{entity.customer.name}" filterBy="#{entity.customer}" filterMatchMode="exact" filterOptions="#{constantController.allCustomers}">
+                            #{entity.customer.name}
+                        </p:column>
+                        
+                        <p:rowExpansion>                            
+                            <component:post title="#{entity.title}" date="#{entity.date}" content="#{entity.description}" author="#{entity.author}"/>                                                        
+                        </p:rowExpansion>
+                            
+                        <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
+                            <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
+                                <f:param name="taskId" value="#{entity.id}"/>
+                            </h:outputLink>
+                                
+                        </p:column>
+                            
+                        <p:column headerText="Autor" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.author.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Serwisant" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.responsible.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                        </p:column>
+                            
+                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                            #{entity.status.name}
+                        </p:column>
+                            
+                        <p:column style="width:40px">
+                            <h:panelGrid columns="1" styleClass="actions" cellpadding="1">
+                                
+                                
+                                <sec:authorize access="hasRole('Helpdesk_Manager')">
+                                    <p:commandButton update=":tabView:entity-form-HIP" oncomplete="entityDetailHIP.show();" icon="#{msg['grid.edit.icon']}" title="#{msg['grid.edit.title']}"> 
+                                        <f:setPropertyActionListener value="#{entity}" target="#{taskHelpdeskInRealisationController.entity}" />
+                                    </p:commandButton>
+                                </sec:authorize>
+                                    
+                            </h:panelGrid>
+                        </p:column>
+                            
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{taskHelpdeskInRealisationController.clear}" update=":tabView:entity-form-HIP" oncomplete="entityDetailHIP.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+                            
+                    </p:dataTable>                                            
+                        
+                </h:form>
+                    
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailHIP" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                    <p:ajax event="close" listener="#{taskHelpdeskInRealisationController.enablePermissionToWrite}" />
+                    <h:form id="entity-form-HIP" style="width: 400px;" prependId="false">                               
+                        
+                        <p:messages id="msgsHIP" globalOnly="false"/>               
+                            
+                        <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                            
+                            <h:outputLabel for="roleHIP" value="Serwisant" />                   
+                            <p:selectOneMenu id="roleHIP" style="width: 180px;" value="#{taskHelpdeskInRealisationController.entity.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant" required="true">
+                                <f:selectItems value="#{constantController.helpdeskUsers}"/>
+                            </p:selectOneMenu>
+                            <p:message for="roleHIP" display="icon"/>
+                                
+                        </h:panelGrid>
+                            
+                        <p:commandButton rendered="#{taskHelpdeskInRealisationController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-HIP:entity-grid-table-HIP @form" actionListener="#{taskHelpdeskInRealisationController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetailHIP)"/>
+                        <p:commandButton rendered="#{!taskHelpdeskInRealisationController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":tabView:entity-grid-form-HIP:entity-grid-table-HIP" oncomplete="entityDetailHIP.hide()"/>
+                    </h:form>
+                </p:dialog>    
+                    
+            </p:tab>
+            
+            <p:tab title="Wszystkie zamknięte" >
+                
+                <h:form id="entity-grid-form-HC">       
+                    <p:dataTable id="entity-grid-table-HC" value="#{taskHelpdeskClosedController.entityList}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                                 draggableColumns="true"  >   
+                                     
+                        <p:column style="width:16px">
+                            <p:rowToggler />
+                        </p:column>
+                        
+                        <p:column headerText="Klient" sortBy="#{entity.customer.name}" filterBy="#{entity.customer}" filterMatchMode="exact" filterOptions="#{constantController.allCustomers}">
+                            #{entity.customer.name}
+                        </p:column>
+                        
+                        <p:rowExpansion>                            
+                            <component:post title="#{entity.title}" date="#{entity.date}" content="#{entity.description}" author="#{entity.author}"/>                                                        
+                        </p:rowExpansion>
+                            
+                        <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
+                            <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
+                                <f:param name="taskId" value="#{entity.id}"/>
+                            </h:outputLink>
+                                
+                        </p:column>
+                            
+                        <p:column headerText="Autor" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.author.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Serwisant" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.responsible.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                        </p:column>
+                            
+                        <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                            #{entity.status.name}
+                        </p:column>
+                            
+                        <p:column style="width:40px">
+                            <h:panelGrid columns="1" styleClass="actions" cellpadding="1">                                                                                                
+                                    
+                            </h:panelGrid>
+                        </p:column>
+                            
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{taskHelpdeskClosedController.clear}" update=":tabView:entity-form-HC" oncomplete="entityDetailHC.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+                            
+                    </p:dataTable>                                            
+                        
+                </h:form>
+                    
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailHC" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+                    <p:ajax event="close" listener="#{taskHelpdeskClosedController.enablePermissionToWrite}" />
+                    <h:form id="entity-form-HC" style="width: 400px;" prependId="false">                               
+                        
+                        <p:messages id="msgsHC" globalOnly="false"/>               
+                            
+                        <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                            
+                            <h:outputLabel for="roleHC" value="Serwisant" />                   
+                            <p:selectOneMenu id="roleHC" style="width: 180px;" value="#{taskHelpdeskClosedController.entity.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant" required="true">
+                                <f:selectItems value="#{constantController.helpdeskUsers}"/>
+                            </p:selectOneMenu>
+                            <p:message for="roleHC" display="icon"/>
+                                
+                        </h:panelGrid>
+                            
+                        <p:commandButton rendered="#{taskHelpdeskClosedController.permissionToWrite}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-HC:entity-grid-table-HC @form" actionListener="#{taskHelpdeskClosedController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetailHC)"/>
+                        <p:commandButton rendered="#{!taskHelpdeskClosedController.permissionToWrite}" value="#{msg['grid.dialog.ok.title']}" icon="#{msg['grid.dialog.ok.icon']}" update=":tabView:entity-grid-form-HC:entity-grid-table-HC" oncomplete="entityDetailHC.hide()"/>
+                    </h:form>
+                </p:dialog>    
+                    
+            </p:tab>
             
         </p:tabView>
         

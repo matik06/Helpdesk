@@ -69,10 +69,5 @@ public abstract class CustomerTaskController extends GridController<Task> {
     @Override
     public GenericService<Task, Integer> getService() {
         return service;
-    }
-    
-    public void goToTaskDetails() {                
-        redirect("/views/task-detail.xhtml?customer=9?faces-redirect=true");
-    }
-    
+    }        
 }

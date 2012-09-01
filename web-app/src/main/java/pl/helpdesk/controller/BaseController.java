@@ -12,6 +12,7 @@ import pl.helpdesk.model.CustomerUser;
 import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.model.User;
 import pl.helpdesk.security.CustomUser;
+import pl.helpdesk.util.SpringSecurityUtil;
 
 /**
  *
@@ -38,11 +39,8 @@ public abstract class BaseController implements Serializable {
         nav.performNavigation(url);
     }
     
-    public User getLoggedUser() {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        CustomUser customUser = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();        
-        
-        return customUser.getUser();
+    public User getLoggedUser() {        
+        return SpringSecurityUtil.getLoggedUser();
     }
     
     protected HelpdeskUser getLoggedHelpdeskUser() {

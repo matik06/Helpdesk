@@ -38,13 +38,20 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, Integer, TaskDao> 
     @Override
     public List<Task> findNotAssigned(Customer customer) {
         Criterion notAssignedRestricion = Restrictions.isNull("responsible");
+        Criterion customerRestriction = Restrictions.eq("customer", customer);
+        return findAllByRestriction(notAssignedRestricion, customerRestriction);
+    }
+    
+    @Override
+    public List<Task> findNotAssigned() {
+        Criterion notAssignedRestricion = Restrictions.isNull("responsible");
         return findAllByRestriction(notAssignedRestricion);
     }
 
     @Override
     public List<Task> findOpen() {        
         Criterion statusRestriction = Restrictions.not(
-                Restrictions.in("status.id", new Integer[]{StatusEnum.CLOSED.getValue()}));
+                Restrictions.in("status.id", new Integer[]{StatusEnum.CLOSED.getValue(), StatusEnum.NOT_STARTED.getValue()}));
         
         return findAllByRestriction(statusRestriction);
     }
@@ -52,7 +59,7 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, Integer, TaskDao> 
     @Override
     public List<Task> findOpen(User user) {
         Criterion statusRestriction = Restrictions.not(
-                Restrictions.in("status.id", new Integer[]{StatusEnum.CLOSED.getValue()}));
+                Restrictions.in("status.id", new Integer[]{StatusEnum.CLOSED.getValue(), StatusEnum.NOT_STARTED.getValue()}));
         Criterion responsibleCriterion = Restrictions.eq("responsible.id", user.getId());
 
         return findAllByRestriction(statusRestriction, responsibleCriterion);

@@ -5,18 +5,21 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:composite="http://java.sun.com/jsf/composite"
-    >
+    
+    xmlns:component="http://java.sun.com/jsf/composite/component">
     
     <composite:interface>
-        <composite:attribute name="controller" required="true"/>
-        <composite:attribute name="widgetVar" default="deleteConfirmation" />
+        <composite:attribute name="bean" type="java.lang.Object" required="true"/>
+        <composite:attribute name="action"  method-signature="void action()" required="true" />
+        <composite:attribute name="widgetVar" required="true" />
+        <composite:attribute name="message" required="true" />
     </composite:interface>
     <composite:implementation>
 
-        <p:confirmDialog message="Czy chcesz usunąć zaznaczony element?" header="&#160;"
+        <p:confirmDialog message="#{cc.attrs.message}" header="&#160;"
                          severity="alert" widgetVar="#{cc.attrs.widgetVar}">                                 
-            <p:commandButton value="Tak"  update="@form"
-                             oncomplete="#{cc.attrs.widgetVar}.hide()" action="#{cc.attrs.controller.deleteEntity}" />
+            <p:commandButton value="Tak" update="@form" action="#{cc.attrs.action}"
+                             oncomplete="#{cc.attrs.widgetVar}.hide()"  />
             <p:commandButton value="Nie" onclick="#{cc.attrs.widgetVar}.hide()" type="button" />
         </p:confirmDialog>
                 

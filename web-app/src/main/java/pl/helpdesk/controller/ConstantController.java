@@ -15,12 +15,11 @@ import org.springframework.stereotype.Controller;
 import pl.helpdesk.constant.RoleEnum;
 import pl.helpdesk.converter.ConverterUtil;
 import pl.helpdesk.model.BaseEntity;
+import pl.helpdesk.model.Customer;
 import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.model.Role;
-import pl.helpdesk.service.GenericService;
-import pl.helpdesk.service.HelpdeskUserService;
-import pl.helpdesk.service.RoleService;
-import pl.helpdesk.service.StatusService;
+import pl.helpdesk.service.*;
+import pl.helpdesk.util.SpringSecurityUtil;
 
 /**
  *
@@ -36,6 +35,8 @@ public class ConstantController implements Serializable {
     HelpdeskUserService helpdeskUserService;
     @Autowired
     StatusService statusService;
+    @Autowired
+    CustomerService customerService;
     
     private List<SelectItem> helpdeskRoles;
     private List<SelectItem> customerRoles;
@@ -59,6 +60,18 @@ public class ConstantController implements Serializable {
     public List<SelectItem> getHelpdeskUsers() {
         List<HelpdeskUser> users = helpdeskUserService.findAll();
         return prepareList(users, "login");
+    }
+    
+    public List<SelectItem> getAllCustomers() {
+        List<Customer> customers = customerService.findAll();
+        return prepareList(customers, "name");
+    }
+    
+    public List<SelectItem> getAllCustomersFroServisant() {
+        //TO-DO implementacja getLoggedUser
+        HelpdeskUser user = (HelpdeskUser)SpringSecurityUtil.getLoggedUser();
+        List<Customer> customers = customerService.findAll();
+        return prepareList(customers, "name");
     }
     
     private <T extends BaseEntity> List<SelectItem> prepereList(GenericService<T, Integer> service) {

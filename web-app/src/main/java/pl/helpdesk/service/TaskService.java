@@ -17,6 +17,7 @@ public interface TaskService extends GenericService<Task, Integer> {
     
     //metody uzywane przez pracownikow helpdesk
     public List<Task> findNotAssigned(Customer customer);
+    public List<Task> findNotAssigned();
     public List<Task> findOpen();
     public List<Task> findOpen(User user);
     public List<Task> findClosed();

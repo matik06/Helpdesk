@@ -37,6 +37,7 @@ import pl.helpdesk.constant.DisplayConfig;
 public class Task extends BaseEntity<Integer> implements Serializable {
     
     private Integer id;
+    @NotNull
     private Customer customer;
     private User author;
     private HelpdeskUser responsible;
@@ -51,6 +52,7 @@ public class Task extends BaseEntity<Integer> implements Serializable {
     private List<TaskNote> notes;
     private List<TaskFile> files;
     private List<Event> events;
+    private boolean isReopened;
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -91,6 +93,7 @@ public class Task extends BaseEntity<Integer> implements Serializable {
     }
 
     public void setResponsible(HelpdeskUser responsible) {
+                
         this.responsible = responsible;
     }
     
@@ -181,6 +184,23 @@ public class Task extends BaseEntity<Integer> implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    public boolean isIsReopened() {
+        return isReopened;
+    }
+
+    public void setIsReopened(boolean isReopened) {
+        this.isReopened = isReopened;
+    }        
+    
+    public boolean canEdit(User user) {
+        if (author == null || author.getId().intValue() == user.getId().intValue()) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     @Override
