@@ -125,8 +125,11 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 .post {
     background: #E1D6CB;
     padding-right: 25px;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding-top: 10px;
+    border: #510000 thin solid ;
 }
 
 

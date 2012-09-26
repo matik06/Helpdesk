@@ -47,7 +47,7 @@ public class LoginBean {
         boolean success = authenticationService.login(login, password);
         if (success) {
             System.out.println("zalogowano poprawnie");
-            return "/index.xhtml?faces-redirect=true";
+            return "/views/tasks.xhtml?faces-redirect=true";
 //            return "bikesShop.xhtml"; // return to application but being logged now
         } else {
             FacesUtils.addErrorMessage("Hasło lub login niepoprawne");

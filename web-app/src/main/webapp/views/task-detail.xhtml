@@ -21,22 +21,60 @@
 
     <ui:define name="content">  
         
+        <h:form id="mainForm">    
+            
+            <component:post title="#{taskDetailController.task.title}" date="#{taskDetailController.task.date}" content="#{taskDetailController.task.description}" author="#{taskDetailController.task.author}"/>
+        
+            <div style="margin-bottom: 70px; margin-top: 15px; width: 100%;">                                
+                <p:menubar autoDisplay="false" style="width: 1180px;">  
+                    
+                    <p:menuitem value="Edytuj" url="#" icon="ui-icon-pencil" />
+
+                    <p:submenu label="Nowy" icon="ui-icon-pencil">  
+                        <p:menuitem value="Komentarz" url="#" icon="ui-icon-arrowreturnthick-1-w" />  
+                        <p:menuitem value="Plik" url="#" icon="ui-icon-arrowreturnthick-1-e" />  
+                    </p:submenu>                                      
+                    
+                    <sec:authorize access="hasRole('Helpdesk_User')">
+                        <p:menuitem value="Zmień serwisanta" url="#" icon="ui-icon-pencil"/>
+                    </sec:authorize>
+                </p:menubar> 
+            </div>
+            
+            
+            
         <!-- dynamic="true" cache="true" -->
-        <p:tabView  id="tabView" activeIndex="0" >       
-            
-            <p:tab title="Komentarze" >
-                 
-            </p:tab>
-            
-            <p:tab title="Pliki">                
-                
-            </p:tab>                         
-            
-            <p:tab title="Logi">                
-                
-            </p:tab>                         
-            
-        </p:tabView>
+            <p:tabView  id="tabView" activeIndex="0" dynamic="true" cache="false">       
+
+                <p:tab title="Komentarze" >
+
+                    <p:dataList value="#{taskDetailController.task.notes}" var="comment" id="cars"  
+                                paginator="true" rows="5" paginatorPosition="top"
+                                paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                rowsPerPageTemplate="5,10,15" type="none">  
+                                     
+                            
+<!--                        <p:commandButton icon="ui-icon-search" update=":form:carDetail" oncomplete="carDialog.show()" title="View Detail">  
+                            <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />  
+                        </p:commandButton>  -->
+                            
+                        <h:outputText value="#{comment.date}, #{comment.content}" style="margin-left:10px" />  
+                        <br />  
+                    </p:dataList>
+                    
+                </p:tab>
+
+                <p:tab title="Pliki">                
+
+                </p:tab>                         
+
+                <p:tab title="Logi">                
+
+                </p:tab>                         
+
+            </p:tabView>
+        
+        </h:form>
         
     </ui:define>   
 

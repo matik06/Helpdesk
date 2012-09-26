@@ -47,6 +47,7 @@
         <primefaces.version>3.3.1</primefaces.version>
         <jstl.version>1.2</jstl.version>
         <prettyfaces.version>3.3.3</prettyfaces.version>
+        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
     
     <dependencies>

@@ -46,7 +46,7 @@ public abstract class HelpdeskTaskController extends GridController<Task> {
         if (entity.getId() == null) {
             entity.setAuthor(getLoggedUser());
             entity.setDate(new Date());
-            Status taskStatus = statusService.findById(StatusEnum.IN_PROGRESS.getValue());
+            Status taskStatus = statusService.findById(StatusEnum.NOT_STARTED.getValue());
             entity.setStatus(taskStatus);
 
             getService().save(entity);

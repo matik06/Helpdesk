@@ -22,9 +22,11 @@ public class TaskHelpdeskNotAssignedAllController extends HelpdeskTaskController
         this.entityList = taskService.findNotAssigned();
     }
     
-    public void assignMyself() {
+    public String assignMyself() {
         HelpdeskUser user = getLoggedHelpdeskUser();
         this.entity.setResponsible(user);
         updateEntity();
+        
+        return "pretty:tasks";
     }
 }

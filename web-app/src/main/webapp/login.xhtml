@@ -36,11 +36,11 @@
                 <p:messages />
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Login" for="j_username"/>
-                    <p:inputText id="j_username" value="#{loginBean.login}"
-                                 required="true" requiredMessage="Pole login jest wymagane"/>
+                    <p:inputText id="j_username" value="#{loginBean.login}" required="true" requiredMessage="Pole login jest wymagane"/>
                     <h:outputLabel value="Hasło" for="j_password"/>
-                    <p:password id="j_password" value="#{loginBean.password}"
-                                required="true" requiredMessage="Pole hasło jest wymagane"/>
+                    <p:password id="j_password" value="#{loginBean.password}" required="true" requiredMessage="Pole hasło jest wymagane"/>
+<!--                    <h:outputLabel value="Zapamiętaj mnie" for="_spring_security_remember_me"/>
+                    <p:selectBooleanCheckbox id="_spring_security_remember_me" />-->
                 </h:panelGrid>
                 <p:commandButton action="#{loginBean.doLogin}" value="Login" ajax="false">
                     

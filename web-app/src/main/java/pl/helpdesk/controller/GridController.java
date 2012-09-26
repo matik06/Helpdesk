@@ -6,7 +6,10 @@ package pl.helpdesk.controller;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
+import org.springframework.security.access.annotation.Secured;
 import pl.helpdesk.model.BaseEntity;
 import pl.helpdesk.service.GenericService;
 
@@ -23,18 +26,24 @@ public abstract class GridController<T extends BaseEntity<Integer>> extends Base
     protected T selectedEntity;    
     protected boolean permissionToWrite = true;
     
+    private static final Logger logger = Logger.getLogger(GridController.class);
     
     public abstract GenericService<T, Integer> getService();
     
     public GridController(Class<T> clazz) {
         this.clazz = clazz;
+        try {
+            entity = clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
     }
     
     @PostConstruct
     public void init() throws InstantiationException, IllegalAccessException {
         reloadList();
     }        
-    
+        
     public void saveOrUpdateEntity() {
 
         System.out.println("save or update");

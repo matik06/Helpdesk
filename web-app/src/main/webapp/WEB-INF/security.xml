@@ -1,4 +1,3 @@
-
 <beans:beans xmlns="http://www.springframework.org/schema/security"
   xmlns:beans="http://www.springframework.org/schema/beans"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -16,13 +15,18 @@
     <global-method-security secured-annotations="enabled" jsr250-annotations="enabled" pre-post-annotations="enabled" />    
     
     <http auto-config="true" use-expressions="true" once-per-request="false" access-denied-page="/access-deny" access-decision-manager-ref="accessDecisionManager">        
-        <form-login login-page="/login" default-target-url="/"/>        
+        <form-login login-page="/login" default-target-url="/tasks"/>        
         <logout logout-url="/logout" logout-success-url="/login" invalidate-session="true" delete-cookies="JSESSIONID"/>
+        <!-- Remember me tutorial: http://mprabhat.wordpress.com/2012/07/15/implementing-spring-security-remember-me-with-jsf-2-0/ -->
+        <!--<remember-me key="helpdesk_application" token-validity-seconds="2419200" />-->
         
         <!-- parametr https wymusza przekierowanie na protokół https za każdym razem gdy http jest użyty -->
-        <intercept-url pattern="/**" requires-channel="https"/>
+        <intercept-url pattern="/" requires-channel="http"/>
+        <intercept-url pattern="/home" requires-channel="http"/>
+        <intercept-url pattern="/**" requires-channel="https"/>        
         <intercept-url pattern="/customers/**" access="hasRole('Helpdesk_Manager')" />
         <intercept-url pattern="/helpdesk-users" access="hasRole('Helpdesk_User')" />
+        <intercept-url pattern="/tasks" access="hasAnyRole('Helpdesk_User','Customer_User')" />
         
         <!-- Detecting timeout -->
         <session-management invalid-session-url="/invalid-session" />   

@@ -28,6 +28,7 @@ public abstract class BaseController implements Serializable {
     
     protected Integer getRequestParameterAsInt(String key) {
         String stringValue = getRequestParameterAsString(key);
+        System.out.println(key + ": " + stringValue);
         return Integer.valueOf(stringValue);
     }
     

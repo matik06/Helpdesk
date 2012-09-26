@@ -46,11 +46,14 @@
                         </p:column>
                             
                         <p:column style="width:40px">
-                            <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
-                                    
-                                <p:commandButton onclick="deleteConfirmationHelpdeskUser.show()" icon="#{msg['grid.delete.icon']}" title="#{msg['grid.delete.title']}">
-                                    <f:setPropertyActionListener value="#{entity}" target="#{customerHelpdeskUserController.entity}" />
-                                </p:commandButton>                        
+                            <h:panelGrid columns="3" styleClass="actions" cellpadding="2">    
+                                
+                                <p:commandButton id="menuHIP" type="button" icon="#{msg['grid.menu.icon']}" title="#{msg['grid.menu.title']}"/>                                                                
+                                <p:menu overlay="true" trigger="menuHIP" my="#{msg['grid.menu.my']}" at="#{msg['grid.menu.at']}">  
+                                    <p:menuitem value="#{msg['grid.delete.title']}" onclick="deleteConfirmationHelpdeskUser.show()" icon="#{msg['grid.delete.icon']}" title="#{msg['grid.delete.title']}">
+                                        <f:setPropertyActionListener value="#{entity}" target="#{customerHelpdeskUserController.entity}" />
+                                    </p:menuitem>
+                                </p:menu> 
                                     
                             </h:panelGrid>
                         </p:column>
@@ -108,19 +111,20 @@
                         </p:column>
 
                         <p:column style="width:40px">
-                            <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
-
-                                <p:commandButton actionListener="#{customerUsersController.disablePermissionToWrite}" update=":tabView:entity-form-client-users" oncomplete="entityDetail.show();" icon="#{msg['grid.show.icon']}" title="#{msg['grid.show.title']}"> 
-                                    <f:setPropertyActionListener value="#{entity}" target="#{customerUsersController.entity}" />
-                                </p:commandButton>
-
-                                <p:commandButton update=":tabView:entity-form-client-users" oncomplete="entityDetail.show();" icon="#{msg['grid.edit.icon']}" title="#{msg['grid.edit.title']}"> 
-                                    <f:setPropertyActionListener value="#{entity}" target="#{customerUsersController.entity}" />
-                                </p:commandButton>
-
-                                <p:commandButton onclick="deleteConfirmation.show()" icon="#{msg['grid.delete.icon']}" title="#{msg['grid.delete.title']}">
-                                    <f:setPropertyActionListener value="#{entity}" target="#{customerUsersController.entity}" />
-                                </p:commandButton>                        
+                            <h:panelGrid columns="3" styleClass="actions" cellpadding="2">    
+                                
+                                <p:commandButton id="menuHIP" type="button" icon="#{msg['grid.menu.icon']}" title="#{msg['grid.menu.title']}"/>                                                                
+                                <p:menu overlay="true" trigger="menuHIP" my="#{msg['grid.menu.my']}" at="#{msg['grid.menu.at']}">  
+                                    <p:menuitem value="#{msg['grid.show.title']}" actionListener="#{customerUsersController.disablePermissionToWrite}" update=":tabView:entity-form-client-users" oncomplete="entityDetail.show();" icon="#{msg['grid.show.icon']}" title="#{msg['grid.show.title']}">
+                                        <f:setPropertyActionListener value="#{entity}" target="#{customerUsersController.entity}" />
+                                    </p:menuitem>
+                                    <p:menuitem value="#{msg['grid.edit.title']}" update=":tabView:entity-form-client-users" oncomplete="entityDetail.show();" icon="#{msg['grid.edit.icon']}" title="#{msg['grid.edit.title']}">
+                                        <f:setPropertyActionListener value="#{entity}" target="#{customerUsersController.entity}" />
+                                    </p:menuitem>
+                                    <p:menuitem value="#{msg['grid.delete.title']}" onclick="deleteConfirmation.show()" icon="#{msg['grid.delete.icon']}" title="#{msg['grid.delete.title']}">
+                                        <f:setPropertyActionListener value="#{entity}" target="#{customerUsersController.entity}" />
+                                    </p:menuitem>
+                                </p:menu> 
 
                             </h:panelGrid>
                         </p:column>

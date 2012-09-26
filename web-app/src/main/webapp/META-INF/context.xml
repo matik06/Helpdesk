@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--<Context antiJARLocking="true" path="/helpdesk"/>-->
-
-<Context path="/helpdesk" debug="1"
-	reloadable="false" crossContext="false">
+<Context crossContext="false" debug="1" path="/helpdesk" reloadable="false">
 </Context>

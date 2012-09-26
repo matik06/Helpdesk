@@ -51,15 +51,16 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, Integer, TaskDao> 
     @Override
     public List<Task> findOpen() {        
         Criterion statusRestriction = Restrictions.not(
-                Restrictions.in("status.id", new Integer[]{StatusEnum.CLOSED.getValue(), StatusEnum.NOT_STARTED.getValue()}));
+                Restrictions.in("status.id", new Integer[]{StatusEnum.CLOSED.getValue()}));
+        Criterion assignedRestricion = Restrictions.isNotNull("responsible");
         
-        return findAllByRestriction(statusRestriction);
+        return findAllByRestriction(statusRestriction, assignedRestricion);
     }
     
     @Override
     public List<Task> findOpen(User user) {
         Criterion statusRestriction = Restrictions.not(
-                Restrictions.in("status.id", new Integer[]{StatusEnum.CLOSED.getValue(), StatusEnum.NOT_STARTED.getValue()}));
+                Restrictions.in("status.id", new Integer[]{StatusEnum.CLOSED.getValue()}));
         Criterion responsibleCriterion = Restrictions.eq("responsible.id", user.getId());
 
         return findAllByRestriction(statusRestriction, responsibleCriterion);
