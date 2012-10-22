@@ -14,7 +14,9 @@
 
         </script>
         <style>
-            
+            .ui-menu .ui-menu-parent ul.ui-menu-child{
+                width: 250px !important;
+            }
         </style>
     </ui:define>   
     
@@ -22,17 +24,22 @@
     <ui:define name="content">  
         
         <h:form id="mainForm">    
-            
-            <component:post title="#{taskDetailController.task.title}" date="#{taskDetailController.task.date}" content="#{taskDetailController.task.description}" author="#{taskDetailController.task.author}"/>
+        
+            <h:panelGroup layout="block" id="taskDetail">
+                <component:post title="#{taskDetailController.task.title}" date="#{taskDetailController.task.date}" content="#{taskDetailController.task.description}" author="#{taskDetailController.task.author}" responsible="#{taskDetailController.task.responsible}"/>
+            </h:panelGroup>
         
             <div style="margin-bottom: 70px; margin-top: 15px; width: 100%;">                                
                 <p:menubar autoDisplay="false" style="width: 1180px;">  
                     
-                    <p:menuitem value="Edytuj" url="#" icon="ui-icon-pencil" />
+                    <p:menuitem value="Edytuj" icon="ui-icon-pencil" rendered="#{taskDetailController.task.author.id == constantController.user.id}" update=":mainForm" oncomplete="taskDetailDialog.show();" />
 
-                    <p:submenu label="Nowy" icon="ui-icon-pencil">  
-                        <p:menuitem value="Komentarz" url="#" icon="ui-icon-arrowreturnthick-1-w" />  
-                        <p:menuitem value="Plik" url="#" icon="ui-icon-arrowreturnthick-1-e" />  
+                    <p:submenu label="Nowy" icon="ui-icon-plusthick">  
+                        <p:menuitem value="Komentarz" icon="ui-icon-comment" update=":mainForm" oncomplete="publicNoteDialog.show();" />  
+                        <p:menuitem value="Komentarz (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateNoteDialog.show();" />  
+                        <p:menuitem value="Komentarz do aktualizacji" icon="ui-icon-comment" update=":mainForm" oncomplete="publicUpgradeNoteDialog.show();" />  
+                        <p:menuitem value="Komentarz do aktualizacji (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateUpgradeNoteDialog.show();" />  
+                        <p:menuitem value="Plik" url="#" icon="ui-icon-folder-open" />  
                     </p:submenu>                                      
                     
                     <sec:authorize access="hasRole('Helpdesk_User')">
@@ -46,22 +53,69 @@
         <!-- dynamic="true" cache="true" -->
             <p:tabView  id="tabView" activeIndex="0" dynamic="true" cache="false">       
 
-                <p:tab title="Komentarze" >
+                <p:tab title="Komentarze" >                    
+                    <h:panelGroup layout="span" id="publicCommentsId">
+                        
+                        <p:dataList value="#{taskDetailController.publicNotes}" var="publicComm"  
+                                    paginator="true" rows="10" paginatorPosition="top"
+                                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                    rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                              
+                            
+                            
+                                <div class="#{index % 2 == 0 ? 'comment_odd':'comment_even'}">
+                                    <div class="author">                                        
+                                        <span class="name"><a href="#"><h:outputText value="#{publicComm.user.fullName}"/></a></span>
+                                    </div>
+                                    <div class="submitdatecomment">
+                                        <a href="#"><h:outputText value="#{publicComm.date}"><f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" /></h:outputText></a>
+                                    </div>
+                                    <div style="margin-top: 5px;"><h:outputText value="#{publicComm.body}" escape="false"/></div>
+<!--                                    <p class="readmore"><a href="#">Continue Reading &#187;</a></p>-->
+                                </div>                                               
+                                                                                                                                                                                                                  
+                            
+                        </p:dataList>
+                        
+                    </h:panelGroup>  
+                </p:tab>
+                
+                <p:tab title="Komentarze (priv)" >
+                    <h:panelGroup layout="span" id="privateCommentsId">
+                        <p:dataList value="#{taskDetailController.privateNotes}" var="privComm"  
+                                    paginator="true" rows="10" paginatorPosition="top"
+                                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                    rowsPerPageTemplate="5,10,15" type="none">                                          
+                            <h:outputText value="#{privComm.body}" style="margin-left:10px" escape="false"/>                                          
+                            <hr/>
+                                
+                        </p:dataList>
+                    </h:panelGroup>  
+                </p:tab>
+                
+                <p:tab title="Komentarz aktualizacji" >
+                    <h:panelGroup layout="span" id="upgradeCommentsId">
+                        <p:dataList value="#{taskDetailController.publicUpgradeNotes}" var="upgradeComm"  
+                                    paginator="true" rows="10" paginatorPosition="top"
+                                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                    rowsPerPageTemplate="5,10,15" type="none">                                          
+                            <h:outputText value="#{upgradeComm.body}" style="margin-left:10px" escape="false"/>                                          
+                            <hr/>
 
-                    <p:dataList value="#{taskDetailController.task.notes}" var="comment" id="cars"  
-                                paginator="true" rows="5" paginatorPosition="top"
-                                paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
-                                rowsPerPageTemplate="5,10,15" type="none">  
-                                     
-                            
-<!--                        <p:commandButton icon="ui-icon-search" update=":form:carDetail" oncomplete="carDialog.show()" title="View Detail">  
-                            <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />  
-                        </p:commandButton>  -->
-                            
-                        <h:outputText value="#{comment.date}, #{comment.content}" style="margin-left:10px" />  
-                        <br />  
-                    </p:dataList>
-                    
+                        </p:dataList>
+                    </h:panelGroup>  
+                </p:tab>
+                
+                <p:tab title="Komentarz aktualizacji (priv)" >
+                    <h:panelGroup layout="span" id="privateUpgradeCommentsId">
+                        <p:dataList value="#{taskDetailController.privateUpgradeNotes}" var="privateUpgradeComm"  
+                                    paginator="true" rows="10" paginatorPosition="top"
+                                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                    rowsPerPageTemplate="5,10,15" type="none">                                          
+                            <h:outputText value="#{privateUpgradeComm.body}" style="margin-left:10px" escape="false"/>                                          
+                            <hr/>
+                                
+                        </p:dataList>
+                    </h:panelGroup>  
                 </p:tab>
 
                 <p:tab title="Pliki">                
@@ -74,6 +128,85 @@
 
             </p:tabView>
         
+        
+            <!-- Formularz taska  -->
+            <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="taskDetailDialog" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >            
+                <h:panelGroup layout="block" style="width: 830px;" id="taskDetailDialogId">                    
+                    <p:messages id="msgsHNA" globalOnly="false"/>               
+
+                    <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                        <h:outputLabel for="taskTitle" value="Tytuł" />
+                        <p:inputText style="width: 700px;"  id="taskTitle" value="#{taskDetailController.task.title}" label="taskTitle"/>                       
+                        <p:message for="taskTitle" display="icon"/>                                
+
+                        <h:outputLabel for="taskDescription" value="Treść" />
+                        <p:editor width="700" height="400" id="taskDescription" value="#{taskDetailController.task.description}"/>
+                        <p:message for="taskDescription" display="icon"/>                                                        
+
+                        <sec:authorize access="hasRole('Helpdesk_User')">
+                            <h:outputLabel for="taskSerwisant" value="Serwisant"/>                   
+                            <p:selectOneMenu id="taskSerwisant" style="width: 180px;" value="#{taskDetailController.task.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant">
+                                <f:selectItems value="#{constantController.helpdeskUsers}"/>
+                            </p:selectOneMenu>
+                            <p:message for="taskSerwisant" display="icon"/>                    
+                        </sec:authorize>
+                    </h:panelGrid>
+                    <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":mainForm:taskDetail :mainForm:taskDetailDialogId" actionListener="#{taskDetailController.updateTask}" oncomplete="handleCloseEntityDialog(xhr, status, args, taskDetailDialog)"/>            
+                </h:panelGroup>
+            </p:dialog>
+            
+            <!-- Formularz notatki publicznej -->
+            <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="publicNoteDialog" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >            
+                <h:panelGroup layout="block" style="width: 830px;" id="publicNoteDialogId">                    
+                    <p:messages/>                                   
+                    <h:panelGrid columns="3" style="margin-bottom:10px">                                           
+                        <h:outputLabel for="publicNoteContent" value="Tytuł" />
+                        <p:editor width="700" height="400" id="publicNoteContent" value="#{taskDetailController.note.body}" label="Treść"/>                       
+                        <p:message for="publicNoteContent" display="icon"/>                                                                                                                                        
+                    </h:panelGrid>                    
+                    <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update="@form"  actionListener="#{taskDetailController.saveOrUpdatePublicNote}" oncomplete="handleCloseEntityDialog(xhr, status, args, publicNoteDialog)"/>            
+                </h:panelGroup>
+            </p:dialog>
+                        
+            <!-- Formularz notatki prywatnej -->
+            <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="privateNoteDialog" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >            
+                <h:panelGroup layout="block" style="width: 830px;" id="privateNoteDialogId">                    
+                    <p:messages/>                                   
+                    <h:panelGrid columns="3" style="margin-bottom:10px">                                           
+                        <h:outputLabel for="privateNoteContent" value="Tytuł" />
+                        <p:editor width="700" height="400" id="privateNoteContent" value="#{taskDetailController.privateNote.body}" label="Treść"/>                       
+                        <p:message for="privateNoteContent" display="icon"/>                                                                                                                                        
+                    </h:panelGrid>                    
+                    <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update="@form"  actionListener="#{taskDetailController.saveOrUpdatePrivateNote}" oncomplete="handleCloseEntityDialog(xhr, status, args, privateNoteDialog)"/>            
+                </h:panelGroup>
+            </p:dialog>
+            
+            <!-- Formularz notatki aktualizacji -->
+            <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="publicUpgradeNoteDialog" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >            
+                <h:panelGroup layout="block" style="width: 830px;" id="publicUpgradeNoteDialogId">                    
+                    <p:messages/>                                   
+                    <h:panelGrid columns="3" style="margin-bottom:10px">                                           
+                        <h:outputLabel for="publicUpgradeNoteContent" value="Tytuł" />
+                        <p:editor width="700" height="400" id="publicUpgradeNoteContent" value="#{taskDetailController.upgradeNote.body}" label="Treść"/>                       
+                        <p:message for="publicUpgradeNoteContent" display="icon"/>                                                                                                                                        
+                    </h:panelGrid>                    
+                    <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update="@form"  actionListener="#{taskDetailController.saveOrUpdatePublicUpgrateNote}" oncomplete="handleCloseEntityDialog(xhr, status, args, publicUpgradeNoteDialog)"/>            
+                </h:panelGroup>
+            </p:dialog>
+
+            <!-- Formularz prywatnej notatki aktualizacji -->
+            <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="privateUpgradeNoteDialog" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >            
+                <h:panelGroup layout="block" style="width: 830px;" id="privateUpgradeNoteDialogId">                    
+                    <p:messages/>                                   
+                    <h:panelGrid columns="3" style="margin-bottom:10px">                                           
+                        <h:outputLabel for="privateUpgradeNoteContent" value="Tytuł" />
+                        <p:editor width="700" height="400" id="privateUpgradeNoteContent" value="#{taskDetailController.privateUpgradeNote.body}" label="Treść"/>                       
+                        <p:message for="privateUpgradeNoteContent" display="icon"/>                                                                                                                                        
+                    </h:panelGrid>                    
+                    <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update="@form"  actionListener="#{taskDetailController.saveOrUpdatePrivateUpgrateNote}" oncomplete="handleCloseEntityDialog(xhr, status, args, privateUpgradeNoteDialog)"/>            
+                </h:panelGroup>
+            </p:dialog>
+            
         </h:form>
         
     </ui:define>   

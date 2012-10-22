@@ -5,16 +5,10 @@
 package pl.helpdesk.model;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -32,7 +26,7 @@ public class TaskNote extends Note implements Serializable {
     private Task task;
 
     
-    @ManyToOne(fetch= FetchType.EAGER, optional=false)
+    @ManyToOne(fetch= FetchType.LAZY, optional=false)
     @JoinColumn(name="noteTypeId")
     public NoteType getType() {
         return type;
@@ -82,6 +76,6 @@ public class TaskNote extends Note implements Serializable {
 
     @Override
     public String toString() {
-        return "TaskNote{" + "id=" + id + ", type=" + type + ", task=" + task + '}';
+        return super.toString() + "\nTaskNote{" + "id=" + id + ", type=" + type + ", task=" + task + '}';
     }
 }

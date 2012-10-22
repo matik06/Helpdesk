@@ -18,6 +18,7 @@ import pl.helpdesk.model.BaseEntity;
 import pl.helpdesk.model.Customer;
 import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.model.Role;
+import pl.helpdesk.model.User;
 import pl.helpdesk.service.*;
 import pl.helpdesk.util.SpringSecurityUtil;
 
@@ -42,9 +43,11 @@ public class ConstantController implements Serializable {
     private List<SelectItem> customerRoles;
     private List<SelectItem> allRoles;
     private List<SelectItem> allTaskStatuses;
+    private User user;
     
     @PostConstruct
     public void init() {
+        user = SpringSecurityUtil.getLoggedUser();
         
         allRoles = prepereList(roleService);
         allTaskStatuses = prepereList(statusService);        
@@ -138,5 +141,13 @@ public class ConstantController implements Serializable {
 
     public void setAllTaskStatuses(List<SelectItem> allTaskStatuses) {
         this.allTaskStatuses = allTaskStatuses;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }        
 }

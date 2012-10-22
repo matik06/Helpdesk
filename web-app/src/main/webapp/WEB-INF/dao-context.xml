@@ -65,7 +65,7 @@
                 <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
                 
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
                 <!-- ładnie sformatowane wyświetlanie zapytań -->
                 <prop key="hibernate.format_sql">true</prop>
                 <!-- opcja do wyłączenia (http://stackoverflow.com/questions/438146/hibernate-question-hbm2ddl-auto-possible-values-and-what-they-do)-->

@@ -12,6 +12,7 @@
         <composite:attribute name="date" required="true" />
         <composite:attribute name="content" required="true" />
         <composite:attribute name="author" required="true" />
+        <composite:attribute name="responsible" required="false"/>
     </composite:interface>
     <composite:implementation>
 
@@ -28,7 +29,10 @@
                 <p>
                     <h:outputText escape="false" value="#{cc.attrs.content}"/> 
                 </p>                                        
-                <p style="font-size: 120%;"><strong>autor: #{cc.attrs.author.firstName} #{cc.attrs.author.lastName}</strong></p>                                
+                <p style="font-size: 120%;"><strong>Autor:</strong> #{cc.attrs.author.firstName} #{cc.attrs.author.lastName}</p>                                
+                <h:panelGroup layout="span" rendered="#{cc.attrs.responsible != null}">
+                    <p style="font-size: 120%;"><strong>Serwisant:</strong> #{cc.attrs.responsible.firstName} #{cc.attrs.responsible.lastName}</p>                                
+                </h:panelGroup>
             </ul>
         </div>
                 

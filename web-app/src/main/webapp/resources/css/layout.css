@@ -154,6 +154,17 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 
 #comments .commentlist li .avatar{float:right; border:1px solid #EEEEEE; margin:0 0 0 10px;}
 
+
+div.comment_odd, div.comment_even{margin:0 0 10px 0; padding:15px; list-style:none;}
+
+div.comment_odd{color:#666666; background-color:#F7F7F7;}
+div.comment_odd a{color:#896C50; background-color:#F7F7F7;}
+
+div.comment_even{color:#666666; background-color:#E8E8E8;}
+div.comment_even a{color:#896C50; background-color:#E8E8E8;}
+
+div.submitdatecomment{font-size:smaller;}
+
 /* ----------------------------------------------Column-------------------------------------*/
 
 #column{

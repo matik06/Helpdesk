@@ -34,7 +34,7 @@ public class Note extends BaseEntity<Integer> implements Serializable {
     protected User user;
     
     protected Date date;
-    protected String content;
+    protected String body;
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -57,13 +57,14 @@ public class Note extends BaseEntity<Integer> implements Serializable {
         this.user = user;
     }
 
-    public String getContent() {
-        return content;
+    @Column(columnDefinition="TEXT")
+    public String getBody() {
+        return body;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+    public void setBody(String body) {
+        this.body = body;
+    }    
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getDate() {
@@ -103,6 +104,6 @@ public class Note extends BaseEntity<Integer> implements Serializable {
 
     @Override
     public String toString() {
-        return "Note{" + "id=" + id + ", user=" + user + ", date=" + date + ", content=" + content + '}';
+        return "Note{" + "id=" + id + ", user=" + user + ", date=" + date + ", body=" + body + '}';
     }
 }
