@@ -33,7 +33,8 @@ public class File extends BaseEntity<Integer> implements Serializable {
     protected Integer id;
     protected User user;
     protected String name;
-    protected String path;
+    protected String fileSystemName;
+    protected String contentType;
     protected Date date;
 
     @Id
@@ -74,14 +75,21 @@ public class File extends BaseEntity<Integer> implements Serializable {
         this.name = name;
     }
 
-    public String getPath() {
-        return path;
+    public String getFileSystemName() {
+        return fileSystemName;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setFileSystemName(String fileSystemName) {
+        this.fileSystemName = fileSystemName;
     }
-    
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }        
 
     @Override
     public int hashCode() {

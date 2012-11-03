@@ -42,6 +42,7 @@
         <javassist.version>3.12.1.GA</javassist.version>
         <guava.version>r09</guava.version>
         <commons-lang.version>2.6</commons-lang.version>
+<!--        <commons-io.version>1.4</commons-io.version>-->
         
         <jsf.version>2.1.11</jsf.version>
         <primefaces.version>3.3.1</primefaces.version>
@@ -302,8 +303,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>${jstl.version}</version>
-        </dependency>   
-        
+        </dependency>           
         
         <dependency>
             <groupId>commons-beanutils</groupId>
@@ -311,6 +311,16 @@
             <version>1.8.3</version>
         </dependency>
         
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.1</version>
+        </dependency>        
     </dependencies>
     
     

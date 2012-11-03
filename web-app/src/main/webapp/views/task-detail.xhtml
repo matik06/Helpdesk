@@ -1,7 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"           
+                xmlns:p="http://primefaces.org/ui"          
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/templates/main.xhtml"
 
@@ -39,7 +39,8 @@
                         <p:menuitem value="Komentarz (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateNoteDialog.show();" />  
                         <p:menuitem value="Komentarz do aktualizacji" icon="ui-icon-comment" update=":mainForm" oncomplete="publicUpgradeNoteDialog.show();" />  
                         <p:menuitem value="Komentarz do aktualizacji (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateUpgradeNoteDialog.show();" />  
-                        <p:menuitem value="Plik" url="#" icon="ui-icon-folder-open" />  
+                        
+                        <p:menuitem value="Plik" icon="ui-icon-folder-open" update=":mainForm" oncomplete="taskFileDialog.show();"/>  
                     </p:submenu>                                      
                     
                     <sec:authorize access="hasRole('Helpdesk_User')">
@@ -60,20 +61,7 @@
                                     paginator="true" rows="10" paginatorPosition="top"
                                     paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
                                     rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                              
-                            
-                            
-                                <div class="#{index % 2 == 0 ? 'comment_odd':'comment_even'}">
-                                    <div class="author">                                        
-                                        <span class="name"><a href="#"><h:outputText value="#{publicComm.user.fullName}"/></a></span>
-                                    </div>
-                                    <div class="submitdatecomment">
-                                        <a href="#"><h:outputText value="#{publicComm.date}"><f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" /></h:outputText></a>
-                                    </div>
-                                    <div style="margin-top: 5px;"><h:outputText value="#{publicComm.body}" escape="false"/></div>
-<!--                                    <p class="readmore"><a href="#">Continue Reading &#187;</a></p>-->
-                                </div>                                               
-                                                                                                                                                                                                                  
-                            
+                            <component:comment date="#{publicComm.date}" content="#{publicComm.body}" author="#{publicComm.user.fullName}" isEven="#{index % 2 == 0}" />                            
                         </p:dataList>
                         
                     </h:panelGroup>  
@@ -84,10 +72,8 @@
                         <p:dataList value="#{taskDetailController.privateNotes}" var="privComm"  
                                     paginator="true" rows="10" paginatorPosition="top"
                                     paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
-                                    rowsPerPageTemplate="5,10,15" type="none">                                          
-                            <h:outputText value="#{privComm.body}" style="margin-left:10px" escape="false"/>                                          
-                            <hr/>
-                                
+                                    rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">      
+                        <component:comment date="#{privComm.date}" content="#{privComm.body}" author="#{privComm.user.fullName}" isEven="#{index % 2 == 0}" />                                                                                                                                                             
                         </p:dataList>
                     </h:panelGroup>  
                 </p:tab>
@@ -97,10 +83,8 @@
                         <p:dataList value="#{taskDetailController.publicUpgradeNotes}" var="upgradeComm"  
                                     paginator="true" rows="10" paginatorPosition="top"
                                     paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
-                                    rowsPerPageTemplate="5,10,15" type="none">                                          
-                            <h:outputText value="#{upgradeComm.body}" style="margin-left:10px" escape="false"/>                                          
-                            <hr/>
-
+                                    rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                                          
+                            <component:comment date="#{upgradeComm.date}" content="#{upgradeComm.body}" author="#{upgradeComm.user.fullName}" isEven="#{index % 2 == 0}" />                            
                         </p:dataList>
                     </h:panelGroup>  
                 </p:tab>
@@ -110,20 +94,47 @@
                         <p:dataList value="#{taskDetailController.privateUpgradeNotes}" var="privateUpgradeComm"  
                                     paginator="true" rows="10" paginatorPosition="top"
                                     paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
-                                    rowsPerPageTemplate="5,10,15" type="none">                                          
-                            <h:outputText value="#{privateUpgradeComm.body}" style="margin-left:10px" escape="false"/>                                          
-                            <hr/>
-                                
+                                    rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                                          
+                            <component:comment date="#{privateUpgradeComm.date}" content="#{privateUpgradeComm.body}" author="#{privateUpgradeComm.user.fullName}" isEven="#{index % 2 == 0}" />                                
                         </p:dataList>
                     </h:panelGroup>  
                 </p:tab>
 
                 <p:tab title="Pliki">                
+                    <p:dataTable id="entity-grid-table-task-files" value="#{taskDetailController.task.files}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="5 10 15"                       
+                                 draggableColumns="true"  >   
 
+                        <p:column headerText="Data" sortBy="#{entity.date}" >                            
+                            #{entity.date}
+                        </p:column>
+
+                        <p:column headerText="Nazwa" sortBy="#{entity.name}" filterBy="#{entity.name}">                            
+                            <h:commandLink action="#{downloadController.downloadTaskFile}" value="#{entity.name}" >
+                                <f:setPropertyActionListener target="#{downloadController.fileId}" value="#{entity.id}" /> 
+                                <p:fileDownload value="#{downloadController.file}" />  
+                            </h:commandLink>
+                        </p:column>
+
+                        <p:column headerText="Autor" sortBy="#{entity.user.fullName}" filterBy="#{entity.user.fullName}">
+                            #{entity.user.fullName}
+                        </p:column>                        
+
+                        <f:facet name="footer">                             
+                        </f:facet>
+
+                    </p:dataTable>
                 </p:tab>                         
 
                 <p:tab title="Logi">                
-
+                    <h:panelGroup layout="span" id="logs">
+                        <p:dataList value="#{taskDetailController.task.events}" var="event"  
+                                    paginator="true" rows="10" paginatorPosition="top"
+                                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                    rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                                          
+                            <component:comment date="#{event.date}" content="#{event.type.name}" author="#{event.user}" isEven="#{index % 2 == 0}" />                                
+                        </p:dataList>
+                    </h:panelGroup>
                 </p:tab>                         
 
             </p:tabView>
@@ -207,6 +218,21 @@
                 </h:panelGroup>
             </p:dialog>
             
+            
+            
+        </h:form>
+        
+        <h:form enctype="multipart/form-data">
+            <!-- Formularz dodawanie pliku -->
+            <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="taskFileDialog" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >            
+                <h:panelGroup layout="block" style="width: 830px;" id="taskFileDialogId">                    
+                    <p:messages/>                                   
+                    <h:panelGrid columns="3" style="margin-bottom:10px">                                           
+                        <p:fileUpload fileUploadListener="#{taskDetailController.upload2}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update=":mainForm" sizeLimit="10000000"/>                        
+                    </h:panelGrid>                    
+                    <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" actionListener="#{taskDetailController.saveOrUpdatePrivateUpgrateNote}" oncomplete="handleCloseEntityDialog(xhr, status, args, taskFileDialog)"/>            
+                </h:panelGroup>
+            </p:dialog>
         </h:form>
         
     </ui:define>   

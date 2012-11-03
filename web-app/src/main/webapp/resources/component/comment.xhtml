@@ -1,0 +1,38 @@
+<ui:component
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:composite="http://java.sun.com/jsf/composite"
+    >
+    
+    <composite:interface>
+        <composite:attribute name="date" required="true" />
+        <composite:attribute name="content" required="true" />
+        <composite:attribute name="author" required="true" />
+        <composite:attribute name="isEven" required="false" default="true" />
+    </composite:interface>
+    <composite:implementation>
+        
+        <div class="#{cc.attrs.isEven ? 'comment_even':'comment_odd'}">
+            <div class="author">                                        
+                <span class="brownlabel">
+                    <h:outputText value="#{cc.attrs.author}"/>
+                </span>
+            </div>
+            <div class="submitdatecomment">
+                <span class="brownlabel">
+                    <h:outputText value="#{cc.attrs.date}">
+                        <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+                    </h:outputText>
+                </span>
+            </div>
+            <div style="margin-top: 5px;">
+                <h:outputText value="#{cc.attrs.content}" escape="false"/>
+            </div>
+        </div>                        
+                
+    </composite:implementation>
+    
+</ui:component>

@@ -5,21 +5,29 @@
 package pl.helpdesk.controller;
 
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import pl.helpdesk.constant.NoteTypeEnum;
 import pl.helpdesk.model.NoteType;
 import pl.helpdesk.model.Task;
+import pl.helpdesk.model.TaskFile;
 import pl.helpdesk.model.TaskNote;
 import pl.helpdesk.service.NoteTypeService;
+import pl.helpdesk.service.TaskFileService;
 import pl.helpdesk.service.TaskNoteService;
 import pl.helpdesk.service.TaskService;
 import pl.helpdesk.util.NoteFilter;
+import pl.helpdesk.util.HelpdeskFileUtil;
+
 
 /**
  *
@@ -36,13 +44,17 @@ public class TaskDetailController extends BaseController {
     @Autowired 
     private TaskNoteService taskNoteService;
     @Autowired 
-    NoteTypeService noteTypeService;
+    NoteTypeService noteTypeService;  
+    @Autowired
+    HelpdeskFileUtil fileUtil;
+    @Autowired
+    TaskFileService taskFileService;
     
     private Task task;
     private TaskNote note;
     private TaskNote privateNote;
     private TaskNote upgradeNote;
-    private TaskNote privateUpgradeNote;
+    private TaskNote privateUpgradeNote;    
     
     
     @PostConstruct
@@ -127,6 +139,33 @@ public class TaskDetailController extends BaseController {
     public List<TaskNote> getPrivateUpgradeNotes() {
         NoteFilter filter = new NoteFilter(task.getNotes());
         return filter.getNotes(NoteTypeEnum.UPGRADE_PRIVATE);
+    }        
+    
+    public void upload2(FileUploadEvent event) {
+        
+        UploadedFile file = event.getFile();
+        String extension = FilenameUtils.getExtension(file.getFileName());                
+        String generatedFile = null;
+        
+        try {
+            generatedFile = fileUtil.upload(file.getInputstream(), extension);                                                
+        } catch (IOException ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+        
+        TaskFile taskFile = new TaskFile();
+        taskFile.setDate(new Date());
+        taskFile.setName(file.getFileName());
+        taskFile.setFileSystemName(generatedFile);
+        taskFile.setTask(task);
+        taskFile.setUser(getLoggedUser());
+        taskFile.setContentType(file.getContentType());
+        
+        taskFileService.save(taskFile);        
+        reload();
+    }       
+    public void download(String fileSystemName) {
+        logger.info("downloading file: " + fileSystemName);
     }
 
     public Task getTask() {
@@ -167,5 +206,5 @@ public class TaskDetailController extends BaseController {
 
     public void setUpgradeNote(TaskNote upgradeNote) {
         this.upgradeNote = upgradeNote;
-    }    
+    }      
 }
