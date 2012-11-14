@@ -16,6 +16,7 @@ import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import pl.helpdesk.constant.EventTypeEnum;
 import pl.helpdesk.constant.NoteTypeEnum;
 import pl.helpdesk.model.NoteType;
 import pl.helpdesk.model.Task;
@@ -25,6 +26,7 @@ import pl.helpdesk.service.NoteTypeService;
 import pl.helpdesk.service.TaskFileService;
 import pl.helpdesk.service.TaskNoteService;
 import pl.helpdesk.service.TaskService;
+import pl.helpdesk.service.custom.TaskNotificationService;
 import pl.helpdesk.util.NoteFilter;
 import pl.helpdesk.util.HelpdeskFileUtil;
 
@@ -49,6 +51,8 @@ public class TaskDetailController extends BaseController {
     HelpdeskFileUtil fileUtil;
     @Autowired
     TaskFileService taskFileService;
+    @Autowired
+    TaskNotificationService notificationService; 
     
     private Task task;
     private TaskNote note;
@@ -78,24 +82,29 @@ public class TaskDetailController extends BaseController {
     }
     
     public void updateTask() {  
-        taskService.update(task);        
+        taskService.update(task);     
+        notificationService.addTaskNotification(task, EventTypeEnum.EDIT_TASK, getLoggedUser());
     }
     
     
     public void saveOrUpdatePublicNote() {
         saveOrUpdateNote(note, NoteTypeEnum.PUBLIC);
+        notificationService.addTaskNotification(task, EventTypeEnum.ADD_COMMENT, getLoggedUser());
     }
     
     public void saveOrUpdatePrivateNote() {
         saveOrUpdateNote(privateNote, NoteTypeEnum.PRIVATE);
+       notificationService.sendMail(getLoggedUser(), EventTypeEnum.ADD_PRIVATE_COMMENT, privateNote.getBody());
     }
     
     public void saveOrUpdatePublicUpgrateNote() {
         saveOrUpdateNote(upgradeNote, NoteTypeEnum.UPGRADE_PUBLIC);
+        notificationService.addTaskNotification(task, EventTypeEnum.ADD_UPGRADE_COMMENT, getLoggedUser());
     }
     
     public void saveOrUpdatePrivateUpgrateNote() {
         saveOrUpdateNote(privateUpgradeNote, NoteTypeEnum.UPGRADE_PRIVATE);
+        notificationService.sendMail(getLoggedUser(), EventTypeEnum.ADD_PRIVATE_UPGRADE_COMMENT, privateNote.getBody());
     }
     
     private void saveOrUpdateNote(TaskNote note, NoteTypeEnum typeEnum) {

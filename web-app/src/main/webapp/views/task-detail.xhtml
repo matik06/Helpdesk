@@ -110,10 +110,9 @@
                         </p:column>
 
                         <p:column headerText="Nazwa" sortBy="#{entity.name}" filterBy="#{entity.name}">                            
-                            <h:commandLink action="#{downloadController.downloadTaskFile}" value="#{entity.name}" >
-                                <f:setPropertyActionListener target="#{downloadController.fileId}" value="#{entity.id}" /> 
+                            <p:commandLink ajax="false" actionListener="#{downloadController.downloadTaskFile(entity.id)}" value="#{entity.name}" >
                                 <p:fileDownload value="#{downloadController.file}" />  
-                            </h:commandLink>
+                            </p:commandLink>
                         </p:column>
 
                         <p:column headerText="Autor" sortBy="#{entity.user.fullName}" filterBy="#{entity.user.fullName}">
@@ -132,7 +131,7 @@
                                     paginator="true" rows="10" paginatorPosition="top"
                                     paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
                                     rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                                          
-                            <component:comment date="#{event.date}" content="#{event.type.name}" author="#{event.user}" isEven="#{index % 2 == 0}" />                                
+                            <component:comment date="#{event.date}" content="#{event.type.name}" author="#{event.user.fullName}" isEven="#{index % 2 == 0}" />                                
                         </p:dataList>
                     </h:panelGroup>
                 </p:tab>                         

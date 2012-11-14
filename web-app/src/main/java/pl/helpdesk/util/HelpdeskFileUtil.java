@@ -6,7 +6,6 @@ package pl.helpdesk.util;
 
 import java.io.*;
 import java.util.UUID;
-import java.util.logging.Level;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author matik06
  */
 @Service
-public class HelpdeskFileUtil {
+public class HelpdeskFileUtil implements Serializable {
     
     private static final Logger logger = Logger.getLogger(HelpdeskFileUtil.class);
     

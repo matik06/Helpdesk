@@ -37,6 +37,11 @@ public class DownloadController {
         download(helpdeskFile);
     }
     
+    public void downloadTaskFile(Integer fileId) {
+        TaskFile helpdeskFile = taskFileService.findById(fileId);
+        download(helpdeskFile);
+    }
+    
     public String download(File file) {                        
         
         InputStream is = fileUtil.getFileStream(file.getFileSystemName());

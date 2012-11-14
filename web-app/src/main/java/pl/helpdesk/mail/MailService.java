@@ -6,6 +6,7 @@ package pl.helpdesk.mail;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class MailService {
     @Autowired
     private MailSender mailSender;
     
-    //todo @Value(spel...)
+    @Value("${mail.smtp.from}")
     private String from;
 
      public void sendMail(String to, String subject, String body) {

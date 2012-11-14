@@ -16,10 +16,13 @@ public enum EventTypeEnum {
     
     CREATED_TASK(1),
     STARTED_WORKING_OVER_TASK(2),
-    STOPPED_NEED_MORE_INFORMATION(3),
     FINISHED_READY_FOR_UPGRADE(4),
     CLOSED(5),
-    REOPENED(6);
+    EDIT_TASK(6),
+    ADD_COMMENT(7),
+    ADD_UPGRADE_COMMENT(8),
+    ADD_PRIVATE_COMMENT(9),
+    ADD_PRIVATE_UPGRADE_COMMENT(10);
     
     private int value;
     @Autowired

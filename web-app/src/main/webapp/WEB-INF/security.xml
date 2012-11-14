@@ -14,6 +14,12 @@
     
     <global-method-security secured-annotations="enabled" jsr250-annotations="enabled" pre-post-annotations="enabled" />    
     
+<!--    <http pattern="/" security="none"/>
+    <http pattern="/home" security="none"/>
+    <http pattern="/login" security="none"/>
+    <http pattern="/logout" security="none"/>
+    <http pattern="/invalid-session" security="none"/>    -->
+    
     <http auto-config="true" use-expressions="true" once-per-request="false" access-denied-page="/access-deny" access-decision-manager-ref="accessDecisionManager">        
         <form-login login-page="/login" default-target-url="/tasks"/>        
         <logout logout-url="/logout" logout-success-url="/login" invalidate-session="true" delete-cookies="JSESSIONID"/>
@@ -21,17 +27,20 @@
         <!--<remember-me key="helpdesk_application" token-validity-seconds="2419200" />-->
         
         <!-- parametr https wymusza przekierowanie na protokół https za każdym razem gdy http jest użyty -->
-        <intercept-url pattern="/" requires-channel="http"/>
-        <intercept-url pattern="/home" requires-channel="http"/>
-        <intercept-url pattern="/**" requires-channel="https"/>        
-        <intercept-url pattern="/customers/**" access="hasRole('Helpdesk_Manager')" />
-        <intercept-url pattern="/helpdesk-users" access="hasRole('Helpdesk_User')" />
-        <intercept-url pattern="/tasks" access="hasAnyRole('Helpdesk_User','Customer_User')" />
+
+        <intercept-url pattern="/customers/**" requires-channel="https" access="hasRole('Helpdesk_Manager')"/>
+        <intercept-url pattern="/helpdesk-users" requires-channel="https" access="hasRole('Helpdesk_User')" />
+        <intercept-url pattern="/tasks" requires-channel="https" access="hasAnyRole('Helpdesk_User','Customer_User')" />
+<!--        <intercept-url pattern="/" requires-channel="any" access="permitAll" />
+        <intercept-url pattern="/home" requires-channel="any" access="permitAll"/>-->
+        <intercept-url pattern="/**" requires-channel="any" access="permitAll"/>        
+
         
         <!-- Detecting timeout -->
         <session-management invalid-session-url="/invalid-session" />   
     </http>
     
+
     
     <!--<beans:bean id="encoder" class="pl.helpdesk.security.CustomPasswordEncoder" />-->
     <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
