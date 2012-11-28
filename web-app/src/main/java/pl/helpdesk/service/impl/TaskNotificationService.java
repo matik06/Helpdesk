@@ -2,13 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.helpdesk.service.custom;
+package pl.helpdesk.service.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,8 @@ import pl.helpdesk.service.EventTypeService;
  * @author matik06
  */
 @Service    
+@Scope(proxyMode= ScopedProxyMode.TARGET_CLASS)
+//implements Serializable - jak dodam obsluge serializacji to z niewiadomych przyczyn spring nie dodaje obiektu do kontenera i nie jest on widoczny
 public class TaskNotificationService implements Serializable {
     
     @Autowired

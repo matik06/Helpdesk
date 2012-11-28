@@ -16,10 +16,10 @@ public enum StatusEnum {
     
     NOT_STARTED(1),
     IN_PROGRESS(2),
-    NEED_MORE_INFORMATION(3),
+//    NEED_MORE_INFORMATION(3),
     READY_FOR_UPGRADE(4),
-    CLOSED(5),
-    REOPENED(6);
+    CLOSED(5);
+//    REOPENED(6);
     
     private int value;
     @Autowired

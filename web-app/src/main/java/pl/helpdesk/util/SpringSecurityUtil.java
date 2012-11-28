@@ -15,7 +15,15 @@ import pl.helpdesk.security.CustomUser;
 public class SpringSecurityUtil {
     
     public static User getLoggedUser() {
-        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return customUser.getUser();
+        
+        try {
+            CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return customUser.getUser();    
+        } catch (ClassCastException e) {
+        }
+        
+        return null;
+        
+        
     }
 }

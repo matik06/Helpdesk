@@ -15,7 +15,7 @@ import pl.helpdesk.model.User;
 import pl.helpdesk.service.GenericService;
 import pl.helpdesk.service.StatusService;
 import pl.helpdesk.service.TaskService;
-import pl.helpdesk.service.custom.TaskNotificationService;
+import pl.helpdesk.service.impl.TaskNotificationService;
 
 /**
  *
@@ -26,9 +26,9 @@ public abstract class HelpdeskTaskController extends GridController<Task> {
     @Autowired
     protected TaskService taskService;
     @Autowired
-    protected StatusService statusService;
+    protected StatusService statusService;    
     @Autowired
-    protected TaskNotificationService notificationService; 
+    TaskNotificationService notificationService; 
     
     public HelpdeskTaskController() {
         super(Task.class);
@@ -76,7 +76,7 @@ public abstract class HelpdeskTaskController extends GridController<Task> {
     
     public boolean getCanEdit() {
         User user = getLoggedUser();
-        if (entity == null) {
+        if (entity == null || entity.getId() == null) {
             return true;
         } else {
             return entity.canEdit(user);

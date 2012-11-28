@@ -43,6 +43,12 @@
         <view-id value="/accessDenied.xhtml"/>
     </url-mapping>
     
+    <url-mapping id="error">
+        <pattern value="/error"/>
+        <view-id value="/error.xhtml"/>
+    </url-mapping>
+    
+    
     <url-mapping id="helpdesk-users">
         <pattern value="/helpdesk-users"/>
         <view-id value="/views/helpdesk-users.xhtml"/>

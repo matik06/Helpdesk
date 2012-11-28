@@ -12,7 +12,7 @@ import org.hibernate.criterion.Criterion;
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
-public interface GenericService <T, ID extends Serializable> {
+public interface GenericService <T, ID extends Serializable> extends Serializable {
     
     T findById(ID id);
     List<T> findAll(int stardIndex, int fetchSize);

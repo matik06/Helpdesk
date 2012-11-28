@@ -27,6 +27,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 import pl.helpdesk.constant.DisplayConfig;
+import pl.helpdesk.constant.StatusEnum;
 
 /**
  *
@@ -196,12 +197,52 @@ public class Task extends BaseEntity<Integer> implements Serializable {
     }        
     
     public boolean canEdit(User user) {
-        if (author == null || author.getId().intValue() == user.getId().intValue()) {
+        
+        if (isClosed()) {
+            return false;
+        } else {            
+            if (author == null || author.getId().intValue() == user.getId().intValue()) {
+                return true;
+            } else {
+                return false;
+            }
+        }        
+    }
+    
+    @Transient
+    public boolean isClosed() {
+        if (status.getId() == StatusEnum.CLOSED.getValue()) {
             return true;
         } else {
             return false;
         }
     }
+    
+    
+    public boolean canStart() {
+        if (status.getId() == StatusEnum.NOT_STARTED.getValue()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean canSetForUpgrade() {
+        if (status.getId() == StatusEnum.IN_PROGRESS.getValue()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean canClose() {
+        if (canSetForUpgrade() || status.getId() == StatusEnum.READY_FOR_UPGRADE.getValue()) {
+            return true;
+        } else {
+            return false;
+        }
+    }        
+    
     
     @Override
     public int hashCode() {

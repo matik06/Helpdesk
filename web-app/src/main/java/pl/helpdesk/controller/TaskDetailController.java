@@ -18,15 +18,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import pl.helpdesk.constant.EventTypeEnum;
 import pl.helpdesk.constant.NoteTypeEnum;
+import pl.helpdesk.constant.StatusEnum;
 import pl.helpdesk.model.NoteType;
+import pl.helpdesk.model.Status;
 import pl.helpdesk.model.Task;
 import pl.helpdesk.model.TaskFile;
 import pl.helpdesk.model.TaskNote;
-import pl.helpdesk.service.NoteTypeService;
-import pl.helpdesk.service.TaskFileService;
-import pl.helpdesk.service.TaskNoteService;
-import pl.helpdesk.service.TaskService;
-import pl.helpdesk.service.custom.TaskNotificationService;
+import pl.helpdesk.model.User;
+import pl.helpdesk.service.*;
+import pl.helpdesk.service.impl.TaskNotificationService;
 import pl.helpdesk.util.NoteFilter;
 import pl.helpdesk.util.HelpdeskFileUtil;
 
@@ -53,6 +53,8 @@ public class TaskDetailController extends BaseController {
     TaskFileService taskFileService;
     @Autowired
     TaskNotificationService notificationService; 
+    @Autowired
+    StatusService taskStatusService ;
     
     private Task task;
     private TaskNote note;
@@ -84,27 +86,32 @@ public class TaskDetailController extends BaseController {
     public void updateTask() {  
         taskService.update(task);     
         notificationService.addTaskNotification(task, EventTypeEnum.EDIT_TASK, getLoggedUser());
+        reload();
     }
     
     
     public void saveOrUpdatePublicNote() {
         saveOrUpdateNote(note, NoteTypeEnum.PUBLIC);
         notificationService.addTaskNotification(task, EventTypeEnum.ADD_COMMENT, getLoggedUser());
+        reload();
     }
     
     public void saveOrUpdatePrivateNote() {
         saveOrUpdateNote(privateNote, NoteTypeEnum.PRIVATE);
        notificationService.sendMail(getLoggedUser(), EventTypeEnum.ADD_PRIVATE_COMMENT, privateNote.getBody());
+       reload();
     }
     
     public void saveOrUpdatePublicUpgrateNote() {
         saveOrUpdateNote(upgradeNote, NoteTypeEnum.UPGRADE_PUBLIC);
         notificationService.addTaskNotification(task, EventTypeEnum.ADD_UPGRADE_COMMENT, getLoggedUser());
+        reload();
     }
     
     public void saveOrUpdatePrivateUpgrateNote() {
         saveOrUpdateNote(privateUpgradeNote, NoteTypeEnum.UPGRADE_PRIVATE);
         notificationService.sendMail(getLoggedUser(), EventTypeEnum.ADD_PRIVATE_UPGRADE_COMMENT, privateNote.getBody());
+        reload();
     }
     
     private void saveOrUpdateNote(TaskNote note, NoteTypeEnum typeEnum) {
@@ -123,8 +130,33 @@ public class TaskDetailController extends BaseController {
             note = taskNoteService.save(note);
         } else {
             taskNoteService.update(note);
-        }
+        }        
+    }
+    
+    public void start() {
+        Status inProgress = taskStatusService.findById(StatusEnum.IN_PROGRESS.getValue());
+        task.setStatus(inProgress);
+        taskService.update(task);
         
+        notificationService.addTaskNotification(task, EventTypeEnum.STARTED_WORKING_OVER_TASK, getLoggedUser());
+        reload();
+    }
+    
+    public void setReadyForUpgrade() {
+        Status inProgress = taskStatusService.findById(StatusEnum.READY_FOR_UPGRADE.getValue());
+        task.setStatus(inProgress);
+        taskService.update(task);
+
+        notificationService.addTaskNotification(task, EventTypeEnum.FINISHED_READY_FOR_UPGRADE, getLoggedUser());
+        reload();
+    }
+    
+    public void close() {
+        Status inProgress = taskStatusService.findById(StatusEnum.CLOSED.getValue());
+        task.setStatus(inProgress);
+        taskService.update(task);
+
+        notificationService.addTaskNotification(task, EventTypeEnum.CLOSED, getLoggedUser());
         reload();
     }
     
@@ -150,7 +182,7 @@ public class TaskDetailController extends BaseController {
         return filter.getNotes(NoteTypeEnum.UPGRADE_PRIVATE);
     }        
     
-    public void upload2(FileUploadEvent event) {
+    public void upload(FileUploadEvent event) {
         
         UploadedFile file = event.getFile();
         String extension = FilenameUtils.getExtension(file.getFileName());                
@@ -172,9 +204,16 @@ public class TaskDetailController extends BaseController {
         
         taskFileService.save(taskFile);        
         reload();
-    }       
-    public void download(String fileSystemName) {
-        logger.info("downloading file: " + fileSystemName);
+    }            
+    
+    public boolean canEdit() {
+        User loggedUser = getLoggedUser();
+        
+        if (task.canEdit(loggedUser)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Task getTask() {

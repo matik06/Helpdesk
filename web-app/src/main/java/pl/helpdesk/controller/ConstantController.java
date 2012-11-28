@@ -43,11 +43,11 @@ public class ConstantController implements Serializable {
     private List<SelectItem> customerRoles;
     private List<SelectItem> allRoles;
     private List<SelectItem> allTaskStatuses;
-    private User user;
+//    private User user;
     
     @PostConstruct
     public void init() {
-        user = SpringSecurityUtil.getLoggedUser();
+//        user = SpringSecurityUtil.getLoggedUser();
         
         allRoles = prepereList(roleService);
         allTaskStatuses = prepereList(statusService);        
@@ -143,11 +143,11 @@ public class ConstantController implements Serializable {
         this.allTaskStatuses = allTaskStatuses;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }        
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }        
 }

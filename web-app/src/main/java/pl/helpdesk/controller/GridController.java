@@ -6,10 +6,8 @@ package pl.helpdesk.controller;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
-import org.springframework.security.access.annotation.Secured;
 import pl.helpdesk.model.BaseEntity;
 import pl.helpdesk.service.GenericService;
 

@@ -21,12 +21,18 @@
     <http pattern="/invalid-session" security="none"/>    -->
     
     <http auto-config="true" use-expressions="true" once-per-request="false" access-denied-page="/access-deny" access-decision-manager-ref="accessDecisionManager">        
+    
+    
+        
+    
         <form-login login-page="/login" default-target-url="/tasks"/>        
         <logout logout-url="/logout" logout-success-url="/login" invalidate-session="true" delete-cookies="JSESSIONID"/>
         <!-- Remember me tutorial: http://mprabhat.wordpress.com/2012/07/15/implementing-spring-security-remember-me-with-jsf-2-0/ -->
         <!--<remember-me key="helpdesk_application" token-validity-seconds="2419200" />-->
         
         <!-- parametr https wymusza przekierowanie na protokół https za każdym razem gdy http jest użyty -->
+
+<!--        <security:intercept-url pattern="/resources/**" filters="none" />-->
 
         <intercept-url pattern="/customers/**" requires-channel="https" access="hasRole('Helpdesk_Manager')"/>
         <intercept-url pattern="/helpdesk-users" requires-channel="https" access="hasRole('Helpdesk_User')" />
@@ -38,6 +44,7 @@
         
         <!-- Detecting timeout -->
         <session-management invalid-session-url="/invalid-session" />   
+<!--        <access-denied-handler error-page="/access-deny"/>-->
     </http>
     
 
@@ -81,6 +88,6 @@
                 Helpdesk_Manager > Helpdesk_User
             </beans:value>
         </beans:property>
-    </beans:bean>        
+    </beans:bean>                
             
 </beans:beans>

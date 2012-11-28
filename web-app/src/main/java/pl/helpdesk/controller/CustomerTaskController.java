@@ -6,7 +6,6 @@ package pl.helpdesk.controller;
 
 import java.util.Date;
 import javax.annotation.PostConstruct;
-import javax.faces.application.ConfigurableNavigationHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.helpdesk.constant.StatusEnum;
 import pl.helpdesk.model.Customer;

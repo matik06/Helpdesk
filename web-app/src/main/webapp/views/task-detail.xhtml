@@ -30,9 +30,9 @@
             </h:panelGroup>
         
             <div style="margin-bottom: 70px; margin-top: 15px; width: 100%;">                                
-                <p:menubar autoDisplay="false" style="width: 1180px;">  
+                <p:menubar autoDisplay="false" style="width: 1180px;" rendered="#{!taskDetailController.task.closed}">  
                     
-                    <p:menuitem value="Edytuj" icon="ui-icon-pencil" rendered="#{taskDetailController.task.author.id == constantController.user.id}" update=":mainForm" oncomplete="taskDetailDialog.show();" />
+                    <p:menuitem value="Edytuj" icon="ui-icon-pencil" rendered="#{taskDetailController.canEdit()}" update=":mainForm" oncomplete="taskDetailDialog.show();" />
 
                     <p:submenu label="Nowy" icon="ui-icon-plusthick">  
                         <p:menuitem value="Komentarz" icon="ui-icon-comment" update=":mainForm" oncomplete="publicNoteDialog.show();" />  
@@ -45,6 +45,10 @@
                     
                     <sec:authorize access="hasRole('Helpdesk_User')">
                         <p:menuitem value="Zmień serwisanta" url="#" icon="ui-icon-pencil"/>
+                        
+                        <p:menuitem value="Rozpocznij prace" actionListener="#{taskDetailController.start}" rendered="#{taskDetailController.task.canStart()}" update="@form" />
+                        <p:menuitem value="Gotowy do aktualizacji" actionListener="#{taskDetailController.setReadyForUpgrade}" rendered="#{taskDetailController.task.canSetForUpgrade()}" update="@form" />
+                        <p:menuitem value="Zamknij" actionListener="#{taskDetailController.close}" rendered="#{taskDetailController.task.canClose()}" update="@form" />
                     </sec:authorize>
                 </p:menubar> 
             </div>
@@ -227,7 +231,7 @@
                 <h:panelGroup layout="block" style="width: 830px;" id="taskFileDialogId">                    
                     <p:messages/>                                   
                     <h:panelGrid columns="3" style="margin-bottom:10px">                                           
-                        <p:fileUpload fileUploadListener="#{taskDetailController.upload2}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update=":mainForm" sizeLimit="10000000"/>                        
+                        <p:fileUpload fileUploadListener="#{taskDetailController.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update=":mainForm" sizeLimit="10000000"/>                        
                     </h:panelGrid>                    
                     <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" actionListener="#{taskDetailController.saveOrUpdatePrivateUpgrateNote}" oncomplete="handleCloseEntityDialog(xhr, status, args, taskFileDialog)"/>            
                 </h:panelGroup>
