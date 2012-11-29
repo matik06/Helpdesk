@@ -36,15 +36,19 @@
 
                     <p:submenu label="Nowy" icon="ui-icon-plusthick">  
                         <p:menuitem value="Komentarz" icon="ui-icon-comment" update=":mainForm" oncomplete="publicNoteDialog.show();" />  
-                        <p:menuitem value="Komentarz (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateNoteDialog.show();" />  
+                        <sec:authorize access="hasRole('Helpdesk_User')">
+                            <p:menuitem value="Komentarz (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateNoteDialog.show();" />  
+                        </sec:authorize>
                         <p:menuitem value="Komentarz do aktualizacji" icon="ui-icon-comment" update=":mainForm" oncomplete="publicUpgradeNoteDialog.show();" />  
-                        <p:menuitem value="Komentarz do aktualizacji (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateUpgradeNoteDialog.show();" />  
+                        <sec:authorize access="hasRole('Helpdesk_User')">
+                            <p:menuitem value="Komentarz do aktualizacji (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateUpgradeNoteDialog.show();" />  
+                        </sec:authorize>
                         
                         <p:menuitem value="Plik" icon="ui-icon-folder-open" update=":mainForm" oncomplete="taskFileDialog.show();"/>  
                     </p:submenu>                                      
                     
                     <sec:authorize access="hasRole('Helpdesk_User')">
-                        <p:menuitem value="Zmień serwisanta" url="#" icon="ui-icon-pencil"/>
+                        <p:menuitem value="Zmień serwisanta" oncomplete="assignToDialog.show()" icon="ui-icon-pencil"/>
                         
                         <p:menuitem value="Rozpocznij prace" actionListener="#{taskDetailController.start}" rendered="#{taskDetailController.task.canStart()}" update="@form" />
                         <p:menuitem value="Gotowy do aktualizacji" actionListener="#{taskDetailController.setReadyForUpgrade}" rendered="#{taskDetailController.task.canSetForUpgrade()}" update="@form" />
@@ -221,6 +225,23 @@
                 </h:panelGroup>
             </p:dialog>
             
+            <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="assignToDialog" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" >
+<!--                <h:form id="entity-form-NHA2" style="width: 400px;" prependId="false">                               -->
+                        
+                    <p:messages id="msgsNHA2" globalOnly="false"/>               
+                            
+                    <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                            
+                        <h:outputLabel for="responsibleUserId" value="Serwisant" />                   
+                        <p:selectOneMenu id="responsibleUserId" style="width: 180px;" value="#{taskDetailController.task.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant" required="true">
+                            <f:selectItems value="#{constantController.helpdeskUsers}"/>
+                        </p:selectOneMenu>
+                        <p:message for="responsibleUserId" display="icon"/>
+                                
+                    </h:panelGrid>
+                            
+                    <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" actionListener="#{taskDetailController.assignTaskTo}" update="@form" oncomplete="handleCloseEntityDialog(xhr, status, args, assignToDialog)"/>
+            </p:dialog>
             
             
         </h:form>
@@ -236,7 +257,7 @@
                     <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" actionListener="#{taskDetailController.saveOrUpdatePrivateUpgrateNote}" oncomplete="handleCloseEntityDialog(xhr, status, args, taskFileDialog)"/>            
                 </h:panelGroup>
             </p:dialog>
-        </h:form>
+        </h:form>                
         
     </ui:define>   
 

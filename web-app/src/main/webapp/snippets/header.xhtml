@@ -22,17 +22,26 @@
                 </sec:authorize>                                                                
             </div>
 
+            
             <div id="topnav">
                 <h:form>
                 <ul>                    
-                    <li><h:outputLink class="active" value="#{request.contextPath}/example.xhtml" >Layout example</h:outputLink></li>                    
-                    <li><h:outputLink value="#{request.contextPath}/index.xhtml" >Home</h:outputLink></li>                    
-                    <li><h:outputLink value="#{request.contextPath}/" >Zgłoszenia nieprzydzielone</h:outputLink></li>
+                    <sec:authorize access="isAuthenticated()">
+<!--                        <li><h:outputLink class="active" value="#{request.contextPath}/example.xhtml" >Layout example</h:outputLink></li>                    -->
+
+                        <li><h:commandLink action="pretty:contact">Dane kontaktowe</h:commandLink></li>
+                        <li><h:commandLink action="pretty:tasks">Zgłoszenia</h:commandLink></li>
+                        
+                        <sec:authorize access="hasRole('Helpdesk_Manager')">
+                        <li><h:commandLink action="pretty:customers">Klienci</h:commandLink></li>
+                        <li><h:commandLink action="pretty:helpdesk-users">Użytkownicy</h:commandLink></li>                    
+                        </sec:authorize>                        
+                    </sec:authorize>
                     
-                    <li><h:commandLink action="pretty:tasks">Zgłoszenia</h:commandLink></li>
-                    <li><h:commandLink action="pretty:customers">Klienci</h:commandLink></li>
-                    <li><h:commandLink action="pretty:helpdesk-users">Użytkownicy</h:commandLink></li>                    
-<!--                    <li><h:outputLink value="#{request.contextPath}/views/helpdesk-users.xhtml" >Użytkownicy</h:outputLink></li>-->
+                    <sec:authorize access="isAnonymous()">
+                        <li><h:commandLink action="pretty:contact">Dane kontaktowe</h:commandLink></li>
+                        <li><h:commandLink action="pretty:info">Informacje</h:commandLink></li>                        
+                    </sec:authorize>
                 </ul>
                 </h:form>
             </div>

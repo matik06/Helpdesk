@@ -23,9 +23,14 @@
         <view-id value="/index.xhtml"/>
     </url-mapping>
     
-    <url-mapping>
-        <pattern value="/home"/>
+    <url-mapping id="info">
+        <pattern value="/info"/>
         <view-id value="/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="contact">
+        <pattern value="/contact"/>
+        <view-id value="/contact.xhtml"/>    
     </url-mapping>
     
     <url-mapping id="login">

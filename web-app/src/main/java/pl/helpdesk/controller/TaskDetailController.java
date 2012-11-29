@@ -89,6 +89,11 @@ public class TaskDetailController extends BaseController {
         reload();
     }
     
+    public void assignTaskTo() {
+        taskService.update(task);
+        reload();
+    }
+    
     
     public void saveOrUpdatePublicNote() {
         saveOrUpdateNote(note, NoteTypeEnum.PUBLIC);
@@ -135,7 +140,12 @@ public class TaskDetailController extends BaseController {
     
     public void start() {
         Status inProgress = taskStatusService.findById(StatusEnum.IN_PROGRESS.getValue());
-        task.setStatus(inProgress);
+        task.setStatus(inProgress);        
+        
+        if (task.getResponsible() == null) {
+            task.setResponsible(getLoggedHelpdeskUser());
+        }
+        
         taskService.update(task);
         
         notificationService.addTaskNotification(task, EventTypeEnum.STARTED_WORKING_OVER_TASK, getLoggedUser());
@@ -159,6 +169,8 @@ public class TaskDetailController extends BaseController {
         notificationService.addTaskNotification(task, EventTypeEnum.CLOSED, getLoggedUser());
         reload();
     }
+    
+    
     
     //gettery i settery
     

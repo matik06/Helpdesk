@@ -22,11 +22,8 @@
     
     <http auto-config="true" use-expressions="true" once-per-request="false" access-denied-page="/access-deny" access-decision-manager-ref="accessDecisionManager">        
     
-    
-        
-    
         <form-login login-page="/login" default-target-url="/tasks"/>        
-        <logout logout-url="/logout" logout-success-url="/login" invalidate-session="true" delete-cookies="JSESSIONID"/>
+        <logout logout-url="/logout" logout-success-url="/info" invalidate-session="true" delete-cookies="JSESSIONID"/>
         <!-- Remember me tutorial: http://mprabhat.wordpress.com/2012/07/15/implementing-spring-security-remember-me-with-jsf-2-0/ -->
         <!--<remember-me key="helpdesk_application" token-validity-seconds="2419200" />-->
         
@@ -37,6 +34,7 @@
         <intercept-url pattern="/customers/**" requires-channel="https" access="hasRole('Helpdesk_Manager')"/>
         <intercept-url pattern="/helpdesk-users" requires-channel="https" access="hasRole('Helpdesk_User')" />
         <intercept-url pattern="/tasks" requires-channel="https" access="hasAnyRole('Helpdesk_User','Customer_User')" />
+        <intercept-url pattern="/login" requires-channel="https" access="permitAll"/>        
 <!--        <intercept-url pattern="/" requires-channel="any" access="permitAll" />
         <intercept-url pattern="/home" requires-channel="any" access="permitAll"/>-->
         <intercept-url pattern="/**" requires-channel="any" access="permitAll"/>        
