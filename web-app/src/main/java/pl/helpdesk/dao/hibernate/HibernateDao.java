@@ -15,8 +15,8 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.dao.GenericDao;
-import pl.helpdesk.model.BaseEntity;
 
 /**
  *
@@ -121,9 +121,8 @@ public abstract class HibernateDao<T, ID extends Serializable> implements Generi
         return query.list();
     }
     
-    
-    
-    protected Session getSession() {
+        
+    public Session getSession() {        
         return sessionFactory.getCurrentSession();
     }
     

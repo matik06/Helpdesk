@@ -163,7 +163,7 @@
 
                         <sec:authorize access="hasRole('Helpdesk_User')">
                             <h:outputLabel for="taskSerwisant" value="Serwisant"/>                   
-                            <p:selectOneMenu id="taskSerwisant" style="width: 180px;" value="#{taskDetailController.task.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant">
+                            <p:selectOneMenu id="taskSerwisant" style="width: 180px;" value="#{taskDetailController.task.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant" required="false">
                                 <f:selectItems value="#{constantController.helpdeskUsers}"/>
                             </p:selectOneMenu>
                             <p:message for="taskSerwisant" display="icon"/>                    
@@ -233,7 +233,7 @@
                     <h:panelGrid columns="3" style="margin-bottom:10px">                   
                             
                         <h:outputLabel for="responsibleUserId" value="Serwisant" />                   
-                        <p:selectOneMenu id="responsibleUserId" style="width: 180px;" value="#{taskDetailController.task.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant" required="true">
+                        <p:selectOneMenu id="responsibleUserId" style="width: 180px;" value="#{taskDetailController.task.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant" required="false">
                             <f:selectItems value="#{constantController.helpdeskUsers}"/>
                         </p:selectOneMenu>
                         <p:message for="responsibleUserId" display="icon"/>

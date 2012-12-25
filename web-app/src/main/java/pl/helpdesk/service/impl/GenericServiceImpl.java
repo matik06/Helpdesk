@@ -6,6 +6,7 @@ package pl.helpdesk.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Propagation;
@@ -87,9 +88,16 @@ public abstract class GenericServiceImpl<T, ID extends Serializable, DAO extends
     @Override
     @PreAuthorize("isAuthenticated()")
     @Transactional(readOnly=true)
-    public List<T> findAllByIds(Integer... ids) {
+    public List<T> findAllByIds(Integer... ids) {       
         return getDao().findAllByIds(ids);
     }        
     
-    public abstract DAO getDao();
+    public abstract DAO getDao();      
+    
+    
+    @PreAuthorize("isAuthenticated()")
+    @Transactional(readOnly=false)
+    public Session getSession() {
+        return getDao().getSession();
+    }
 }

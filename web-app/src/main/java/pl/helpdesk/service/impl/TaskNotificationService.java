@@ -7,7 +7,9 @@ package pl.helpdesk.service.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -16,12 +18,18 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.constant.EventTypeEnum;
 import pl.helpdesk.mail.MailService;
+import pl.helpdesk.model.Customer;
+import pl.helpdesk.model.CustomerUser;
 import pl.helpdesk.model.Event;
 import pl.helpdesk.model.EventType;
+import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.model.Task;
 import pl.helpdesk.model.User;
+import pl.helpdesk.service.CustomerHelpdeskUserService;
+import pl.helpdesk.service.CustomerUserService;
 import pl.helpdesk.service.EventService;
 import pl.helpdesk.service.EventTypeService;
+import pl.helpdesk.util.RecipientUtil;
 
 /**
  *
@@ -38,11 +46,38 @@ public class TaskNotificationService implements Serializable {
     private EventService eventService;
     @Autowired
     private EventTypeService eventTypeService;
+    @Autowired
+    private CustomerHelpdeskUserService customerHelpdeskUserService;
+    @Autowired
+    private CustomerUserService customerUserService;
     
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false, rollbackFor={Exception.class})
     public void addTaskNotification(Task task, EventTypeEnum eventType, User user) {
         Event event = addEvent(eventType, task, user);
-        sendMail(event);
+        
+        List<? extends User> PMList = getContractPMList(user, task);       
+        RecipientUtil recipients = new RecipientUtil();
+        recipients.add(PMList);
+        recipients.add(user);
+        recipients.add(task.getAuthor());
+        recipients.add(task.getResponsible());
+        recipients.add(task.getAuthor2());
+                                
+        sendMail(event, recipients.getRecipientList());
+    }
+    
+    private List<? extends User> getContractPMList(User user, Task task) {
+                        
+        List<? extends User> result = new ArrayList<>();
+        Customer customer = task.getCustomer();
+        
+        if (user instanceof CustomerUser) {            
+            result = customerHelpdeskUserService.getProjectManagerList(customer);
+        } else if(user instanceof HelpdeskUser) {
+            result = customerUserService.getProjectManagerList(customer);
+        }                        
+        
+        return result;
     }
     
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true, rollbackFor={Exception.class})
@@ -64,19 +99,9 @@ public class TaskNotificationService implements Serializable {
         return eventService.save(event);
     }
     
-    private void sendMail(Event event) {
+    private void sendMail(Event event, List<? extends User> customerPmList) {
         
-        Task task = event.getTask();
-        
-        if (event.getType().getId() == EventTypeEnum.CREATED_TASK.getValue()) {
-            //przy tworzeniu taska wysyłamy maila tylko do PM odpowiedzialnych za daną umowę serwisową
-            mailService.sendMail("matik06@gmail.com", "created new task :)", task.getDescription());
-        } else {
-            List<User> recipients = new ArrayList();
-            recipients.add(task.getResponsible());
-            recipients.add(task.getAuthor());            
-            
-            mailService.sendMail(recipients, event.getType().getName(), event.getType().getName());
-        }
+        Task task = event.getTask();        
+        mailService.sendMail(customerPmList, event.getType().getName(), event.getType().getName());                
     }
 }

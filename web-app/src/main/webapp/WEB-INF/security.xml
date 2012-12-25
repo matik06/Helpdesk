@@ -34,7 +34,7 @@
         <intercept-url pattern="/customers/**" requires-channel="https" access="hasRole('Helpdesk_Manager')"/>
         <intercept-url pattern="/helpdesk-users" requires-channel="https" access="hasRole('Helpdesk_User')" />
         <intercept-url pattern="/tasks" requires-channel="https" access="hasAnyRole('Helpdesk_User','Customer_User')" />
-        <intercept-url pattern="/login" requires-channel="https" access="permitAll"/>        
+        <intercept-url pattern="/login" requires-channel="http" access="permitAll"/>        
 <!--        <intercept-url pattern="/" requires-channel="any" access="permitAll" />
         <intercept-url pattern="/home" requires-channel="any" access="permitAll"/>-->
         <intercept-url pattern="/**" requires-channel="any" access="permitAll"/>        

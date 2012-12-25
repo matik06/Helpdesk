@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -21,6 +23,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
+
+@NamedQueries({
+    @NamedQuery(name="helpdeskPMList", query="SELECT chu.helpdeskUser from CustomerHelpdeskUser chu WHERE chu.customer = :customerId AND chu.helpdeskUser.role = :roleId ")
+})
 @Entity
 @Table(name="CustomerHelpdeskUser")
 public class CustomerHelpdeskUser extends BaseEntity<Integer> implements Serializable {

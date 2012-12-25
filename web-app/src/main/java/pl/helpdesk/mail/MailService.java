@@ -41,7 +41,7 @@ public class MailService implements Serializable {
         mailSender.send(message);
      }
      
-     public void sendMail(List<User> recipients, String subject, String body) {
+     public void sendMail(List<? extends User> recipients, String subject, String body) {
          
          for (User recipient : recipients) {
              SimpleMailMessage message = new SimpleMailMessage();

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -18,6 +20,11 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  *
  * @author Mateusz Lubański <mlubanskii@gmail.com>
  */
+
+@NamedQueries({
+    @NamedQuery(name="customerPMList", query="SELECT cu from CustomerUser cu WHERE cu.customer = :customerId AND cu.role = :roleId "),
+    @NamedQuery(name="customerUsers", query="SELECT cu from CustomerUser cu WHERE cu.customer = :customerId")
+})
 @Entity
 @Table(name="CustomerUser")
 public class CustomerUser extends User implements Serializable {

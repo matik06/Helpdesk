@@ -37,12 +37,16 @@ public class ConstantController implements Serializable {
     @Autowired
     StatusService statusService;
     @Autowired
+    PriorityService priorityService;
+    @Autowired
     CustomerService customerService;
+    
     
     private List<SelectItem> helpdeskRoles;
     private List<SelectItem> customerRoles;
     private List<SelectItem> allRoles;
     private List<SelectItem> allTaskStatuses;
+    private List<SelectItem> allTaskPriorities;
 //    private User user;
     
     @PostConstruct
@@ -50,7 +54,8 @@ public class ConstantController implements Serializable {
 //        user = SpringSecurityUtil.getLoggedUser();
         
         allRoles = prepereList(roleService);
-        allTaskStatuses = prepereList(statusService);        
+        allTaskStatuses = prepereList(statusService);              
+        allTaskPriorities = prepereList(priorityService);              
         
         List<Role> roles;
         roles = roleService.findAllByIds(RoleEnum.CUSTOMER_MANAGER.getValue(), RoleEnum.CUSTOMER_USER.getValue());
@@ -67,8 +72,9 @@ public class ConstantController implements Serializable {
     
     public List<SelectItem> getAllCustomers() {
         List<Customer> customers = customerService.findAll();
+        System.out.println("found " + customers.size() + " customers");
         return prepareList(customers, "name");
-    }
+    }        
     
     public List<SelectItem> getAllCustomersFroServisant() {
         //TO-DO implementacja getLoggedUser
@@ -94,7 +100,7 @@ public class ConstantController implements Serializable {
         return result;
     }
     
-    private <T extends BaseEntity> List<SelectItem> prepareList(List<T> entities, String label) {
+    public <T extends BaseEntity> List<SelectItem> prepareList(List<T> entities, String label) {
         List<SelectItem> result = new ArrayList<>();
 
         //dodanie pustego elementu
@@ -141,7 +147,7 @@ public class ConstantController implements Serializable {
 
     public void setAllTaskStatuses(List<SelectItem> allTaskStatuses) {
         this.allTaskStatuses = allTaskStatuses;
-    }
+    }        
 
 //    public User getUser() {
 //        return user;
@@ -150,4 +156,12 @@ public class ConstantController implements Serializable {
 //    public void setUser(User user) {
 //        this.user = user;
 //    }        
+
+    public List<SelectItem> getAllTaskPriorities() {
+        return allTaskPriorities;
+    }
+
+    public void setAllTaskPriorities(List<SelectItem> allTaskPriorities) {
+        this.allTaskPriorities = allTaskPriorities;
+    }
 }

@@ -7,6 +7,7 @@ package pl.helpdesk.controller;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import pl.helpdesk.constant.EventTypeEnum;
 import pl.helpdesk.constant.StatusEnum;
 import pl.helpdesk.model.Customer;
 import pl.helpdesk.model.Status;
@@ -14,6 +15,7 @@ import pl.helpdesk.model.Task;
 import pl.helpdesk.service.GenericService;
 import pl.helpdesk.service.StatusService;
 import pl.helpdesk.service.TaskService;
+import pl.helpdesk.service.impl.TaskNotificationService;
 
 /**
  *
@@ -26,6 +28,8 @@ public abstract class CustomerTaskController extends GridController<Task> {
     @Autowired
     protected StatusService statusService;
     Customer customer;
+    @Autowired
+    TaskNotificationService notificationService; 
     
     
     public CustomerTaskController() {
@@ -46,8 +50,10 @@ public abstract class CustomerTaskController extends GridController<Task> {
             entity.setStatus(taskStatus);
 
             getService().save(entity);
+            notificationService.addTaskNotification(entity, EventTypeEnum.CREATED_TASK, getLoggedCustomerUser());
         } else {
             getService().update(entity);
+            notificationService.addTaskNotification(entity, EventTypeEnum.EDIT_TASK, getLoggedCustomerUser());
         }
 
         reloadList();

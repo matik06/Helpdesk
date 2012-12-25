@@ -41,9 +41,14 @@ public class Task extends BaseEntity<Integer> implements Serializable {
     @NotNull
     private Customer customer;
     private User author;
+    //jeśli pracownik helpdesku dodaje zgloszenie to moze wybrac pracownika klienta dla ktorego zgloszenie jest dodawane do systemu
+    //w przypadku gdy klient dodaje zgloszenie to zostanie on zapisany w polu author a pole author2 bedzie null
+    private User author2;
     private HelpdeskUser responsible;
     private Status status;
     private Upgrade upgrade;
+    @NotNull
+    private Priority priority;
     
     @NotNull
     private String title;
@@ -86,6 +91,16 @@ public class Task extends BaseEntity<Integer> implements Serializable {
         this.author = author;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "customer_authorId")
+    public User getAuthor2() {
+        return author2;
+    }
+
+    public void setAuthor2(User author2) {
+        this.author2 = author2;
+    }
+    
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "responsibleId")
@@ -163,6 +178,16 @@ public class Task extends BaseEntity<Integer> implements Serializable {
     public String getDescription() {
         return description;
     }
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "priorityId")
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }        
     
     @Transient
     public String getShortDescription() {

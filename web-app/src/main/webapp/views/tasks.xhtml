@@ -63,6 +63,10 @@
                             <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
                             </p:column>
+                            
+                            <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
+                            </p:column>
                                 
                             <p:column style="width:40px">
                                 <h:panelGrid columns="1" styleClass="actions" cellpadding="1">                                                                                                                                    
@@ -93,6 +97,13 @@
                             <p:messages id="msgsCMTIP" globalOnly="false"/>               
                                 
                             <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                                
+                                <h:outputLabel for="priorityCMTIP" value="Priorytet"/>                   
+                                <p:selectOneMenu id="priorityCMTIP" style="width: 180px;" value="#{taskCustomerMyOpenController.entity.priority}" converter="#{priorityConverter}" label="Priorytet">
+                                <f:selectItems value="#{constantController.allTaskPriorities}"/>
+                                </p:selectOneMenu>
+                                <p:message for="priorityCMTIP" display="icon"/>
+                                
                                 <h:outputLabel for="titleCMTIP" value="Tytuł" />
                                 <p:inputText style="width: 700px;"  id="titleCMTIP" disabled="#{!taskCustomerMyOpenController.permissionToWrite}" value="#{taskCustomerMyOpenController.entity.title}" label="titleCMTIP">                       
                                 </p:inputText>
@@ -151,6 +162,10 @@
                             <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
                             </p:column>                                                                                
+                            
+                            <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
+                            </p:column>
                                 
                         </p:dataTable>
                             
@@ -197,6 +212,10 @@
                             
                         <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
+                        </p:column>
+                        
+                        <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
                         </p:column>
                             
                         <p:column style="width:40px">
@@ -282,7 +301,11 @@
                             
                         <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
-                        </p:column>                                                    
+                        </p:column>        
+                        
+                        <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
+                        </p:column>
                             
                         <f:facet name="footer">                             
                         </f:facet>
@@ -337,6 +360,10 @@
                         <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
                         </p:column>                                                
+                        
+                        <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
+                        </p:column>
 
                         <p:column style="width:40px">
                             <h:panelGrid columns="1" styleClass="actions" cellpadding="1">
@@ -394,7 +421,13 @@
 
                         <p:messages id="msgsHNA" globalOnly="false"/>               
 
-                        <h:panelGrid columns="3" style="margin-bottom:10px">                   
+                        <h:panelGrid columns="3" style="margin-bottom:10px">    
+                            
+                            <h:outputLabel for="priorityHNA" value="Priorytet"/>                   
+                            <p:selectOneMenu id="priorityHNA" style="width: 180px;" value="#{taskHelpdeskNotAssignedAllController.entity.priority}" converter="#{priorityConverter}" label="Priorytet">
+                                <f:selectItems value="#{constantController.allTaskPriorities}"/>
+                            </p:selectOneMenu>
+                            <p:message for="priorityHNA" display="icon"/>
 
                             <h:outputLabel for="titleHNA" value="Tytuł" />
                             <p:inputText style="width: 700px;"  id="titleHNA" disabled="#{!taskHelpdeskNotAssignedAllController.canEdit}" value="#{taskHelpdeskNotAssignedAllController.entity.title}" label="titleHNA">                       
@@ -405,18 +438,24 @@
                             <p:editor width="700" height="400" id="descriptionHNA" disabled="#{!taskHelpdeskNotAssignedAllController.canEdit}" value="#{taskHelpdeskNotAssignedAllController.entity.description}" label="descriptionHNA"/>
                             <p:message for="descriptionHNA" display="icon"/>                                
                             
-                            
-                            <h:outputLabel for="servisantHNA" value="Serwisant"/>                   
+                            <h:outputLabel for="servisantHNA" value="Przypisz do"/>                   
                             <p:selectOneMenu id="servisantHNA" style="width: 180px;" value="#{taskHelpdeskNotAssignedAllController.entity.responsible}" converter="#{helpdeskUserConverter}" label="Serwisant" required="#{taskHelpdeskNotAssignedAllController.entity != null and taskHelpdeskNotAssignedAllController.entity.id != null}">
                                 <f:selectItems value="#{constantController.helpdeskUsers}"/>
                             </p:selectOneMenu>
                             <p:message for="servisantHNA" display="icon"/>
                             
                             <h:outputLabel for="customerHNA" value="Klient" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}"/>                   
-                            <p:selectOneMenu id="customerHNA" style="width: 180px;" value="#{taskHelpdeskNotAssignedAllController.entity.customer}" converter="#{customerConverter}" label="Klient" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}">
+                            <p:selectOneMenu id="customerHNA" style="width: 180px;" value="#{taskHelpdeskNotAssignedAllController.entity.customer}" converter="#{customerConverter}" label="Klient" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}">                                
+                                <p:ajax listener="#{taskHelpdeskNotAssignedAllController.testttt}" update="customerAuthorHNA" />                                
                                 <f:selectItems value="#{constantController.allCustomers}"/>
                             </p:selectOneMenu>
-                            <p:message for="customerHNA" display="icon" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}"/>
+                            <p:message for="customerHNA" display="icon" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}"/>                                                       
+                            
+                            <h:outputLabel for="customerAuthorHNA" value="Zgłaszający" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}"/>  
+                            <p:selectOneMenu id="customerAuthorHNA" style="width: 180px;" value="#{taskHelpdeskNotAssignedAllController.entity.author2}" converter="#{customerUserConverter}" label="Zgłaszający" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}">
+                                <f:selectItems value="#{taskHelpdeskNotAssignedAllController.allCustomerUsers}" />
+                            </p:selectOneMenu>
+                            <p:message for="customerAuthorHNA" display="icon" rendered="#{taskHelpdeskNotAssignedAllController.canEdit}"/>
                             
                         </h:panelGrid>
 
@@ -469,6 +508,10 @@
                             
                         <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
+                        </p:column>
+                        
+                        <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
                         </p:column>
                             
                         <p:column style="width:40px">
@@ -554,6 +597,10 @@
                         <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
                         </p:column>
+                        
+                        <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
+                        </p:column>
                             
                         <p:column style="width:40px">
                             <h:panelGrid columns="1" styleClass="actions" cellpadding="1">                                                                                                
@@ -609,6 +656,10 @@
                                 
                             <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                             #{entity.status.name}
+                            </p:column>
+                            
+                            <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
                             </p:column>
                                 
                             <p:column style="width:40px">
@@ -693,6 +744,10 @@
 
                         <p:column headerText="Status" sortBy="#{entity.status.name}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
                     #{entity.status.name}
+                        </p:column>
+                        
+                        <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
                         </p:column>
 
                         <p:column style="width:40px">

@@ -6,6 +6,7 @@ package pl.helpdesk.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 
 /**
@@ -23,5 +24,6 @@ public interface GenericDao<T, ID extends Serializable> {
     List<T> findByExample(T exampleInstance, String[] excludeProperty);        
     T save(T entity);
     T update(T entity);
-    void delete(T entity);       
+    void delete(T entity);      
+    Session getSession();
 }

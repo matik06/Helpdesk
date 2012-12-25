@@ -54,10 +54,10 @@ public abstract class HelpdeskTaskController extends GridController<Task> {
             entity.setStatus(taskStatus);
 
             getService().save(entity);
-            notificationService.addTaskNotification(entity, EventTypeEnum.CREATED_TASK, getLoggedUser());
+            notificationService.addTaskNotification(entity, EventTypeEnum.CREATED_TASK, getLoggedHelpdeskUser());
         } else {
             getService().update(entity);
-            notificationService.addTaskNotification(entity, EventTypeEnum.EDIT_TASK, getLoggedUser());
+            notificationService.addTaskNotification(entity, EventTypeEnum.EDIT_TASK, getLoggedHelpdeskUser());
         }
 
         reloadList();
