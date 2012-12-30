@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"          
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/main.xhtml"
+
+                xmlns:utils="http://java.sun.com/jsf/composite/utils"
+                xmlns:component="http://java.sun.com/jsf/composite/component"
+                xmlns:sec="http://www.springframework.org/security/tags">
+
+    <ui:define name="resources">   
+        <script type="text/javascript">
+
+        </script>
+        <style>
+            .ui-menu .ui-menu-parent ul.ui-menu-child{
+                width: 250px !important;
+            }
+        </style>
+    </ui:define>   
+    
+
+    <ui:define name="content">  
+        
+        <h:form id="mainForm">    
+        
+            
+            <div class="post">
+                <ul class="commentlist">                                
+                    <div style="font-size: 130%;">
+                        <span class="name"><strong>Aktualizacja: </strong> #{updateDetailController.entity.description}</span>
+                    </div>
+                    <div class="submitdate">
+                        <strong>Data utworzenia: </strong> #{updateDetailController.entity.date}
+                    </div>      
+                    <p>
+                        <strong>Autor: </strong> #{updateDetailController.entity.user.fullName}
+                    </p>
+                    <p>
+                        <strong>Ilość zamkniętych zgłoszeń: </strong> #{updateDetailController.tasks.size()}
+                    </p>
+                    <sec:authorize access="hasRole('Helpdesk_User')">
+                        <p>
+                            <strong>Status aktualizacji:</strong>
+                            <h:outputLabel value="Zakończona" rendered="#{updateDetailController.entity.isCompleted}"/>
+                            <h:outputLabel value="W trakcie" rendered="#{!updateDetailController.entity.isCompleted}"/>
+                        </p>
+                    </sec:authorize>
+                </ul>
+            </div>            
+        
+            <sec:authorize access="hasRole('Helpdesk_User')">
+                <div style="margin-bottom: 70px; margin-top: 15px; width: 100%;">                                
+                    <p:menubar autoDisplay="false" style="width: 1180px;">  
+
+
+                        <sec:authorize access="hasRole('Helpdesk_User')">
+                            <p:menuitem value="Zatwierdź aktualizację" url="#" icon="ui-icon-pencil"/>                                                
+                        </sec:authorize>
+                    </p:menubar> 
+                </div>
+            </sec:authorize>                        
+            
+        <!-- dynamic="true" cache="true" -->
+            <p:tabView  id="tabView" activeIndex="0" dynamic="true" cache="false">                       
+                
+                <p:tab title="Zgłoszenia">                
+                    <p:dataTable id="entity-grid-table-HNA" value="#{updateDetailController.tasks}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                                 draggableColumns="true"  >   
+
+                        <p:column style="width:16px">
+                            <p:rowToggler />
+                        </p:column>                                                    
+
+                        <p:rowExpansion>                            
+                            <component:post title="#{entity.title}" date="#{entity.date}" content="#{entity.description}" author="#{entity.author}" status="#{entity.status.name}"/>                                                        
+                        </p:rowExpansion>                                                
+                            
+                        <p:column headerText="Tytuł" sortBy="#{entity.title}" filterBy="#{entity.title}">
+                            <h:outputLink value="#{request.contextPath}/views/task-detail.xhtml">#{entity.title}
+                                <f:param name="taskId" value="#{entity.id}"/>
+                            </h:outputLink>
+                                
+                        </p:column>
+                            
+                        <p:column headerText="Autor" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.author.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Serwisant" sortBy="#{entity.author.fullName}" filterBy="#{entity.author.fullName}">
+                            #{entity.responsible.fullName}
+                        </p:column>
+                            
+                        <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                        </p:column>                                                                          
+
+                        <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
+                            #{entity.priority.name}
+                        </p:column>                                                                            
+                    </p:dataTable>
+                </p:tab>  
+                
+                <sec:authorize access="hasRole('Helpdesk_User')">
+                    <p:tab title="Komentarz aktualizacji (priv)" >                    
+                    </p:tab>
+                </sec:authorize>
+                
+                <p:tab title="Komentarz aktualizacji" >
+
+                </p:tab>
+                                       
+            </p:tabView>                                         
+            
+            
+        </h:form>                    
+        
+    </ui:define>   
+
+</ui:composition>

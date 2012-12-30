@@ -18,8 +18,14 @@
     </ui:define>
 
     <ui:define name="content">                
-
-        Wystąpił błąd, proszę spróbuj ponownie!!!
+        
+        <p:dialog header="Komunikat" closable="false" draggable="true" resizable="false" visible="true" width="500">
+            <h:panelGrid columns="1">                                
+                <p>
+                    Wystąpił błąd, proszę spróbuj ponownie!!!
+                </p>                        
+            </h:panelGrid>
+        </p:dialog>       
         
     </ui:define>   
 

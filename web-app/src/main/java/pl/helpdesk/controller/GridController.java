@@ -67,8 +67,13 @@ public abstract class GridController<T extends BaseEntity<Integer>> extends Base
         entityList = getService().findAll();
     }
 
-    public void clear() throws InstantiationException, IllegalAccessException {
-        this.entity = clazz.newInstance();
+    public void clear() {
+        try {
+            this.entity = clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            logger.error(e.getMessage(), e);
+        }
+        
     }
 
     public void onRowSelect(SelectEvent event) {

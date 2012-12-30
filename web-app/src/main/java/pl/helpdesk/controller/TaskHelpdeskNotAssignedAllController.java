@@ -45,7 +45,6 @@ public class TaskHelpdeskNotAssignedAllController extends HelpdeskTaskController
     }
     
     public List<SelectItem>getAllCustomerUsers() {        
-        System.out.println("calling getAllCustomerUsers()");
         return constantControler.prepareList(customerUsers, "login");
     }
     

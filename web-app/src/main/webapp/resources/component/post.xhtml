@@ -13,6 +13,7 @@
         <composite:attribute name="content" required="true" />
         <composite:attribute name="author" required="true" />
         <composite:attribute name="responsible" required="false"/>
+        <composite:attribute name="status" required="true"/>
     </composite:interface>
     <composite:implementation>
 
@@ -28,6 +29,9 @@
                 </div>
                 <p>
                     <h:outputText escape="false" value="#{cc.attrs.content}"/> 
+                </p>                                        
+                <p>
+                    <h:outputText escape="false" value="#{cc.attrs.status}"/> 
                 </p>                                        
                 <p style="font-size: 120%;"><strong>Autor:</strong> #{cc.attrs.author.firstName} #{cc.attrs.author.lastName}</p>                                
                 <h:panelGroup layout="span" rendered="#{cc.attrs.responsible != null}">

@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,6 +35,10 @@ import pl.helpdesk.constant.StatusEnum;
  *
  * @author Mateusz Lubański <m.lubanskii@gmail.com>
  */
+@NamedQueries({
+    @NamedQuery(name="customerTasksByStatus", query="SELECT t from Task t WHERE t.customer = :customerId AND t.status = :statusId AND t.upgrade IS null"),
+    @NamedQuery(name="upgradeTasks", query="SELECT t from Task t WHERE t.upgrade = :upgradeId")    
+})
 @Entity
 @Table(name="Task")
 public class Task extends BaseEntity<Integer> implements Serializable {
@@ -91,7 +97,7 @@ public class Task extends BaseEntity<Integer> implements Serializable {
         this.author = author;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "customer_authorId")
     public User getAuthor2() {
         return author2;

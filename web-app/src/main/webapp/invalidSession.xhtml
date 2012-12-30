@@ -19,7 +19,13 @@
 
     <ui:define name="content">                
 
-        Sesja wygasła, zaloguj się ponownie !!!
+        <p:dialog header="Komunikat" closable="false" draggable="true" resizable="false" visible="true" width="500">
+            <h:panelGrid columns="1">                                
+                <p>
+                    Proszę zalaogować się ponownie !!!
+                </p>                        
+            </h:panelGrid>                    
+        </p:dialog>        
         
     </ui:define>   
 

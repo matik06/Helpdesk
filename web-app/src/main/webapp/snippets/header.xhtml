@@ -29,7 +29,8 @@
                     <sec:authorize access="isAuthenticated()">
 <!--                        <li><h:outputLink class="active" value="#{request.contextPath}/example.xhtml" >Layout example</h:outputLink></li>                    -->
 
-                        <li><h:commandLink action="pretty:contact">Dane kontaktowe</h:commandLink></li>
+                        
+                        <li><h:commandLink action="pretty:updates">Aktualizacje</h:commandLink></li>
                         <li><h:commandLink action="pretty:tasks">Zgłoszenia</h:commandLink></li>
                         
                         <sec:authorize access="hasRole('Helpdesk_Manager')">

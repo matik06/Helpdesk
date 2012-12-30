@@ -5,6 +5,7 @@
 package pl.helpdesk.service.impl;
 
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.constant.StatusEnum;
 import pl.helpdesk.dao.TaskDao;
 import pl.helpdesk.model.Customer;
+import pl.helpdesk.model.Status;
 import pl.helpdesk.model.Task;
+import pl.helpdesk.model.Upgrade;
 import pl.helpdesk.model.User;
+import pl.helpdesk.service.StatusService;
 import pl.helpdesk.service.TaskService;
 
 /**
@@ -27,8 +31,11 @@ import pl.helpdesk.service.TaskService;
 @Scope(proxyMode= ScopedProxyMode.TARGET_CLASS)
 @Transactional(readOnly=true)
 public class TaskServiceImpl extends GenericServiceImpl<Task, Integer, TaskDao> implements TaskService {
+    
     @Autowired
     TaskDao taskDao;
+    @Autowired
+    StatusService statusService;
 
     @Override
     public TaskDao getDao() {
@@ -123,4 +130,27 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, Integer, TaskDao> 
         Criterion c = Restrictions.eq("customer", customer);
         return super.findAllByRestriction(c);
     }
+
+    @Override
+    @Transactional(readOnly=true)
+    public List<Task> findByCustomer(Customer customer, StatusEnum statusEnum) {        
+        Query query = getSession().getNamedQuery("customerTasksByStatus");
+
+        query.setEntity("customerId", customer);
+        Status status = statusService.findById(statusEnum.getValue());        
+        query.setEntity("statusId", status);
+
+        return query.list();
+    }  
+
+    @Override    
+    public List<Task> findByUpgrade(Upgrade upgrade) {
+               
+        Query query = getSession().getNamedQuery("upgradeTasks");
+        query.setEntity("upgradeId", upgrade);               
+
+        return query.list();
+    }
+    
+    
 }

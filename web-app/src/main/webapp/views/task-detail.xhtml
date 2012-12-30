@@ -26,7 +26,7 @@
         <h:form id="mainForm">    
         
             <h:panelGroup layout="block" id="taskDetail">
-                <component:post title="#{taskDetailController.task.title}" date="#{taskDetailController.task.date}" content="#{taskDetailController.task.description}" author="#{taskDetailController.task.author}" responsible="#{taskDetailController.task.responsible}"/>
+                <component:post title="#{taskDetailController.task.title}" date="#{taskDetailController.task.date}" content="#{taskDetailController.task.description}" author="#{taskDetailController.task.author}" responsible="#{taskDetailController.task.responsible}" status="#{taskDetailController.task.status.name}"/>
             </h:panelGroup>
         
             <div style="margin-bottom: 70px; margin-top: 15px; width: 100%;">                                

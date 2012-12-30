@@ -1,0 +1,138 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"           
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/main.xhtml"
+
+                xmlns:utils="http://java.sun.com/jsf/composite/utils"
+                xmlns:component="http://java.sun.com/jsf/composite/component"
+                xmlns:sec="http://www.springframework.org/security/tags">
+
+    <ui:define name="resources">   
+        <script type="text/javascript">
+
+        </script>
+        <style>
+            
+        </style>
+    </ui:define>   
+    
+
+    <ui:define name="content">  
+        
+        <!-- dynamic="true" cache="true" -->
+        <p:tabView  id="tabView" activeIndex="0" dynamic="true" cache="false">                                              
+            
+            <sec:authorize access="hasRole('Helpdesk_User')">
+            <p:tab title="Aktualizacje niezatwierdzone" >
+
+                <h:form id="entity-grid-form-UNF">       
+                    <p:dataTable id="entity-grid-table-UNF" value="#{updateNotCompletedController.entityList}" var="entity"
+                                 paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                        draggableColumns="true"  >   
+                        
+                        <p:column headerText="Klient" sortBy="#{entity.customer.name}" filterBy="#{entity.customer}" filterMatchMode="exact" filterOptions="#{constantController.allCustomers}">
+                            #{entity.customer.name}
+                        </p:column>
+                        
+                        <p:column headerText="Opis" sortBy="#{entity.description}" filterBy="#{entity.description}">
+                            <h:outputLink value="#{request.contextPath}/views/update-details.xhtml">#{entity.description}
+                                <f:param name="upgradeId" value="#{entity.id}"/>
+                            </h:outputLink>                                
+                        </p:column>
+                        
+                        <p:column headerText="Autor" sortBy="#{entity.user.fullName}" filterBy="#{entity.user.fullName}">
+                            #{entity.user.fullName}
+                        </p:column>
+                        
+                        <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                        </p:column>
+                                     
+                        <f:facet name="footer"> 
+                            <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{updateNotCompletedController.clear}" update=":tabView:entity-form-UNF" oncomplete="entityDetailUNF.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
+                        </f:facet>
+
+                    </p:dataTable>
+                                    
+                </h:form>
+                
+                
+                <p:dialog header="#{msg['grid.dialog.title']}" widgetVar="entityDetailUNF" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" width="600">
+                    <h:form id="entity-form-UNF" prependId="false">                               
+
+                        <p:messages id="msgsUNF" globalOnly="false"/>               
+
+                        <p:wizard widgetVar="wiz"  flowListener="#{updateNotCompletedController.onFlowProcess}" showStepStatus="false">
+                            
+                            <p:tab id="wizardDetailsUNF" title="Sczegóły"> 
+                                <h:panelGrid columns="3" style="margin-bottom:10px" >   
+                                    
+                                    <h:outputLabel for="customerUNF" value="Klient" />                   
+                                    <p:selectOneMenu id="customerUNF" value="#{updateNotCompletedController.entity.customer}" converter="#{customerConverter}" label="Klient">                                
+                                        <f:selectItems value="#{constantController.allCustomers}"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="customerUNF" display="icon"/>
+                                        
+                                    <h:outputLabel for="titleUNF" value="Opis" />
+                                    <p:inputText id="titleUNF" value="#{updateNotCompletedController.entity.description}" label="titleUNF">                       
+                                    </p:inputText>
+                                    <p:message for="titleUNF" display="icon"/>
+                                        
+                                </h:panelGrid>
+                            </p:tab> 
+                            
+                            <p:tab id="wizardTasksUNF" title="Zgłoszenia"> 
+                                <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">                                                                                      
+                                    <p:selectManyCheckbox value="#{updateNotCompletedController.tasks}" converter="#{taskConverter}"  layout="pageDirection">  
+                                        <f:selectItems value="#{updateNotCompletedController.taksForUpdate}" var="task" itemLabel="item.title" itemValue="item.id"/>  
+                                    </p:selectManyCheckbox>              
+                                </h:panelGrid> 
+                                <p:commandButton value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update=":tabView:entity-grid-form-UNF:entity-grid-table-UNF @form" action="pretty:updates" actionListener="#{updateNotCompletedController.saveOrUpdateEntity}" oncomplete="handleCloseEntityDialog(xhr, status, args, entityDetailUNF)"/>                        
+                            </p:tab> 
+                        
+                        </p:wizard>                                                                        
+                    </h:form>
+                </p:dialog>    
+                    
+            </p:tab>
+            </sec:authorize>                            
+                
+            <sec:authorize access="isAuthenticated()">
+                <p:tab title="Przeprowadzone aktualizacje" >
+                                        
+                    <h:form id="entity-grid-form-UF">       
+                        <p:dataTable id="entity-grid-table-UF" value="#{updateCompletedController.entityList}" var="entity"
+                                     paginator="true" rows="15" paginatorPosition="top" rowsPerPageTemplate="15 30 50"                       
+                            draggableColumns="true"  >   
+                            
+                            <sec:authorize access="hasRole('Helpdesk_User')">
+                                <p:column headerText="Klient" sortBy="#{entity.customer.name}" filterBy="#{entity.customer}" filterMatchMode="exact" filterOptions="#{constantController.allCustomers}">
+                                #{entity.customer.name}
+                                </p:column>
+                            </sec:authorize>
+                            
+                            <p:column headerText="Opis" sortBy="#{entity.description}" filterBy="#{entity.description}">
+                                <h:outputLink value="#{request.contextPath}/views/update-details.xhtml">#{entity.description}
+                                    <f:param name="upgradeId" value="#{entity.id}"/>
+                                </h:outputLink>                                
+                            </p:column>
+                            
+                            <p:column headerText="Autor" sortBy="#{entity.user.fullName}" filterBy="#{entity.user.fullName}">
+                            #{entity.user.fullName}
+                            </p:column>
+                            
+                            <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
+                            #{entity.date}
+                            </p:column>                                                                                    
+                        </p:dataTable>
+                    </h:form>                                                            
+                </p:tab>
+            </sec:authorize>
+            
+        </p:tabView>
+        
+    </ui:define>   
+
+</ui:composition>

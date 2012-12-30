@@ -111,6 +111,19 @@ public class ConstantController implements Serializable {
         return result;
     }
     
+    public <T extends BaseEntity> List<SelectItem> prepareList(List<T> entities, String label, boolean empty) {
+        List<SelectItem> result = new ArrayList<>();
+
+        if (empty) {
+            result.add(getEmpty());
+        }
+        
+        List<SelectItem> subList = ConverterUtil.convertList(entities, label);
+        result.addAll(subList);
+
+        return result;
+    }
+    
     private SelectItem getEmpty() {
         return new SelectItem(null, "");
     }

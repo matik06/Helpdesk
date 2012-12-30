@@ -16,6 +16,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -28,7 +30,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @Entity
 @Table(name = "Note")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Note extends BaseEntity<Integer> implements Serializable {
+public class Note extends BaseEntity<Integer> implements Serializable {    
     
     protected Integer id;
     protected User user;

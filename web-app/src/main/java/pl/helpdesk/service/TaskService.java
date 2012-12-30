@@ -5,8 +5,10 @@
 package pl.helpdesk.service;
 
 import java.util.List;
+import pl.helpdesk.constant.StatusEnum;
 import pl.helpdesk.model.Customer;
 import pl.helpdesk.model.Task;
+import pl.helpdesk.model.Upgrade;
 import pl.helpdesk.model.User;
 
 /**
@@ -30,4 +32,6 @@ public interface TaskService extends GenericService<Task, Integer> {
     public List<Task> findClosed(Customer customer, User user);
             
     public List<Task> findAll(Customer customer);  
+    public List<Task> findByCustomer(Customer customer, StatusEnum status);
+    public List<Task> findByUpgrade(Upgrade upgrade);
 }
