@@ -55,6 +55,7 @@
         <context:exclude-filter type="annotation" expression="javax.faces.bean.RequestScoped"/>-->
     </context:component-scan>
     
+    
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${mail.smtp.host}"/>
         <property name="port" value="${mail.smtp.port}"/>

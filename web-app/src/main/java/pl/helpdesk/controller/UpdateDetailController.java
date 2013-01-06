@@ -11,6 +11,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import pl.helpdesk.constant.EventTypeEnum;
+import pl.helpdesk.constant.NoteTypeEnum;
+import pl.helpdesk.constant.StatusEnum;
+import pl.helpdesk.model.Status;
 import pl.helpdesk.model.Task;
 import pl.helpdesk.model.TaskNote;
 import pl.helpdesk.model.Upgrade;
@@ -34,6 +38,10 @@ public class UpdateDetailController extends BaseController {
     TaskService taskService;
     @Autowired
     TaskNotificationService notificationService;
+    @Autowired
+    TaskNoteService taskNoteService;
+    @Autowired
+    StatusService statusService;
     
     private Upgrade entity;        
     
@@ -54,21 +62,28 @@ public class UpdateDetailController extends BaseController {
 //    }
     
     public void updateUpgrade() {
+        entity.setIsCompleted(Boolean.TRUE);
         upgradeService.update(entity);
-        //TODO
-//        notificationService.addUpgradeNotification(upgrade, getLoggedUser());
+
+        Status status = statusService.findById(StatusEnum.CLOSED.getValue());
+            for (Task task : getTasks()) {
+                
+                if (task.getStatus().getId() != StatusEnum.CLOSED.getValue()) {                    
+                    task.setStatus(status);
+                    taskService.update(task);
+                    notificationService.addTaskNotification(task, EventTypeEnum.CLOSED, getLoggedHelpdeskUser());   
+                }                
+            }      
+                
+        notificationService.addTaskNotification(entity, getLoggedUser());
     }
         
-    public List<TaskNote> getPublicUpgradeNotes() {
-        //TODO
-//        NoteTypeEnum.UPGRADE_PUBLIC;
-        return null;
+    public List<TaskNote> getPublicUpgradeNotes() {        
+        return taskNoteService.getNotes(entity, NoteTypeEnum.UPGRADE_PUBLIC.getValue());        
     }
     
     public List<TaskNote> getPrivateUpgradeNotes() {
-        //TODO
-//                NoteTypeEnum.UPGRADE_PRIVATE;
-        return null;
+        return taskNoteService.getNotes(entity, NoteTypeEnum.UPGRADE_PRIVATE.getValue());
     }
 
     public Upgrade getEntity() {

@@ -4,6 +4,7 @@
  */
 package pl.helpdesk.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
@@ -30,7 +31,7 @@ import pl.helpdesk.service.TaskService;
 @Service
 @Scope(proxyMode= ScopedProxyMode.TARGET_CLASS)
 @Transactional(readOnly=true)
-public class TaskServiceImpl extends GenericServiceImpl<Task, Integer, TaskDao> implements TaskService {
+public class TaskServiceImpl extends GenericServiceImpl<Task, Integer, TaskDao> implements TaskService {    
     
     @Autowired
     TaskDao taskDao;
@@ -131,14 +132,21 @@ public class TaskServiceImpl extends GenericServiceImpl<Task, Integer, TaskDao> 
         return super.findAllByRestriction(c);
     }
 
-    @Override
+//    @Override
     @Transactional(readOnly=true)
-    public List<Task> findByCustomer(Customer customer, StatusEnum statusEnum) {        
+    public List<Task> findByCustomer(Customer customer, StatusEnum ... statusEnums) {        
+        
+        List<Status> statuses = new ArrayList<>();
+        
+        for (StatusEnum statusEnum : statusEnums) {
+            statuses.add(statusService.findById(statusEnum.getValue()));
+        }
+        
+        
+//        query.setEntity("statusId", status);
         Query query = getSession().getNamedQuery("customerTasksByStatus");
-
         query.setEntity("customerId", customer);
-        Status status = statusService.findById(statusEnum.getValue());        
-        query.setEntity("statusId", status);
+        query.setParameterList("statusId", statuses);
 
         return query.list();
     }  

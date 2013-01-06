@@ -32,6 +32,6 @@ public interface TaskService extends GenericService<Task, Integer> {
     public List<Task> findClosed(Customer customer, User user);
             
     public List<Task> findAll(Customer customer);  
-    public List<Task> findByCustomer(Customer customer, StatusEnum status);
+    public List<Task> findByCustomer(Customer customer, StatusEnum ... status);
     public List<Task> findByUpgrade(Upgrade upgrade);
 }

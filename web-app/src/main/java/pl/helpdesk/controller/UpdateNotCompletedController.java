@@ -64,11 +64,9 @@ public class UpdateNotCompletedController extends GridController<Upgrade> {
             getService().save(entity);   
             
             Status status = statusService.findById(StatusEnum.CLOSED.getValue());
-            for (Task task : tasks) {
-                task.setUpgrade(entity);
-                task.setStatus(status);
-                taskService.update(task);
-                notificationService.addTaskNotification(task, EventTypeEnum.CLOSED, getLoggedHelpdeskUser());
+            for (Task task : tasks) {                
+                task.setUpgrade(entity);                    
+                taskService.update(task);                                    
             }            
         } else {
             getService().update(entity);
@@ -92,7 +90,7 @@ public class UpdateNotCompletedController extends GridController<Upgrade> {
     public List<SelectItem> getTaksForUpdate() {
         
         Customer customer = this.entity.getCustomer();
-        List<Task> tasks = taskService.findByCustomer(customer, StatusEnum.READY_FOR_UPGRADE);
+        tasks = taskService.findByCustomer(customer, StatusEnum.READY_FOR_UPGRADE, StatusEnum.CLOSED);
         
         return constantControler.prepareList(tasks, "title", false);
     }

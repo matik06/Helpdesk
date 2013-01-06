@@ -7,9 +7,7 @@ package pl.helpdesk.service.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.helpdesk.constant.EventTypeEnum;
+import pl.helpdesk.constant.NoteTypeEnum;
 import pl.helpdesk.mail.MailService;
 import pl.helpdesk.model.Customer;
 import pl.helpdesk.model.CustomerUser;
@@ -24,12 +23,18 @@ import pl.helpdesk.model.Event;
 import pl.helpdesk.model.EventType;
 import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.model.Task;
+import pl.helpdesk.model.Upgrade;
 import pl.helpdesk.model.User;
 import pl.helpdesk.service.CustomerHelpdeskUserService;
 import pl.helpdesk.service.CustomerUserService;
 import pl.helpdesk.service.EventService;
 import pl.helpdesk.service.EventTypeService;
+import pl.helpdesk.service.TaskNoteService;
+import pl.helpdesk.service.TaskService;
+import pl.helpdesk.util.EmailBuilder;
 import pl.helpdesk.util.RecipientUtil;
+import pl.helpdesk.util.TaskEmailBuilder;
+import pl.helpdesk.util.UpgradeTaskEmailBuilder;
 
 /**
  *
@@ -50,26 +55,44 @@ public class TaskNotificationService implements Serializable {
     private CustomerHelpdeskUserService customerHelpdeskUserService;
     @Autowired
     private CustomerUserService customerUserService;
+    @Autowired 
+    TaskService taskService;
+    @Autowired
+    TaskNoteService taskNoteService;
+    
+    
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=false, rollbackFor={Exception.class})
+    public void addTaskNotification(Upgrade upgrade, User user) {
+        
+        RecipientUtil recipients = new RecipientUtil();
+        recipients.add(getContractPMList(user, upgrade.getCustomer()));
+        recipients.add(upgrade.getCustomer().getEmail());
+        recipients.add(user);
+                
+        EmailBuilder builder = new UpgradeTaskEmailBuilder(upgrade, taskService.findByUpgrade(upgrade), taskNoteService.getNotes(upgrade, NoteTypeEnum.UPGRADE_PUBLIC.getValue()));  
+        
+        senTaskdMail(builder, recipients);
+    }
     
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false, rollbackFor={Exception.class})
     public void addTaskNotification(Task task, EventTypeEnum eventType, User user) {
         Event event = addEvent(eventType, task, user);
         
-        List<? extends User> PMList = getContractPMList(user, task);       
+        List<? extends User> PMList = getContractPMList(user, task.getCustomer());       
         RecipientUtil recipients = new RecipientUtil();
         recipients.add(PMList);
         recipients.add(user);
         recipients.add(task.getAuthor());
         recipients.add(task.getResponsible());
         recipients.add(task.getAuthor2());
-                                
-        sendMail(event, recipients.getRecipientList());
+
+        EmailBuilder builder = new TaskEmailBuilder(task, event);
+        senTaskdMail(builder, recipients);
     }
     
-    private List<? extends User> getContractPMList(User user, Task task) {
+    private List<? extends User> getContractPMList(User user, Customer customer) {
                         
         List<? extends User> result = new ArrayList<>();
-        Customer customer = task.getCustomer();
         
         if (user instanceof CustomerUser) {            
             result = customerHelpdeskUserService.getProjectManagerList(customer);
@@ -97,11 +120,10 @@ public class TaskNotificationService implements Serializable {
         event.setType(eventType);
         
         return eventService.save(event);
-    }
+    }    
     
-    private void sendMail(Event event, List<? extends User> customerPmList) {
-        
-        Task task = event.getTask();        
-        mailService.sendMail(customerPmList, event.getType().getName(), event.getType().getName());                
+    @Transactional(readOnly=true)
+    private void senTaskdMail(EmailBuilder builder, RecipientUtil recipients) {                
+        mailService.sendMail(recipients.getRecipientList(), builder.getTitle(), builder.getContent());
     }
 }

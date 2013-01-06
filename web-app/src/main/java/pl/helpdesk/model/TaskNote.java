@@ -21,6 +21,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @Table(name="TaskNote")
 public class TaskNote extends Note implements Serializable {
     
+    public static final String getPublicUpgradeNotes = "SELECT n FROM TaskNote n"
+            + " JOIN Task t on t.id = n.task.id"
+            + " JOIN Upgrade u ON u.id = t.upgrade.id";
+    
     private Integer id;
     private NoteType type;
     private Task task;

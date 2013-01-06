@@ -36,7 +36,7 @@ import pl.helpdesk.constant.StatusEnum;
  * @author Mateusz Lubański <m.lubanskii@gmail.com>
  */
 @NamedQueries({
-    @NamedQuery(name="customerTasksByStatus", query="SELECT t from Task t WHERE t.customer = :customerId AND t.status = :statusId AND t.upgrade IS null"),
+    @NamedQuery(name="customerTasksByStatus", query="SELECT t from Task t WHERE t.customer = :customerId AND t.status IN (:statusId) AND t.upgrade IS null"),
     @NamedQuery(name="upgradeTasks", query="SELECT t from Task t WHERE t.upgrade = :upgradeId")    
 })
 @Entity

@@ -48,7 +48,7 @@
                         
                         <p:column headerText="Data utworzenia" sortBy="#{entity.date}">
                             #{entity.date}
-                        </p:column>
+                        </p:column>                        
                                      
                         <f:facet name="footer"> 
                             <p:commandButton value="#{msg['grid.add.title']}" icon="#{msg['grid.add.icon']}" actionListener="#{updateNotCompletedController.clear}" update=":tabView:entity-form-UNF" oncomplete="entityDetailUNF.show();" style="float: left; height: 30px; margin: 5px; font-size: 12px"/>                   
@@ -76,7 +76,7 @@
                                     <p:message for="customerUNF" display="icon"/>
                                         
                                     <h:outputLabel for="titleUNF" value="Opis" />
-                                    <p:inputText id="titleUNF" value="#{updateNotCompletedController.entity.description}" label="titleUNF">                       
+                                    <p:inputText id="titleUNF" value="#{updateNotCompletedController.entity.description}" label="titleUNF" style="width: 350px;">                       
                                     </p:inputText>
                                     <p:message for="titleUNF" display="icon"/>
                                         

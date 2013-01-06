@@ -33,6 +33,12 @@ public class RecipientUtil {
         recipients.add(recipient);
     }
     
+    public void add(String email) {
+        User user = new User();
+        user.setEmail(email);
+        recipients.add(user);
+    }
+    
     public List<User> getRecipientList() {
         //ewentualna filtracja
         return new ArrayList(recipients);

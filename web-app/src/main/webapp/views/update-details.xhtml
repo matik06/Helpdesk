@@ -52,11 +52,9 @@
         
             <sec:authorize access="hasRole('Helpdesk_User')">
                 <div style="margin-bottom: 70px; margin-top: 15px; width: 100%;">                                
-                    <p:menubar autoDisplay="false" style="width: 1180px;">  
-
-
+                    <p:menubar autoDisplay="false" style="width: 1180px;" rendered="#{!updateDetailController.entity.isCompleted}">  
                         <sec:authorize access="hasRole('Helpdesk_User')">
-                            <p:menuitem value="Zatwierdź aktualizację" url="#" icon="ui-icon-pencil"/>                                                
+                            <p:menuitem value="Zatwierdź aktualizację" update=":mainForm" actionListener="#{updateDetailController.updateUpgrade}" icon="ui-icon-pencil" />                                                
                         </sec:authorize>
                     </p:menubar> 
                 </div>
@@ -99,17 +97,42 @@
 
                         <p:column headerText="Priorytet" sortBy="#{entity.priority.name}" filterBy="#{entity.priority}" filterMatchMode="exact" filterOptions="#{constantController.allTaskPriorities}">
                             #{entity.priority.name}
-                        </p:column>                                                                            
+                        </p:column>      
+                        
+                        <sec:authorize access="hasRole('Helpdesk_User')">
+                            <p:column headerText="Status" sortBy="#{entity.status.name}" filterBy="#{entity.status}" filterMatchMode="exact" filterOptions="#{constantController.allTaskStatuses}">
+                                #{entity.status.name}
+                            </p:column>
+                        </sec:authorize>
                     </p:dataTable>
                 </p:tab>  
                 
                 <sec:authorize access="hasRole('Helpdesk_User')">
-                    <p:tab title="Komentarz aktualizacji (priv)" >                    
+                    <p:tab title="Komentarz aktualizacji (priv)" >    
+                        
+                        <h:panelGroup layout="span" id="privateCommentsId">                                            
+                            <p:dataList value="#{updateDetailController.privateUpgradeNotes}" var="privateUpgradeComment"  
+                                        paginator="true" rows="10" paginatorPosition="top"
+                                        paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                        rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                              
+                                <component:comment date="#{privateUpgradeComment.date}" content="#{privateUpgradeComment.body}" author="#{privateUpgradeComment.user.fullName}" isEven="#{index % 2 == 0}" />                            
+                            </p:dataList>
+                        </h:panelGroup>
+                        
                     </p:tab>
                 </sec:authorize>
                 
-                <p:tab title="Komentarz aktualizacji" >
-
+                <p:tab title="Komentarz aktualizacji" >                    
+                    
+                    <h:panelGroup layout="span" id="publicCommentsId">                                            
+                        <p:dataList value="#{updateDetailController.publicUpgradeNotes}" var="publicComm"  
+                                    paginator="true" rows="10" paginatorPosition="top"
+                                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                    rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                              
+                            <component:comment date="#{publicComm.date}" content="#{publicComm.body}" author="#{publicComm.user.fullName}" isEven="#{index % 2 == 0}" />                            
+                        </p:dataList>
+                    </h:panelGroup>
+                    
                 </p:tab>
                                        
             </p:tabView>                                         

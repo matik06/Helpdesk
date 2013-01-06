@@ -7,6 +7,7 @@ package pl.helpdesk.service;
 import java.util.List;
 import pl.helpdesk.model.Task;
 import pl.helpdesk.model.TaskNote;
+import pl.helpdesk.model.Upgrade;
 
 /**
  *
@@ -14,4 +15,5 @@ import pl.helpdesk.model.TaskNote;
  */
 public interface TaskNoteService extends GenericService<TaskNote, Integer> {
     List<TaskNote> getNotes(Task task, Integer noteType);
+    List<TaskNote> getNotes(Upgrade upgrade, Integer noteType);
 }
