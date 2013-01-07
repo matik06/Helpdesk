@@ -1,9 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets" >    
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"           
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/main.xhtml"
+
+                xmlns:utils="http://java.sun.com/jsf/composite/utils"
+                xmlns:component="http://java.sun.com/jsf/composite/component"
+                xmlns:sec="http://www.springframework.org/security/tags">
     
     <ui:insert name="get-param" ></ui:insert>
     
@@ -75,6 +81,11 @@
             .ui-helper-hidden {
                 display: none;
             }
+            
+            .firstColNotiSett {
+                width: 85%;
+            }
+            
         </style>
         
         <script>
@@ -113,7 +124,52 @@
                 </div>-->
                 
                 <!-- MAIN CONTENT -->
-                <div id="content">            
+                <div id="content">       
+                    
+                    <sec:authorize access="isAuthenticated()">
+                    <p:dialog header="Ustawienia systemowe" widgetVar="settingDialog" resizable="false" modal="#{msg['grid.dialog.modal']}" draggable="true" width="600">                                                                               
+                                                                                
+                            <p:accordionPanel activeIndex="-1">  
+                                                        
+                                    <p:tab id="changePasswordTab" title="Zmiana hasła"> 
+                                        <h:form id="change-passw-form" prependId="false">    
+                                            
+                                        <p:messages id="settingsMsg" globalOnly="false"/>               
+                                        <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                                            <h:outputLabel for="spassword" value="Aktualne Hasło" />
+                                            <p:password id="spassword" value="#{settingController.currentPassword}" label="Aktualne Hasło" required="true" validator="#{settingController.validatePassword}" validatorMessage="Podane hasło jest nieprawidłowe" />
+                                            <p:message for="spassword" display="icon"/>
+
+                                            <h:outputLabel for="snpassword" value="Nowe Hasło" />
+                                            <p:password id="snpassword" value="#{settingController.newPassword}" label="Nowe Hasło" required="true" match="snrpassword" validatorMessage="Pola Nowe Hasło oraz Powtórz nowe hasło nie są takie same"/>
+                                            <p:message for="snpassword" display="icon"/>
+
+                                            <h:outputLabel for="snrpassword" value="Powtórz Nowe Hasło" />
+                                            <p:password id="snrpassword" value="#{settingController.repeatedNewPassword}" label="Powtórz Nowe Hasło" required="true"/>
+                                            <p:message for="snrpassword" display="icon"/>
+                                        </h:panelGrid> 
+                                        <p:commandButton actionListener="#{settingController.changePassword}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update="@form"/>                        
+                                        </h:form>
+                                    </p:tab>        
+                                
+                                <p:tab id="mailSettingTab" title="Ustawienia maili">
+                                    <h:form id="mail-setting-form" prependId="false">         
+                                        <p:messages id="notificationSettingMsg" globalOnly="false"/>               
+                                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="firstColNotiSett" >
+                                            <h:outputLabel value="Cyz dostawać powiadomienia dot. zgłoszeń innych użytkowników?" />
+                                            <p:selectBooleanButton  value="#{settingController.user.getAllNotifications}" onLabel="Tak" offLabel="Nie" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+                                            
+                                            <h:outputLabel value="Cyz dostawać powiadomienia dot. aktualizacji?" />
+                                            <p:selectBooleanButton  value="#{settingController.user.getAllUpdateNotifications}" onLabel="Tak" offLabel="Nie" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+                                        </h:panelGrid>
+                                        <p:commandButton actionListener="#{settingController.updateUserSettings}" value="#{msg['grid.dialog.save.title']}" icon="#{msg['grid.dialog.save.icon']}" update="@form"/>
+                                    </h:form>
+                                    </p:tab>
+                            </p:accordionPanel>    
+                        <p:commandButton style="float: right;" value="Zamknij" icon="#{msg['grid.dialog.save.icon']}" oncomplete="handleCloseEntityDialog(xhr, status, args, settingDialog)"/>                        
+                    </p:dialog>
+                    </sec:authorize>
+                    
                     <ui:insert name="content">
                         <ui:include src="/snippets/content-example.xhtml" />
                     </ui:insert>

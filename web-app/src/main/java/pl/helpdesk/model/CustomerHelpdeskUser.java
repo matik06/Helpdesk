@@ -25,7 +25,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 
 @NamedQueries({
-    @NamedQuery(name="helpdeskPMList", query="SELECT chu.helpdeskUser from CustomerHelpdeskUser chu WHERE chu.customer = :customerId AND chu.helpdeskUser.role = :roleId ")
+    @NamedQuery(name="helpdeskPMList", query="SELECT chu.helpdeskUser from CustomerHelpdeskUser chu WHERE chu.customer = :customerId AND chu.helpdeskUser.role = :roleId AND chu.helpdeskUser.getAllNotifications = true")
 })
 @Entity
 @Table(name="CustomerHelpdeskUser")

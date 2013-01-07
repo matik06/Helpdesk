@@ -75,7 +75,7 @@ public class UpdateDetailController extends BaseController {
                 }                
             }      
                 
-        notificationService.addTaskNotification(entity, getLoggedUser());
+        notificationService.addUpgradeNotification(entity, getLoggedUser());
     }
         
     public List<TaskNote> getPublicUpgradeNotes() {        

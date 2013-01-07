@@ -38,8 +38,8 @@
                         <p:menuitem value="Komentarz" icon="ui-icon-comment" update=":mainForm" oncomplete="publicNoteDialog.show();" />  
                         <sec:authorize access="hasRole('Helpdesk_User')">
                             <p:menuitem value="Komentarz (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateNoteDialog.show();" />  
-                        </sec:authorize>
-                        <p:menuitem value="Komentarz do aktualizacji" icon="ui-icon-comment" update=":mainForm" oncomplete="publicUpgradeNoteDialog.show();" />  
+                            <p:menuitem value="Komentarz do aktualizacji" icon="ui-icon-comment" update=":mainForm" oncomplete="publicUpgradeNoteDialog.show();" />  
+                        </sec:authorize>                        
                         <sec:authorize access="hasRole('Helpdesk_User')">
                             <p:menuitem value="Komentarz do aktualizacji (priv)" icon="ui-icon-comment" update=":mainForm" oncomplete="privateUpgradeNoteDialog.show();" />  
                         </sec:authorize>
@@ -75,38 +75,44 @@
                     </h:panelGroup>  
                 </p:tab>
                 
-                <p:tab title="Komentarze (priv)" >
-                    <h:panelGroup layout="span" id="privateCommentsId">
-                        <p:dataList value="#{taskDetailController.privateNotes}" var="privComm"  
-                                    paginator="true" rows="10" paginatorPosition="top"
-                                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
-                                    rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">      
-                        <component:comment date="#{privComm.date}" content="#{privComm.body}" author="#{privComm.user.fullName}" isEven="#{index % 2 == 0}" />                                                                                                                                                             
-                        </p:dataList>
-                    </h:panelGroup>  
-                </p:tab>
+                <sec:authorize access="hasRole('Helpdesk_User')">
+                    <p:tab title="Komentarze (priv)" >
+                        <h:panelGroup layout="span" id="privateCommentsId">
+                            <p:dataList value="#{taskDetailController.privateNotes}" var="privComm"  
+                                        paginator="true" rows="10" paginatorPosition="top"
+                                        paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                        rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">      
+                            <component:comment date="#{privComm.date}" content="#{privComm.body}" author="#{privComm.user.fullName}" isEven="#{index % 2 == 0}" />                                                                                                                                                             
+                            </p:dataList>
+                        </h:panelGroup>  
+                    </p:tab>
+                </sec:authorize>
                 
-                <p:tab title="Komentarz aktualizacji" >
-                    <h:panelGroup layout="span" id="upgradeCommentsId">
-                        <p:dataList value="#{taskDetailController.publicUpgradeNotes}" var="upgradeComm"  
-                                    paginator="true" rows="10" paginatorPosition="top"
-                                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
-                                    rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                                          
-                            <component:comment date="#{upgradeComm.date}" content="#{upgradeComm.body}" author="#{upgradeComm.user.fullName}" isEven="#{index % 2 == 0}" />                            
-                        </p:dataList>
-                    </h:panelGroup>  
-                </p:tab>
+                <sec:authorize access="hasRole('Helpdesk_User')">
+                    <p:tab title="Komentarz aktualizacji" >
+                        <h:panelGroup layout="span" id="upgradeCommentsId">
+                            <p:dataList value="#{taskDetailController.publicUpgradeNotes}" var="upgradeComm"  
+                                        paginator="true" rows="10" paginatorPosition="top"
+                                        paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                        rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                                          
+                                <component:comment date="#{upgradeComm.date}" content="#{upgradeComm.body}" author="#{upgradeComm.user.fullName}" isEven="#{index % 2 == 0}" />                            
+                            </p:dataList>
+                        </h:panelGroup>  
+                    </p:tab>
+                </sec:authorize>
                 
-                <p:tab title="Komentarz aktualizacji (priv)" >
-                    <h:panelGroup layout="span" id="privateUpgradeCommentsId">
-                        <p:dataList value="#{taskDetailController.privateUpgradeNotes}" var="privateUpgradeComm"  
-                                    paginator="true" rows="10" paginatorPosition="top"
-                                    paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
-                                    rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                                          
-                            <component:comment date="#{privateUpgradeComm.date}" content="#{privateUpgradeComm.body}" author="#{privateUpgradeComm.user.fullName}" isEven="#{index % 2 == 0}" />                                
-                        </p:dataList>
-                    </h:panelGroup>  
-                </p:tab>
+                <sec:authorize access="hasRole('Helpdesk_User')">
+                    <p:tab title="Komentarz aktualizacji (priv)" >
+                        <h:panelGroup layout="span" id="privateUpgradeCommentsId">
+                            <p:dataList value="#{taskDetailController.privateUpgradeNotes}" var="privateUpgradeComm"  
+                                        paginator="true" rows="10" paginatorPosition="top"
+                                        paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"  
+                                        rowsPerPageTemplate="5,10,15" type="none" rowIndexVar="index">                                          
+                                <component:comment date="#{privateUpgradeComm.date}" content="#{privateUpgradeComm.body}" author="#{privateUpgradeComm.user.fullName}" isEven="#{index % 2 == 0}" />                                
+                            </p:dataList>
+                        </h:panelGroup>  
+                    </p:tab>
+                </sec:authorize>
 
                 <p:tab title="Pliki">                
                     <p:dataTable id="entity-grid-table-task-files" value="#{taskDetailController.task.files}" var="entity"

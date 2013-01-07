@@ -25,9 +25,17 @@ public class RecipientUtil {
         
     }
     
+    public void addFroUpgrade(List<?extends User> recipientList) {
+        for (User user : recipientList) {
+            if (user.getGetAllUpdateNotifications() == true) {
+                recipients.add(user);
+            }
+        }
+    }
+    
     public void add(List<? extends User> recipientList) {
         recipients.addAll(recipientList);
-    }
+    }    
     
     public void add(User recipient) {
         recipients.add(recipient);

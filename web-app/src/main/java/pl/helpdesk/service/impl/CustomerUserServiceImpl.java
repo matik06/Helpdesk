@@ -18,7 +18,6 @@ import pl.helpdesk.constant.RoleEnum;
 import pl.helpdesk.dao.CustomerUserDao;
 import pl.helpdesk.model.Customer;
 import pl.helpdesk.model.CustomerUser;
-import pl.helpdesk.model.HelpdeskUser;
 import pl.helpdesk.model.Role;
 import pl.helpdesk.service.CustomerUserService;
 import pl.helpdesk.service.RoleService;

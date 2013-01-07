@@ -62,10 +62,13 @@ public class TaskNotificationService implements Serializable {
     
     
     @Transactional(propagation= Propagation.REQUIRED, readOnly=false, rollbackFor={Exception.class})
-    public void addTaskNotification(Upgrade upgrade, User user) {
+    public void addUpgradeNotification(Upgrade upgrade, User user) {
         
         RecipientUtil recipients = new RecipientUtil();
-        recipients.add(getContractPMList(user, upgrade.getCustomer()));
+        
+        recipients.add(customerHelpdeskUserService.getProjectManagerList(upgrade.getCustomer()));
+        recipients.add(customerUserService.getProjectManagerList(upgrade.getCustomer()));
+        
         recipients.add(upgrade.getCustomer().getEmail());
         recipients.add(user);
                 
@@ -102,6 +105,7 @@ public class TaskNotificationService implements Serializable {
         
         return result;
     }
+    
     
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true, rollbackFor={Exception.class})
     public void sendMail(User user, EventTypeEnum eventEnum, String body) {

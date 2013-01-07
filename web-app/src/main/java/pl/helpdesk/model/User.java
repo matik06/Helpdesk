@@ -38,10 +38,19 @@ public class User extends BaseEntity<Integer> implements Serializable {
    protected String password;
    protected String phone;
    protected String mobile;
+   @Column(nullable=false, columnDefinition="boolean default true")
+   protected Boolean getAllNotifications;
+   @Column(nullable=false, columnDefinition="boolean default true")
+   protected Boolean getAllUpdateNotifications;
    
    @Transient
    protected String newPassword;
-
+   
+   public User() {
+       this.getAllNotifications = true;
+       getAllUpdateNotifications = true;
+   }
+   
     @Id
     @GeneratedValue
     @Column(name = "userId")
@@ -121,6 +130,22 @@ public class User extends BaseEntity<Integer> implements Serializable {
     public String getNewPassword() {
         return newPassword;
     }
+
+    public Boolean getGetAllNotifications() {
+        return getAllNotifications;
+    }
+
+    public void setGetAllNotifications(Boolean getAllNotifications) {
+        this.getAllNotifications = getAllNotifications;
+    }      
+
+    public Boolean getGetAllUpdateNotifications() {
+        return getAllUpdateNotifications;
+    }
+
+    public void setGetAllUpdateNotifications(Boolean getAllUpdateNotifications) {
+        this.getAllUpdateNotifications = getAllUpdateNotifications;
+    }        
 
     public void setNewPassword(String newPassword) {
         if (newPassword != null && !newPassword.isEmpty()) {
