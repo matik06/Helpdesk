@@ -66,8 +66,8 @@ public class TaskNotificationService implements Serializable {
         
         RecipientUtil recipients = new RecipientUtil();
         
-        recipients.add(customerHelpdeskUserService.getProjectManagerList(upgrade.getCustomer()));
-        recipients.add(customerUserService.getProjectManagerList(upgrade.getCustomer()));
+        recipients.addFroUpgrade(customerHelpdeskUserService.getProjectManagerList(upgrade.getCustomer()));
+        recipients.addFroUpgrade(customerUserService.getProjectManagerList(upgrade.getCustomer()));
         
         recipients.add(upgrade.getCustomer().getEmail());
         recipients.add(user);

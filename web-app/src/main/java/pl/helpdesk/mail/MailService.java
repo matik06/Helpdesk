@@ -38,27 +38,31 @@ public class MailService implements Serializable {
     @Value("${mail.smtp.from}")
     private String from;
 
-     public void sendMail(String to, String subject, String body) {        
-        
-        MimeMessage mimeMessage = mailSender.createMimeMessage();        
-        
-        try {
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            
-            helper.setFrom(from);
-            helper.setTo(to);
-            helper.setSubject("Helpdesk: " + subject);
-            helper.setText("<html><body>" + body + "</body></html>", true);
-            logger.info(body);
-        } catch (Exception e) {
-            logger.info(e.getMessage(), e);
-        }
+     public void sendMail(final String to, final String subject, final String body) {  
+         
+         (new Thread() {
+             public void run() {
+                 MimeMessage mimeMessage = mailSender.createMimeMessage();
 
-        try {
-            mailSender.send(mimeMessage);
-        } catch (MailException e) {
-            logger.info(e.getMessage(), e);
-        }
+                 try {
+                     MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+                     helper.setFrom(from);
+                     helper.setTo(to);
+                     helper.setSubject("Helpdesk: " + subject);
+                     helper.setText("<html><body>" + body + "</body></html>", true);
+                     logger.info("sending mail: " + subject + " to :" + to);
+                 } catch (Exception e) {
+                     logger.info(e.getMessage(), e);
+                 }
+
+                 try {
+                     mailSender.send(mimeMessage);
+                 } catch (MailException e) {
+                     logger.info(e.getMessage(), e);
+                 }
+             }
+         }).start();                
      }
      
      public void sendMail(List<? extends User> recipients, String subject, String body) {
