@@ -59,7 +59,8 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
                 }
                                 
                 log.error("złapano wyjątek: nieprzechwycony przez controller");                
-                log.error(t);                                                                
+                log.error(t.getMessage(), t);      
+                t.printStackTrace();
 
                 //redirect error page
                 requestMap.put("exceptionMessage", t.getMessage());
