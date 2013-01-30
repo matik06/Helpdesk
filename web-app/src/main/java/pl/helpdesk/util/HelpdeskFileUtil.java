@@ -69,7 +69,7 @@ public class HelpdeskFileUtil implements Serializable {
         } finally {
             try {
                 os.close();
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 logger.error(ex.getMessage(), ex);
             }
         }
