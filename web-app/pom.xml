@@ -38,7 +38,7 @@
         <cglib.version>2.2.2</cglib.version>
         <mysql-connector.version>5.1.18</mysql-connector.version>
         <c3p0.version>0.9.1.2</c3p0.version>
-        <hibernate.version>4.1.0.Final</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <javassist.version>3.12.1.GA</javassist.version>
         <guava.version>r09</guava.version>
         <commons-lang.version>2.6</commons-lang.version>
