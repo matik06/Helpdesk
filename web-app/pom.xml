@@ -32,7 +32,7 @@
         
         <javax.mail>1.4</javax.mail>
         <javax.version>6.0</javax.version>
-        <spring.version>3.1.1.RELEASE</spring.version>
+        <spring.version>6.0.0</spring.version>
         <spring-security-version>3.1.1.RELEASE</spring-security-version>
         <spring-aspects.version>2.5.6</spring-aspects.version>
         <cglib.version>2.2.2</cglib.version>
